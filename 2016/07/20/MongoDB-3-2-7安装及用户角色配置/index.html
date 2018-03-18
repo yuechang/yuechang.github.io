@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1、MongDB安装步骤1.1、下载安装包环境信息：Linux：CentOS release 6.5 (Final)MongoDB：3.2.7MongoDB下载地址：http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz 1.2、解压1tar -zxvf mongodb-linux-x86_">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 3.2.7安装及用户角色配置">
+<meta property="og:url" content="http://yuechang.github.io/2016/07/20/MongoDB-3-2-7安装及用户角色配置/index.html">
+<meta property="og:site_name" content="漠北空城">
+<meta property="og:description" content="1、MongDB安装步骤1.1、下载安装包环境信息：Linux：CentOS release 6.5 (Final)MongoDB：3.2.7MongoDB下载地址：http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz 1.2、解压1tar -zxvf mongodb-linux-x86_">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-07-20T12:05:45.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB 3.2.7安装及用户角色配置">
+<meta name="twitter:description" content="1、MongDB安装步骤1.1、下载安装包环境信息：Linux：CentOS release 6.5 (Final)MongoDB：3.2.7MongoDB下载地址：http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz 1.2、解压1tar -zxvf mongodb-linux-x86_">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yuechang.github.io/2016/07/20/MongoDB-3-2-7安装及用户角色配置/"/>
+
+
+
+
+
+  <title>MongoDB 3.2.7安装及用户角色配置 | 漠北空城</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">漠北空城</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">听海观潮</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/20/MongoDB-3-2-7安装及用户角色配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">MongoDB 3.2.7安装及用户角色配置</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T20:04:49+08:00">
+                Jul 20 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/07/20/MongoDB-3-2-7安装及用户角色配置/" class="leancloud_visitors" data-flag-title="MongoDB 3.2.7安装及用户角色配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1、MongDB安装步骤"><a href="#1、MongDB安装步骤" class="headerlink" title="1、MongDB安装步骤"></a>1、MongDB安装步骤</h2><h3 id="1-1、下载安装包"><a href="#1-1、下载安装包" class="headerlink" title="1.1、下载安装包"></a>1.1、下载安装包</h3><p>环境信息：<br>Linux：CentOS release 6.5 (Final)<br>MongoDB：3.2.7<br>MongoDB下载地址：<br><a href="http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz" target="_blank" rel="noopener">http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz</a></p>
+<h3 id="1-2、解压"><a href="#1-2、解压" class="headerlink" title="1.2、解压"></a>1.2、解压</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz</span><br></pre></td></tr></table></figure>
+<h3 id="1-3、指定安装目录"><a href="#1-3、指定安装目录" class="headerlink" title="1.3、指定安装目录"></a>1.3、指定安装目录</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv mongodb-linux-x86_64-enterprise-rhel62-3.2.7 /home/martin/</span><br></pre></td></tr></table></figure>
+<p>并重命名为mongodb</p>
+<h3 id="1-4、新建目录"><a href="#1-4、新建目录" class="headerlink" title="1.4、新建目录"></a>1.4、新建目录</h3><p>新建MongoDB数据文件存放目录<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/martin/mongodb/db</span><br></pre></td></tr></table></figure></p>
+<p>新建log文件存放目录<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/martin/mongodb/logs</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-5、新建配置文件"><a href="#1-5、新建配置文件" class="headerlink" title="1.5、新建配置文件"></a>1.5、新建配置文件</h3><p>MongoDB支持把参数写进配置文件，mongod.conf配置文件内容如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># mongod.conf</span><br><span class="line"># for documentation of all options, see:</span><br><span class="line">#   http://docs.mongodb.org/manual/reference/configuration-options/</span><br><span class="line"></span><br><span class="line"># where to write logging data.</span><br><span class="line">systemLog:</span><br><span class="line">  destination: file</span><br><span class="line">  logAppend: true</span><br><span class="line">  path: /home/martin/mongodb/logs/mongod.log #日志文件存放目录</span><br><span class="line"></span><br><span class="line"># Where and how to store data.</span><br><span class="line">storage:</span><br><span class="line">  dbPath: /home/martin/mongodb/db #数据文件存放目录</span><br><span class="line">  journal:</span><br><span class="line">    enabled: true</span><br><span class="line">#  engine:</span><br><span class="line">#  mmapv1:</span><br><span class="line">#  wiredTiger:</span><br><span class="line"></span><br><span class="line"># how the process runs</span><br><span class="line">processManagement:</span><br><span class="line">  fork: true  #以守护程序的方式启用，即在后台运行</span><br><span class="line">  pidFilePath: /home/martin/mongodb/mongod.pid  # location of pidfile</span><br><span class="line"></span><br><span class="line"># network interfaces</span><br><span class="line">net:</span><br><span class="line">  port: 27017 #端口</span><br><span class="line">  bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.</span><br><span class="line"></span><br><span class="line">#security:</span><br><span class="line">  #authorization: enabled </span><br><span class="line">#operationProfiling:</span><br><span class="line"></span><br><span class="line">#replication:</span><br><span class="line"></span><br><span class="line">#sharding:</span><br><span class="line"></span><br><span class="line">## Enterprise-Only Options</span><br><span class="line"></span><br><span class="line">#auditLog:</span><br><span class="line"></span><br><span class="line">#snmp:</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-6、启动MongoDB服务器"><a href="#1-6、启动MongoDB服务器" class="headerlink" title="1.6、启动MongoDB服务器"></a>1.6、启动MongoDB服务器</h3><p>使用配置文件mongod.conf定义的参数启动<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/martin/mongodb/bin/mongod --config /home/martin/mongodb/bin/mongod.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-7、配置开机启动"><a href="#1-7、配置开机启动" class="headerlink" title="1.7、配置开机启动"></a>1.7、配置开机启动</h3><p>vi /etc/rc.d/rc.local<br>在文件末端加入：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/martin/mongodb/bin/mongod --config /home/martin/mongodb/bin/mongod.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-8、安装防火墙服务并开启端口"><a href="#1-8、安装防火墙服务并开启端口" class="headerlink" title="1.8、安装防火墙服务并开启端口"></a>1.8、安装防火墙服务并开启端口</h3><p>安装防火墙服务<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables services</span><br></pre></td></tr></table></figure></p>
+<p>防火墙开启27017端口<br>打开配置文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/iptables</span><br></pre></td></tr></table></figure></p>
+<p>加入如下语句<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -p tcp -m state --state NEW -m tcp --dport 27107 -j ACCEPT</span><br></pre></td></tr></table></figure></p>
+<p>重启防火墙<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables start</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-9、测试连接"><a href="#1-9、测试连接" class="headerlink" title="1.9、测试连接"></a>1.9、测试连接</h3><p>1、通过xshell连接对应linux服务器，到MongoDB安装的bin目录运行./mongo命令<br>2、telnet ip 27017</p>
+<h2 id="2、-MongoDB用户角色配置"><a href="#2、-MongoDB用户角色配置" class="headerlink" title="2、    MongoDB用户角色配置"></a>2、    MongoDB用户角色配置</h2><h3 id="2-1、基本知识介绍"><a href="#2-1、基本知识介绍" class="headerlink" title="2.1、基本知识介绍"></a>2.1、基本知识介绍</h3><p>MongoDB基本的角色<br>1.数据库用户角色：read、readWrite;<br>2.数据库管理角色：dbAdmin、dbOwner、userAdmin；<br>3.集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；<br>4.备份恢复角色：backup、restore；<br>5.所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase<br>6.超级用户角色：root<br>//这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）<br>   其中MongoDB默认是没有开启用户认证的，也就是说游客也拥有超级管理员的权限。userAdminAnyDatabase：有分配角色和用户的权限，但没有查写的权限</p>
+<h3 id="2-2、操作步骤"><a href="#2-2、操作步骤" class="headerlink" title="2.2、操作步骤"></a>2.2、操作步骤</h3><h4 id="2-2-1、连接到MongoDB服务器"><a href="#2-2-1、连接到MongoDB服务器" class="headerlink" title="2.2.1、连接到MongoDB服务器"></a>2.2.1、连接到MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2、创建root-admin用户"><a href="#2-2-2、创建root-admin用户" class="headerlink" title="2.2.2、创建root/admin用户"></a>2.2.2、创建root/admin用户</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">db.createUser(&#123;user:"root",pwd:"password",roles:["root"]&#125;)</span><br><span class="line"></span><br><span class="line">db.createUser(  </span><br><span class="line">  &#123;  </span><br><span class="line">    user: "admin",  </span><br><span class="line">    pwd: "password",  </span><br><span class="line">    roles: [&#123;role: "userAdminAnyDatabase", db: "admin"&#125;]  </span><br><span class="line">  &#125;  </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3、修改mongod-conf文件"><a href="#2-2-3、修改mongod-conf文件" class="headerlink" title="2.2.3、修改mongod.conf文件"></a>2.2.3、修改mongod.conf文件</h4><p>在配置文件中增加如下配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  authorization: enabled //启用授权</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-2-4、重启MongoDB服务器"><a href="#2-2-4、重启MongoDB服务器" class="headerlink" title="2.2.4、重启MongoDB服务器"></a>2.2.4、重启MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mongod restart</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-5、创建数据库读写权限用户"><a href="#2-2-5、创建数据库读写权限用户" class="headerlink" title="2.2.5、创建数据库读写权限用户"></a>2.2.5、创建数据库读写权限用户</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">db.auth("admin"," password");</span><br><span class="line">use ballmatch</span><br><span class="line">db.createUser(&#123;</span><br><span class="line">    user: "football",</span><br><span class="line">    pwd: "password",</span><br><span class="line">    roles: [&#123;role: "readWrite",db: "ballmatch"&#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-6、Java程序连接MongoDB服务器"><a href="#2-2-6、Java程序连接MongoDB服务器" class="headerlink" title="2.2.6、Java程序连接MongoDB服务器"></a>2.2.6、Java程序连接MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//方式一</span><br><span class="line">MongoCredential credential = MongoCredential.createCredential("username", "dbName", "password".toCharArray());</span><br><span class="line">ServerAddress serverAddress = new ServerAddress("192.168.10.242", 27017);</span><br><span class="line">MongoClient mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));</span><br><span class="line">DB db = mongoClient.getDB("dbName");</span><br><span class="line">return db;</span><br><span class="line"></span><br><span class="line">//方式二</span><br><span class="line">String sURI = String.format("mongodb://%s:%s@%s:%d/%s", "username", "password", "192.168.10.242", 27017, "dbName"); </span><br><span class="line">MongoClientURI uri = new MongoClientURI(sURI); </span><br><span class="line">MongoClient mongoClient = new MongoClient(uri); </span><br><span class="line">DB db = mongoClient.getDB("dbName");</span><br></pre></td></tr></table></figure>
+<h2 id="3、命令参考"><a href="#3、命令参考" class="headerlink" title="3、命令参考"></a>3、命令参考</h2><h3 id="3-1、修改用户密码"><a href="#3-1、修改用户密码" class="headerlink" title="3.1、修改用户密码"></a>3.1、修改用户密码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.updateUser( "admin",&#123;pwd:"password"&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="3-2、密码认证"><a href="#3-2、密码认证" class="headerlink" title="3.2、密码认证"></a>3.2、密码认证</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.auth("admin","password");</span><br></pre></td></tr></table></figure>
+<h3 id="3-3、MongoDB连接信息查询"><a href="#3-3、MongoDB连接信息查询" class="headerlink" title="3.3、MongoDB连接信息查询"></a>3.3、MongoDB连接信息查询</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.serverStatus().connections;</span><br></pre></td></tr></table></figure>
+<p>MongoDB实例接受的最多连接数，如果高于操作系统接受的最大线程数，设置无效。net.maxIncomingConnections默认（65536）</p>
+<h3 id="3-4、关闭MongoDB服务"><a href="#3-4、关闭MongoDB服务" class="headerlink" title="3.4、关闭MongoDB服务"></a>3.4、关闭MongoDB服务</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin;</span><br><span class="line">db.shutdownServer();</span><br></pre></td></tr></table></figure>
+<h3 id="3-5、删除用户"><a href="#3-5、删除用户" class="headerlink" title="3.5、删除用户"></a>3.5、删除用户</h3><p>删除用户(需要root权限，会将所有数据库中的football用户删除)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.system.users.remove(&#123;user:"football"&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>删除用户(权限要求没有那么高，只删除本数据中的football用户)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropUser("football");</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://yuechang.qiniudn.com/wechat-reward-image.png" alt="Yue Chang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://yuechang.qiniudn.com/alipay-reward-image.jpg" alt="Yue Chang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/14/Java webSocket 网页聊天室/" rel="next" title="Java webSocket 网页聊天室">
+                <i class="fa fa-chevron-left"></i> Java webSocket 网页聊天室
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/" rel="prev" title="MongoDB3.2配置文件directoryPerDB参数">
+                MongoDB3.2配置文件directoryPerDB参数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+ 	<div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://yuechang.qiniudn.com/naruto.jpg"
+                alt="Yue Chang" />
+            
+              <p class="site-author-name" itemprop="name">Yue Chang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友链
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.xyz327.cn/" title="xyz327" target="_blank">xyz327</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、MongDB安装步骤"><span class="nav-number">1.</span> <span class="nav-text">1、MongDB安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、下载安装包"><span class="nav-number">1.1.</span> <span class="nav-text">1.1、下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、解压"><span class="nav-number">1.2.</span> <span class="nav-text">1.2、解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3、指定安装目录"><span class="nav-number">1.3.</span> <span class="nav-text">1.3、指定安装目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4、新建目录"><span class="nav-number">1.4.</span> <span class="nav-text">1.4、新建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5、新建配置文件"><span class="nav-number">1.5.</span> <span class="nav-text">1.5、新建配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6、启动MongoDB服务器"><span class="nav-number">1.6.</span> <span class="nav-text">1.6、启动MongoDB服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7、配置开机启动"><span class="nav-number">1.7.</span> <span class="nav-text">1.7、配置开机启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8、安装防火墙服务并开启端口"><span class="nav-number">1.8.</span> <span class="nav-text">1.8、安装防火墙服务并开启端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9、测试连接"><span class="nav-number">1.9.</span> <span class="nav-text">1.9、测试连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、-MongoDB用户角色配置"><span class="nav-number">2.</span> <span class="nav-text">2、    MongoDB用户角色配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1、基本知识介绍"><span class="nav-number">2.1.</span> <span class="nav-text">2.1、基本知识介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2、操作步骤"><span class="nav-number">2.2.</span> <span class="nav-text">2.2、操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1、连接到MongoDB服务器"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1、连接到MongoDB服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2、创建root-admin用户"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2、创建root/admin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3、修改mongod-conf文件"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3、修改mongod.conf文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4、重启MongoDB服务器"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4、重启MongoDB服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5、创建数据库读写权限用户"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.2.5、创建数据库读写权限用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-6、Java程序连接MongoDB服务器"><span class="nav-number">2.2.6.</span> <span class="nav-text">2.2.6、Java程序连接MongoDB服务器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、命令参考"><span class="nav-number">3.</span> <span class="nav-text">3、命令参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1、修改用户密码"><span class="nav-number">3.1.</span> <span class="nav-text">3.1、修改用户密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2、密码认证"><span class="nav-number">3.2.</span> <span class="nav-text">3.2、密码认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3、MongoDB连接信息查询"><span class="nav-number">3.3.</span> <span class="nav-text">3.3、MongoDB连接信息查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4、关闭MongoDB服务"><span class="nav-number">3.4.</span> <span class="nav-text">3.4、关闭MongoDB服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5、删除用户"><span class="nav-number">3.5.</span> <span class="nav-text">3.5、删除用户</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yue Chang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'e2c6e67fcad058c89942',
+          clientSecret: 'c4108747aa643f1e80367a3b6a0883342d5aa7f9',
+          repo: 'blog-comment',
+          owner: '13375021',
+          admin: ['yuechang'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("gxjtQDQU8Po0WNAWg2EuOQPj-gzGzoHsz", "igR8qwpo2ez9JtsjOwu04w6Q");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
