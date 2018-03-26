@@ -320,6 +320,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2018/03/26/dubbo-admin-2.0.0控制台安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/26/dubbo-admin-2.0.0控制台安装/" itemprop="url">dubbo-admin-2.0.0管理控制台安装</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T22:16:41+08:00">
+                Mar 26 2018
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/26/dubbo-admin-2.0.0控制台安装/" class="leancloud_visitors" data-flag-title="dubbo-admin-2.0.0管理控制台安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="dubbo-admin-2-0-0管理控制台安装"><a href="#dubbo-admin-2-0-0管理控制台安装" class="headerlink" title="dubbo-admin-2.0.0管理控制台安装"></a>dubbo-admin-2.0.0管理控制台安装</h3><p>dubbo-admin-2.0.0管理控制台安装</p>
+<p>环境</p>
+<ul>
+<li>Maven:                 Apache Maven 3.3.3</li>
+<li>Server version:        Apache Tomcat/9.0.6</li>
+<li>OS Name:               Linux</li>
+<li>JVM Version:           1.8.0_161-b12</li>
+<li>OS Version:            3.10.0-514.26.2.el7.x86_64</li>
+<li>Dubbo admin:           2.0.0</li>
+</ul>
+<h4 id="1、在github上获得dubbo-admin源码"><a href="#1、在github上获得dubbo-admin源码" class="headerlink" title="1、在github上获得dubbo-admin源码"></a>1、在github上获得dubbo-admin源码</h4><p>通过下面命令克隆dubbo-admin项目<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/incubator-dubbo-ops.git</span><br></pre></td></tr></table></figure></p>
+<h4 id="1、在github上获得dubbo-admin源码-1"><a href="#1、在github上获得dubbo-admin源码-1" class="headerlink" title="1、在github上获得dubbo-admin源码"></a>1、在github上获得dubbo-admin源码</h4><p>通过下面命令克隆dubbo-admin项目<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/incubator-dubbo-ops.git</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、将dubbo-admin编译并打包"><a href="#2、将dubbo-admin编译并打包" class="headerlink" title="2、将dubbo-admin编译并打包"></a>2、将dubbo-admin编译并打包</h4><p>进入incubator-dubbo-ops\dubbo-admin目录，输入下面命令<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></p>
+<p>打包成功之后将在incubator-dubbo-ops\dubbo-admin\target目录下生成dubbo-admin-2.0.0.war<br><img src="http://yuechang.qiniudn.com/mvn-clean-package.jpg" alt="mvn-clean-package"></p>
+<h4 id="3、部署"><a href="#3、部署" class="headerlink" title="3、部署"></a>3、部署</h4><p>将dubbo-admin-2.0.0.war放入apache-tomcat-9.0.6-dubbo-admin/webapps目录下，<br>并启动tomcat,启动成功后，关闭tomcat</p>
+<p>通过以下命令，删除对应的war包以及原来的ROOT目录，将dubbo-admin-2.0.0重命名为ROOT<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf dubbo-admin-2.0.0.war</span><br><span class="line">rm -rf ROOT</span><br><span class="line"></span><br><span class="line">mv dubbo-admin-2.0.0 ROOT</span><br></pre></td></tr></table></figure></p>
+<h4 id="4、修改配置文件"><a href="#4、修改配置文件" class="headerlink" title="4、修改配置文件"></a>4、修改配置文件</h4><p>修改dubbo.properties配置文件<br>apache-tomcat-9.0.6-dubbo-admin/webapps/ROOT/WEB-INF/dubbo.properties</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dubbo.registry.address=zookeeper://127.0.0.1:2181?backup=127.0.0.1:2182,127.0.0.1:2183</span><br><span class="line">dubbo.admin.root.password=root</span><br><span class="line">dubbo.admin.guest.password=guest</span><br></pre></td></tr></table></figure>
+<p>修改完成，再次启动tomcat</p>
+<h4 id="5、访问"><a href="#5、访问" class="headerlink" title="5、访问"></a>5、访问</h4><p>通过<a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a>进行dubbo-admin管理控制台进行访问<br>出现下面界面则说明成功了：<br><img src="http://yuechang.qiniudn.com/dubbo-admin.jpg" alt="dubbo-admin"></p>
+<h4 id="6、参考文档"><a href="#6、参考文档" class="headerlink" title="6、参考文档"></a>6、参考文档</h4><ul>
+<li><a href="http://dubbo.io/books/dubbo-admin-book/install/admin-console.html" target="_blank" rel="noopener">管理控制台安装</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/28/spring-AOP-配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -919,162 +1072,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/25/spring-DI-注解注入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/25/spring-DI-注解注入/" itemprop="url">spring DI-注解注入</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T19:30:10+08:00">
-                Nov 25 2017
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/25/spring-DI-注解注入/" class="leancloud_visitors" data-flag-title="spring DI-注解注入">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="spring-DI-注解注入"><a href="#spring-DI-注解注入" class="headerlink" title="spring DI-注解注入"></a>spring DI-注解注入</h3><p>用注解实现属性注入</p>
-<h4 id="1、步骤："><a href="#1、步骤：" class="headerlink" title="1、步骤："></a>1、步骤：</h4><h5 id="1-1、创建Student类和Person类"><a href="#1-1、创建Student类和Person类" class="headerlink" title="1.1、创建Student类和Person类"></a>1.1、创建Student类和Person类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> Student student;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.student.say();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="1-2、把Person和Student放入到spring容器中"><a href="#1-2、把Person和Student放入到spring容器中" class="headerlink" title="1.2、把Person和Student放入到spring容器中"></a>1.2、把Person和Student放入到spring容器中</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"student"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="1-3、启动依赖注入的注解解析器"><a href="#1-3、启动依赖注入的注解解析器" class="headerlink" title="1.3、启动依赖注入的注解解析器"></a>1.3、启动依赖注入的注解解析器</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:annotation-config</span>&gt;</span><span class="tag">&lt;/<span class="name">context:annotation-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>注意:基本类型不能用注解完成注入</p>
-<h4 id="2、原理："><a href="#2、原理：" class="headerlink" title="2、原理："></a>2、原理：</h4><h5 id="2-1、当启动spring容器的时候创建了person和student两个对象"><a href="#2-1、当启动spring容器的时候创建了person和student两个对象" class="headerlink" title="2.1、当启动spring容器的时候创建了person和student两个对象"></a>2.1、当启动spring容器的时候创建了person和student两个对象</h5><h5 id="2-2、加载配置文件是否含有context-annotation-config"><a href="#2-2、加载配置文件是否含有context-annotation-config" class="headerlink" title="2.2、加载配置文件是否含有context:annotation-config"></a>2.2、加载配置文件是否含有context:annotation-config</h5><p>当spring容器解析到<br><a href="context:annotation-config" target="_blank" rel="noopener">context:annotation-config</a>&lt;/context:annotation-config&gt;<br>spring容器会在纳入spring管理范围的bean查找；</p>
-<h5 id="2-3、查找这些bean的方法或者属性上是否含有Resource注解"><a href="#2-3、查找这些bean的方法或者属性上是否含有Resource注解" class="headerlink" title="2.3、查找这些bean的方法或者属性上是否含有Resource注解"></a>2.3、查找这些bean的方法或者属性上是否含有Resource注解</h5><h5 id="2-4、当存在Resource注解"><a href="#2-4、当存在Resource注解" class="headerlink" title="2.4、当存在Resource注解"></a>2.4、当存在Resource注解</h5><p>则查看该注解的属性name的值：</p>
-<ul>
-<li><p>如果name的值为””,则会按照该注解所在的属性的名称和spring容器中的ID做匹配，如果匹配成功，则赋值；<br>如果匹配不成功，则按照类型进行匹配,则赋值; 如果类型再匹配不成功，则报错；</p>
-</li>
-<li><p>如果name的属性值不为””,则按照name的属性的值和spring容器中的ID匹配，成功，则赋值，不成功，则报错    </p>
-</li>
-</ul>
-<h4 id="3、xml与注解区别"><a href="#3、xml与注解区别" class="headerlink" title="3、xml与注解区别"></a>3、xml与注解区别</h4><ul>
-<li>xml效果比较高，写法比较复杂</li>
-<li><p>注解效率比较低，但是写法比较简单</p>
-<p>因为注解可能需要查找spring容器中定义的所有bean。</p>
-</li>
-</ul>
-<h4 id="4、依赖注入的注解"><a href="#4、依赖注入的注解" class="headerlink" title="4、依赖注入的注解"></a>4、依赖注入的注解</h4><ul>
-<li>@Resource(name=”student”)  见上面</li>
-<li>@Autowired      按照类型进行匹配</li>
-<li>@Qualifier(“student”)   按照”student”与spring中的ID进行匹配</li>
-</ul>
-<p>@Resource = @Autowired + @Qualifier(“student”)</p>
-<p>@Autowired + @Qualifier(“student”)组合使用</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1129,7 +1126,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
