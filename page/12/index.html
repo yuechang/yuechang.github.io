@@ -320,6 +320,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2014/12/18/diagram-to-show-java-strings-immutability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/12/18/diagram-to-show-java-strings-immutability/" itemprop="url">Diagram to show Java String's Immutability</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-18T22:29:41+08:00">
+                Dec 18 2014
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2014/12/18/diagram-to-show-java-strings-immutability/" class="leancloud_visitors" data-flag-title="Diagram to show Java String's Immutability">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Here are a set of diagrams to illustrate Java String’s immutability.</p>
+<h3 id="1-Declare-a-string"><a href="#1-Declare-a-string" class="headerlink" title="1. Declare a string"></a>1. Declare a string</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"abcd"</span>;</span><br></pre></td></tr></table></figure>
+<p>s stores the reference of the string object. The arrow below should be interpreted as “store reference of”.</p>
+<p><img src="http://7s1reu.com1.z0.glb.clouddn.com/String-Immutability-1.jpeg" alt=""></p>
+<h3 id="2-Assign-one-string-variable-to-another-string-variable"><a href="#2-Assign-one-string-variable-to-another-string-variable" class="headerlink" title="2. Assign one string variable to another string variable"></a>2. Assign one string variable to another string variable</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s2 = s;</span><br></pre></td></tr></table></figure>
+<p>s2 stores the same reference value, since it is the same string object.</p>
+<p><img src="http://7s1reu.com1.z0.glb.clouddn.com/String-Immutability-2.jpeg" alt=""></p>
+<h3 id="3-Concat-string"><a href="#3-Concat-string" class="headerlink" title="3. Concat string"></a>3. Concat string</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = s.concat(<span class="string">"ef"</span>);</span><br></pre></td></tr></table></figure>
+<p>s now stores the reference of newly created string object.</p>
+<p><img src="http://7s1reu.com1.z0.glb.clouddn.com/string-immutability-650x279.jpeg" alt=""></p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>Once a string is created in memory(heap), it can not be changed. We should note that all methods of String do not change the string itself, but rather return a new String.</p>
+<p>If we need a string that can be modified, we will need StringBuffer or StringBuilder. Otherwise, there would be a lot of time wasted for Garbage Collection, since each time a new String is created. Here is an example of StringBuilder usage.</p>
+<p>参考文件：[<a href="http://www.programcreek.com/][1]" target="_blank" rel="noopener">http://www.programcreek.com/][1]</a><br>[1]:<a href="http://www.programcreek.com/" target="_blank" rel="noopener">http://www.programcreek.com/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2014/12/14/每天问自己五件事/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -637,7 +780,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
