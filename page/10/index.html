@@ -320,6 +320,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/25/一致性Hash算法及Java实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/25/一致性Hash算法及Java实现/" itemprop="url">一致性Hash算法及Java实现</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-25T15:30:38+08:00">
+                Jul 25 2015
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/07/25/一致性Hash算法及Java实现/" class="leancloud_visitors" data-flag-title="一致性Hash算法及Java实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1、一致性Hash简介"><a href="#1、一致性Hash简介" class="headerlink" title="1、一致性Hash简介"></a>1、一致性Hash简介</h3><p>一致性哈希算法在1997年由麻省理工学院提出(参见扩展阅读[1])，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。</p>
+<h3 id="2、评价一致性Hash算法的标准"><a href="#2、评价一致性Hash算法的标准" class="headerlink" title="2、评价一致性Hash算法的标准"></a>2、评价一致性Hash算法的标准</h3><p>一致性hash算法提出了在动态变化的Cache环境中，判定哈希算法好坏的四个方面：</p>
+<h4 id="2-1、平衡性-Balance"><a href="#2-1、平衡性-Balance" class="headerlink" title="2.1、平衡性(Balance)"></a>2.1、平衡性(Balance)</h4><p>平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用。很多哈希算法都能够满足这一条件。</p>
+<h4 id="2-2、单调性-Monotonicity"><a href="#2-2、单调性-Monotonicity" class="headerlink" title="2.2、单调性(Monotonicity)"></a>2.2、单调性(Monotonicity)</h4><p>单调性是指如果已经有一些内容通过哈希分派到了相应的缓冲中，又有新的缓冲加入到系统中。哈希的结果应能够保证原有已分配的内容可以被映射到原有的或者新的缓冲中去，而不会被映射到旧的缓冲集合中的其他缓冲区。 </p>
+<h4 id="2-3、分散性-Spread"><a href="#2-3、分散性-Spread" class="headerlink" title="2.3、分散性(Spread)"></a>2.3、分散性(Spread)</h4><p>在分布式环境中，终端有可能看不到所有的缓冲，而是只能看到其中的一部分。当终端希望通过哈希过程将内容映射到缓冲上时，由于不同终端所见的缓冲范围有可能不同，从而导致哈希的结果不一致，最终的结果是相同的内容被不同的终端映射到不同的缓冲区中。这种情况显然是应该避免的，因为它导致相同内容被存储到不同缓冲中去，降低了系统存储的效率。分散性的定义就是上述情况发生的严重程度。好的哈希算法应能够尽量避免不一致的情况发生，也就是尽量降低分散性。 </p>
+<h4 id="2-4、负载-Load"><a href="#2-4、负载-Load" class="headerlink" title="2.4、负载(Load)"></a>2.4、负载(Load)</h4><p>负载问题实际上是从另一个角度看待分散性问题。既然不同的终端可能将相同的内容映射到不同的缓冲区中，那么对于一个特定的缓冲区而言，也可能被不同的用户映射为不同 的内容。与分散性一样，这种情况也是应当避免的，因此好的哈希算法应能够尽量降低缓冲的负荷。</p>
+<h3 id="3、Java实现关键代码"><a href="#3、Java实现关键代码" class="headerlink" title="3、Java实现关键代码"></a>3、Java实现关键代码</h3><p>关键代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RedisConsistentHash</span><span class="params">(HashFunction hashFunction, <span class="keyword">int</span> numberOfReplicas,Collection&lt;T&gt; nodes)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.hashFunction = hashFunction;</span><br><span class="line">	<span class="keyword">this</span>.numberOfReplicas = numberOfReplicas;</span><br><span class="line">	<span class="keyword">for</span> (T node : nodes) &#123;</span><br><span class="line">		add(node);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 添加节点信息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> node</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(T node)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numberOfReplicas; i++) &#123;</span><br><span class="line">		circle.put(hashFunction.hash(node.toString() + i), node);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 移除节点信息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> node</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(T node)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numberOfReplicas; i++) &#123;</span><br><span class="line">		circle.remove(hashFunction.hash(node.toString() + i));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据key获得一致性hash中的值，</span></span><br><span class="line"><span class="comment"> * 当值不存在时，返回circle.tailMap的首个元素或者circle的首个元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (circle.isEmpty()) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> hash = hashFunction.hash(key);</span><br><span class="line">	<span class="keyword">if</span> (!circle.containsKey(hash)) &#123;</span><br><span class="line">		SortedMap&lt;Integer, T&gt; tailMap = circle.tailMap(hash);</span><br><span class="line">		hash = tailMap.isEmpty() ? circle.firstKey() : tailMap.firstKey();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> circle.get(hash);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">HashFunction</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// md5加密后，hashcode</span></span><br><span class="line">		<span class="keyword">return</span> MD5.MD5Encode(key.toString()).hashCode();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/24/积微/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -862,149 +999,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/07/Redis的安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/07/07/Redis的安装/" itemprop="url">Redis的安装</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-07T21:50:01+08:00">
-                Jul 7 2015
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/07/07/Redis的安装/" class="leancloud_visitors" data-flag-title="Redis的安装">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>redis是比较流行的NOSQL数据库之一，下面来记录下redis的安装过程：</p>
-<h3 id="1-安装环境介绍："><a href="#1-安装环境介绍：" class="headerlink" title="1. 安装环境介绍："></a>1. 安装环境介绍：</h3><p>Redis版本：redis-3.0.1<br>Linux版本：Red Hat Enterprise Linux Workstation release 7.0 (Maipo)</p>
-<h3 id="2-下载所需Redis文件"><a href="#2-下载所需Redis文件" class="headerlink" title="2. 下载所需Redis文件"></a>2. 下载所需Redis文件</h3><p>在<a href="[http://redis.io]">http://redis.io</a>下载最新的稳定版本。这里下载的是redis-3.0.1.tar.gz</p>
-<h3 id="3-将所下载文件放入Linux系统中"><a href="#3-将所下载文件放入Linux系统中" class="headerlink" title="3. 将所下载文件放入Linux系统中"></a>3. 将所下载文件放入Linux系统中</h3><p>通过Xmanager中Xftp工具连接到对应机器，将redis-3.0.1.tar.gz放到/redis文件夹下，如下图：<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-1.jpg" alt="将所下载文件放入到Linux系统中"></p>
-<h3 id="4-将压缩文件解压并编译"><a href="#4-将压缩文件解压并编译" class="headerlink" title="4. 将压缩文件解压并编译"></a>4. 将压缩文件解压并编译</h3><p>解压：tar zxvf redis-3.0.1.tar.gz<br>编译：make<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-2.jpg" alt="解压"><br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-3.jpg" alt="编译"></p>
-<h3 id="5-启动redis服务器"><a href="#5-启动redis服务器" class="headerlink" title="5. 启动redis服务器"></a>5. 启动redis服务器</h3><p>切换到src目录下，并通过./redis-server /redis/redis-3.0.1/redis.conf启动 服务器<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/redis安装-5.jpg" alt="启动redis服务器"></p>
-<h3 id="6-验证服务器是否成功启动"><a href="#6-验证服务器是否成功启动" class="headerlink" title="6. 验证服务器是否成功启动"></a>6. 验证服务器是否成功启动</h3><p>通过./redis-cli -h 192.168.161.252 -p 6379连接到客户端，并设置相关值来验证服务器是否成功启动<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-6.jpg" alt="验证服务器是否成功启动"></p>
-<h3 id="7-其他相关命令参考"><a href="#7-其他相关命令参考" class="headerlink" title="7. 其他相关命令参考"></a>7. 其他相关命令参考</h3><p>查看redis相关线程：ps -ef|grep redis<br>关闭redis服务：./redis-cli -h 192.168.153.138 -p 6379<br>查看redis信息：./redis-cli -h 192.168.153.138 -p 6379 info</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1054,7 +1053,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

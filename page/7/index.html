@@ -320,6 +320,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/20/MongoDB-3-2-7安装及用户角色配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/20/MongoDB-3-2-7安装及用户角色配置/" itemprop="url">MongoDB 3.2.7安装及用户角色配置</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T20:04:49+08:00">
+                Jul 20 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/07/20/MongoDB-3-2-7安装及用户角色配置/" class="leancloud_visitors" data-flag-title="MongoDB 3.2.7安装及用户角色配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、MongDB安装步骤"><a href="#1、MongDB安装步骤" class="headerlink" title="1、MongDB安装步骤"></a>1、MongDB安装步骤</h2><h3 id="1-1、下载安装包"><a href="#1-1、下载安装包" class="headerlink" title="1.1、下载安装包"></a>1.1、下载安装包</h3><p>环境信息：<br>Linux：CentOS release 6.5 (Final)<br>MongoDB：3.2.7<br>MongoDB下载地址：<br><a href="http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz" target="_blank" rel="noopener">http://downloads.10gen.com/linux/mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz</a></p>
+<h3 id="1-2、解压"><a href="#1-2、解压" class="headerlink" title="1.2、解压"></a>1.2、解压</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-enterprise-rhel62-3.2.7.tgz</span><br></pre></td></tr></table></figure>
+<h3 id="1-3、指定安装目录"><a href="#1-3、指定安装目录" class="headerlink" title="1.3、指定安装目录"></a>1.3、指定安装目录</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv mongodb-linux-x86_64-enterprise-rhel62-3.2.7 /home/martin/</span><br></pre></td></tr></table></figure>
+<p>并重命名为mongodb</p>
+<h3 id="1-4、新建目录"><a href="#1-4、新建目录" class="headerlink" title="1.4、新建目录"></a>1.4、新建目录</h3><p>新建MongoDB数据文件存放目录<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/martin/mongodb/db</span><br></pre></td></tr></table></figure></p>
+<p>新建log文件存放目录<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /home/martin/mongodb/logs</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-5、新建配置文件"><a href="#1-5、新建配置文件" class="headerlink" title="1.5、新建配置文件"></a>1.5、新建配置文件</h3><p>MongoDB支持把参数写进配置文件，mongod.conf配置文件内容如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># mongod.conf</span><br><span class="line"># for documentation of all options, see:</span><br><span class="line">#   http://docs.mongodb.org/manual/reference/configuration-options/</span><br><span class="line"></span><br><span class="line"># where to write logging data.</span><br><span class="line">systemLog:</span><br><span class="line">  destination: file</span><br><span class="line">  logAppend: true</span><br><span class="line">  path: /home/martin/mongodb/logs/mongod.log #日志文件存放目录</span><br><span class="line"></span><br><span class="line"># Where and how to store data.</span><br><span class="line">storage:</span><br><span class="line">  dbPath: /home/martin/mongodb/db #数据文件存放目录</span><br><span class="line">  journal:</span><br><span class="line">    enabled: true</span><br><span class="line">#  engine:</span><br><span class="line">#  mmapv1:</span><br><span class="line">#  wiredTiger:</span><br><span class="line"></span><br><span class="line"># how the process runs</span><br><span class="line">processManagement:</span><br><span class="line">  fork: true  #以守护程序的方式启用，即在后台运行</span><br><span class="line">  pidFilePath: /home/martin/mongodb/mongod.pid  # location of pidfile</span><br><span class="line"></span><br><span class="line"># network interfaces</span><br><span class="line">net:</span><br><span class="line">  port: 27017 #端口</span><br><span class="line">  bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.</span><br><span class="line"></span><br><span class="line">#security:</span><br><span class="line">  #authorization: enabled </span><br><span class="line">#operationProfiling:</span><br><span class="line"></span><br><span class="line">#replication:</span><br><span class="line"></span><br><span class="line">#sharding:</span><br><span class="line"></span><br><span class="line">## Enterprise-Only Options</span><br><span class="line"></span><br><span class="line">#auditLog:</span><br><span class="line"></span><br><span class="line">#snmp:</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-6、启动MongoDB服务器"><a href="#1-6、启动MongoDB服务器" class="headerlink" title="1.6、启动MongoDB服务器"></a>1.6、启动MongoDB服务器</h3><p>使用配置文件mongod.conf定义的参数启动<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/martin/mongodb/bin/mongod --config /home/martin/mongodb/bin/mongod.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-7、配置开机启动"><a href="#1-7、配置开机启动" class="headerlink" title="1.7、配置开机启动"></a>1.7、配置开机启动</h3><p>vi /etc/rc.d/rc.local<br>在文件末端加入：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/martin/mongodb/bin/mongod --config /home/martin/mongodb/bin/mongod.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-8、安装防火墙服务并开启端口"><a href="#1-8、安装防火墙服务并开启端口" class="headerlink" title="1.8、安装防火墙服务并开启端口"></a>1.8、安装防火墙服务并开启端口</h3><p>安装防火墙服务<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables services</span><br></pre></td></tr></table></figure></p>
+<p>防火墙开启27017端口<br>打开配置文件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/iptables</span><br></pre></td></tr></table></figure></p>
+<p>加入如下语句<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -p tcp -m state --state NEW -m tcp --dport 27107 -j ACCEPT</span><br></pre></td></tr></table></figure></p>
+<p>重启防火墙<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables start</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-9、测试连接"><a href="#1-9、测试连接" class="headerlink" title="1.9、测试连接"></a>1.9、测试连接</h3><p>1、通过xshell连接对应linux服务器，到MongoDB安装的bin目录运行./mongo命令<br>2、telnet ip 27017</p>
+<h2 id="2、-MongoDB用户角色配置"><a href="#2、-MongoDB用户角色配置" class="headerlink" title="2、    MongoDB用户角色配置"></a>2、    MongoDB用户角色配置</h2><h3 id="2-1、基本知识介绍"><a href="#2-1、基本知识介绍" class="headerlink" title="2.1、基本知识介绍"></a>2.1、基本知识介绍</h3><p>MongoDB基本的角色<br>1.数据库用户角色：read、readWrite;<br>2.数据库管理角色：dbAdmin、dbOwner、userAdmin；<br>3.集群管理角色：clusterAdmin、clusterManager、clusterMonitor、hostManager；<br>4.备份恢复角色：backup、restore；<br>5.所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase<br>6.超级用户角色：root<br>//这里还有几个角色间接或直接提供了系统超级用户的访问（dbOwner 、userAdmin、userAdminAnyDatabase）<br>   其中MongoDB默认是没有开启用户认证的，也就是说游客也拥有超级管理员的权限。userAdminAnyDatabase：有分配角色和用户的权限，但没有查写的权限</p>
+<h3 id="2-2、操作步骤"><a href="#2-2、操作步骤" class="headerlink" title="2.2、操作步骤"></a>2.2、操作步骤</h3><h4 id="2-2-1、连接到MongoDB服务器"><a href="#2-2-1、连接到MongoDB服务器" class="headerlink" title="2.2.1、连接到MongoDB服务器"></a>2.2.1、连接到MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mongo</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2、创建root-admin用户"><a href="#2-2-2、创建root-admin用户" class="headerlink" title="2.2.2、创建root/admin用户"></a>2.2.2、创建root/admin用户</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">db.createUser(&#123;user:"root",pwd:"password",roles:["root"]&#125;)</span><br><span class="line"></span><br><span class="line">db.createUser(  </span><br><span class="line">  &#123;  </span><br><span class="line">    user: "admin",  </span><br><span class="line">    pwd: "password",  </span><br><span class="line">    roles: [&#123;role: "userAdminAnyDatabase", db: "admin"&#125;]  </span><br><span class="line">  &#125;  </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3、修改mongod-conf文件"><a href="#2-2-3、修改mongod-conf文件" class="headerlink" title="2.2.3、修改mongod.conf文件"></a>2.2.3、修改mongod.conf文件</h4><p>在配置文件中增加如下配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  authorization: enabled //启用授权</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-2-4、重启MongoDB服务器"><a href="#2-2-4、重启MongoDB服务器" class="headerlink" title="2.2.4、重启MongoDB服务器"></a>2.2.4、重启MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mongod restart</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-5、创建数据库读写权限用户"><a href="#2-2-5、创建数据库读写权限用户" class="headerlink" title="2.2.5、创建数据库读写权限用户"></a>2.2.5、创建数据库读写权限用户</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">db.auth("admin"," password");</span><br><span class="line">use ballmatch</span><br><span class="line">db.createUser(&#123;</span><br><span class="line">    user: "football",</span><br><span class="line">    pwd: "password",</span><br><span class="line">    roles: [&#123;role: "readWrite",db: "ballmatch"&#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-6、Java程序连接MongoDB服务器"><a href="#2-2-6、Java程序连接MongoDB服务器" class="headerlink" title="2.2.6、Java程序连接MongoDB服务器"></a>2.2.6、Java程序连接MongoDB服务器</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//方式一</span><br><span class="line">MongoCredential credential = MongoCredential.createCredential("username", "dbName", "password".toCharArray());</span><br><span class="line">ServerAddress serverAddress = new ServerAddress("192.168.10.242", 27017);</span><br><span class="line">MongoClient mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));</span><br><span class="line">DB db = mongoClient.getDB("dbName");</span><br><span class="line">return db;</span><br><span class="line"></span><br><span class="line">//方式二</span><br><span class="line">String sURI = String.format("mongodb://%s:%s@%s:%d/%s", "username", "password", "192.168.10.242", 27017, "dbName"); </span><br><span class="line">MongoClientURI uri = new MongoClientURI(sURI); </span><br><span class="line">MongoClient mongoClient = new MongoClient(uri); </span><br><span class="line">DB db = mongoClient.getDB("dbName");</span><br></pre></td></tr></table></figure>
+<h2 id="3、命令参考"><a href="#3、命令参考" class="headerlink" title="3、命令参考"></a>3、命令参考</h2><h3 id="3-1、修改用户密码"><a href="#3-1、修改用户密码" class="headerlink" title="3.1、修改用户密码"></a>3.1、修改用户密码</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.updateUser( "admin",&#123;pwd:"password"&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="3-2、密码认证"><a href="#3-2、密码认证" class="headerlink" title="3.2、密码认证"></a>3.2、密码认证</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.auth("admin","password");</span><br></pre></td></tr></table></figure>
+<h3 id="3-3、MongoDB连接信息查询"><a href="#3-3、MongoDB连接信息查询" class="headerlink" title="3.3、MongoDB连接信息查询"></a>3.3、MongoDB连接信息查询</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.serverStatus().connections;</span><br></pre></td></tr></table></figure>
+<p>MongoDB实例接受的最多连接数，如果高于操作系统接受的最大线程数，设置无效。net.maxIncomingConnections默认（65536）</p>
+<h3 id="3-4、关闭MongoDB服务"><a href="#3-4、关闭MongoDB服务" class="headerlink" title="3.4、关闭MongoDB服务"></a>3.4、关闭MongoDB服务</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin;</span><br><span class="line">db.shutdownServer();</span><br></pre></td></tr></table></figure>
+<h3 id="3-5、删除用户"><a href="#3-5、删除用户" class="headerlink" title="3.5、删除用户"></a>3.5、删除用户</h3><p>删除用户(需要root权限，会将所有数据库中的football用户删除)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.system.users.remove(&#123;user:"football"&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>删除用户(权限要求没有那么高，只删除本数据中的football用户)<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropUser("football");</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/14/Java webSocket 网页聊天室/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -860,186 +1018,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/06/22/如何正确的实现Java中的hashCode方法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/22/如何正确的实现Java中的hashCode方法/" itemprop="url">如何正确的实现Java中的hashCode方法</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-22T10:50:58+08:00">
-                Jun 22 2016
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/06/22/如何正确的实现Java中的hashCode方法/" class="leancloud_visitors" data-flag-title="如何正确的实现Java中的hashCode方法">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>你知道一个对象的唯一标志不能仅仅通过<a href="https://www.sitepoint.com/implement-javas-equals-method-correctly/" target="_blank" rel="noopener">写一个漂亮的equals</a>来实现<br>太棒了，不过现在你也必须实现hashCode方法。</p>
-<p>让我们看看为什么和怎么做才是正确的。</p>
-<h2 id="相等和哈希码"><a href="#相等和哈希码" class="headerlink" title="相等和哈希码"></a>相等和哈希码</h2><p>相等是从一般的方面来讲，哈希码更加具有技术性。如果我们在理解方面存在困难,我们可以说,他们通过只是一个实现细节来提高了性能。</p>
-<p>大多数的数据结构通过equals方法来判断他们是否包含一个元素，例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line"><span class="keyword">boolean</span> contains = list.contains(<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>这个变量contains结果是true，因为,虽然”b”是不相同的实例(此外,忽略字符串驻留),但是他们是平等的。</p>
-<p>通过比较实例的每个元素，然后将比较结果赋值给<code>contains</code>是比较浪费的，虽然整个类的数据结构进行了优化，能够提升性能。<br>他们通过使用一种快捷的方式(减少潜在的实例相等)进行比较，从而代替通过比较实例所包含的每个元素。<br>而快捷比较仅需要比较下面这些方面：</p>
-<p>快捷方式比较即通过比较哈希值，它可以将一个实例用一个整数值来代替。哈希码相同的实例不一定相等，但相等的实例一定具有有相同的哈希值。<br>(或应该有,我们很快就会讨论这个)这些数据结构经常通过这种这种技术来命名,可以通过<code>Hash</code>来识别他们的,其中，<code>HashMap</code>是其中最著名的代表。</p>
-<p>它们通常是这样这样运作的</p>
-<ul>
-<li>当添加一个元素,它的哈希码是用来计算内部数组的索引(即所谓的桶)</li>
-<li>如果是,不相等的元素有相同的哈希码,他们最终在同一个桶上并且捆绑在一起,例如通过添加到列表。</li>
-<li>当一个实例来进行<code>contains</code>操作时，它的哈希码将用来计算桶值(索引值)，只有当对应索引值上存在元素时，才会对实例进行比较。</li>
-</ul>
-<p>因此<code>equals</code>，<code>hashCode</code>是定义在<code>Object</code>类中。</p>
-<h2 id="散列法的思想"><a href="#散列法的思想" class="headerlink" title="散列法的思想"></a>散列法的思想</h2><p>如果<code>hashCode</code>作为快捷方式来确定相等，那么只有一件事我们应该关心:相等的对象应该具有相同的哈希码<br>这也是为什么如果我们重写了<code>equals</code>方法后，我们必须创建一个与之匹配的<code>hashCode</code>实现!<br>否则相等的对象是可能不会有相同的哈希码,因为它们将调用的是<code>Object&#39;s</code>的默认实现。</p>
-<h2 id="HashCode-准则"><a href="#HashCode-准则" class="headerlink" title="HashCode 准则"></a><code>HashCode</code> 准则</h2><p>引用自<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--" target="_blank" rel="noopener">官方文档</a></p>
-<p>hashCode通用约定:</p>
-<ul>
-<li>调用运行Java应用程序中同一对象,hashCode方法必须始终返回相同的整数。这个整数不需要在不同的Java应用程序中保持一致。</li>
-<li>根据equals(Object)的方法来比较，如果两个对象是相等的,两个对象调用hashCode方法必须产生相同的结果。</li>
-<li>根据equals(Object)的方法是比较，如果两个对象是不相等的，那么两个对象调用hashCode方法并不一定产生不同的整数的结果。但是,程序员应该意识到给不平等的对象产生不同的整数结果将有可能提高哈希表的性能。</li>
-</ul>
-<p>第一点反映出了相等的一致性属性，第二个就是我们上面提出的要求。第三个阐述了一个重要的细节，我们将在稍后讨论。</p>
-<h2 id="HashCode实现"><a href="#HashCode实现" class="headerlink" title="HashCode实现"></a>HashCode实现</h2><p>下面是非常简单的<code>Person.hashCode</code>的实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Objects.hash(firstName, lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>person’s是通过多个字段结合来计算哈希码的。都是通过<code>Object</code>的<code>hash</code>函数来计算。</p>
-<h2 id="选择字段"><a href="#选择字段" class="headerlink" title="选择字段"></a>选择字段</h2><p>但哪些字段是相关的吗?需求将会帮助我们回答这个问题:如果相等的对象必须具有相同的哈希码,那么计算哈希码就不应包括任何不用于相等检查的字段。(否则两个对象只是这些字段不同但是仍然有可能会相等，此时他们这两个对象哈希码却会不相同。)<br>所以用于哈希组字段应该相等时使用的字段的子集。默认情况下都使用相同的字段,但有一些细节需要考虑。</p>
-<h2 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h2><p>首先,有一致性的要求。它应该相当严格。虽然它允许如果一些字段改变对应的哈希码发生变化(对于可变的类是不可避免的)，但是哈希数据结构并不是为这种场景准备的。<br>正如我们以上所见的哈希码用于确定元素的桶。但如果hash-relevant字段发生了改变,并不会重新计算哈希码、也不会更新内部数组。<br>这意味着以后通过相等的对象，甚至同一实例进行查询也会失败，数据结构计算当前的哈希码与之前存储实例计算的哈希码并不一致,并是错误的桶。<br>结论:最好不要使用可变字段计算哈希码!</p>
-<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p>哈希码最终计算的频率与可能调用<code>equals</code>差不多，那么这里将是影响性能的关键部分，因此考虑此部分性能也是非常有意义的。并且与<code>equals</code>相比，优化之后又更大的上升空间。<br>除非使用非常复杂的算法或者涉及非常多的字段，那么计算哈希码的运算成本是微不足道的、同样也是不可避免的。但是也应该考虑是否需要包含所有的字段来进行运算。集合需要特别警惕的对待。以<code>Lists</code>和<code>sets</code>为例，将会包含集合里面的每一个元素来计算哈希码。是否需要调用它们需要具体情况具体分析。<br>如果性能是至关重要的，使用<code>Objects.hash</code>因为需要为<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/varargs.html" target="_blank" rel="noopener"><code>varargs</code></a>创建一个数组也许并不是最好的选择<br>但一般规则优化是适用的:不要过早地!使用一个通用的散列码算法,也许需要放弃集合,只有优化分析显示潜在的改进。</p>
-<h2 id="碰撞"><a href="#碰撞" class="headerlink" title="碰撞"></a>碰撞</h2><p>总是关注性能,这个实现怎么呢?<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>快是肯定的。相等的对象将具有相同的哈希码。并且,没有可变的字段!<br>但是，我们之前说过的桶呢？！这种方式下所有的实例将会有相同的桶！这将会导致一个链表来包含所有的元素，这样一来将会有非常差的性能。每次调用<code>contains</code>将会触发对整个list线性扫描。<br>我们希望尽可能少的元素在同一个桶!一个算法返回变化多端的哈希码,即使对于非常相似的对象,是一个好的开始。<br>怎样才能达到上面的效果部分取决于选取的字段，我们在计算中包含更多的细节，越有可能获取到不同的哈希码。注意：这个与我们所说的性能是完全相反的。因此，有趣的是，使用过多或者过少的字段都会导致糟糕的性能。<br>防止碰撞的另一部分是使用实际计算散列的算法。</p>
-<h2 id="计算Hsah"><a href="#计算Hsah" class="headerlink" title="计算Hsah"></a>计算Hsah</h2><p>最简单的方法来计算一个字段的哈希码是通过直接调用<code>hashCode</code>，结合的话会自动完成。常见的算法是首先在以任意数量的数值(通常是基本数据类型)反复进行相乘操作再与字段哈希码相加<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> prime = <span class="number">31</span>;</span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">result = prime * result + ((firstName == <span class="keyword">null</span>) ? <span class="number">0</span> : firstName.hashCode());</span><br><span class="line">result = prime * result + ((lastName == <span class="keyword">null</span>) ? <span class="number">0</span> : lastName.hashCode());</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure></p>
-<p>这可能导致溢出,但是不是特别有问题的,因为他们并没有产生Java异常。</p>
-<p>注意,即使是非常良好的的哈希算法也可能因为输入特定的模式的数据有导致频繁碰撞。作为一个简单的例子假设我们会计算点的散列通过增加他们的x和y坐标。当我们处理<code>f(x) = -x</code>线上的点时，线上的点都满足：<code>x + y == 0</code>，将会有大量的碰撞。</p>
-<p>但是:我们可以使用一个通用的算法，只到分析表明并不正确，才需要对哈希算法进行修改。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们了解到计算哈希码就是压缩相等的一个整数值：相等的对象必须有相同的哈希码，而出于对性能的考虑：最好是尽可能少的不相等的对象共享相同的哈希码。</p>
-<p>这就意味着如果重写了<code>equals</code>方法，那么就必须重写<code>hashCode</code>方法</p>
-<p>当实现<code>hashCode</code></p>
-<ul>
-<li>使用与equals中使用的相同的字段(或者equals中使用字段的子集)</li>
-<li>最好不要包含可变的字段。</li>
-<li>对集合不要考虑调用<code>hashCode</code></li>
-<li>如果没有特殊的输入特定的模式，尽量采用通用的哈希算法</li>
-</ul>
-<p>记住<code>hashCode</code>性能,所以除非分析表明必要性，否则不要浪费太多的精力。</p>
-<p>首发地址：<a href="http://www.codeceo.com/article/java-hashcode-implement.html" target="_blank" rel="noopener">http://www.codeceo.com/article/java-hashcode-implement.html</a><br>英文原文：<a href="https://www.sitepoint.com/how-to-implement-javas-hashcode-correctly/" target="_blank" rel="noopener">https://www.sitepoint.com/how-to-implement-javas-hashcode-correctly/</a><br>本文作者：漠北空城</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1089,7 +1072,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -164,7 +164,7 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"><script src="/assets/js/DPlayer.min.js"></script></head>
+<script src="/assets/js/DPlayer.min.js"></script><link rel="stylesheet" type="text/css" href="/assets/css/DPlayer.min.css"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -306,6 +306,144 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/07/Redis的安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/07/Redis的安装/" itemprop="url">Redis的安装</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-07T21:50:01+08:00">
+                Jul 7 2015
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/07/07/Redis的安装/" class="leancloud_visitors" data-flag-title="Redis的安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>redis是比较流行的NOSQL数据库之一，下面来记录下redis的安装过程：</p>
+<h3 id="1-安装环境介绍："><a href="#1-安装环境介绍：" class="headerlink" title="1. 安装环境介绍："></a>1. 安装环境介绍：</h3><p>Redis版本：redis-3.0.1<br>Linux版本：Red Hat Enterprise Linux Workstation release 7.0 (Maipo)</p>
+<h3 id="2-下载所需Redis文件"><a href="#2-下载所需Redis文件" class="headerlink" title="2. 下载所需Redis文件"></a>2. 下载所需Redis文件</h3><p>在<a href="[http://redis.io]">http://redis.io</a>下载最新的稳定版本。这里下载的是redis-3.0.1.tar.gz</p>
+<h3 id="3-将所下载文件放入Linux系统中"><a href="#3-将所下载文件放入Linux系统中" class="headerlink" title="3. 将所下载文件放入Linux系统中"></a>3. 将所下载文件放入Linux系统中</h3><p>通过Xmanager中Xftp工具连接到对应机器，将redis-3.0.1.tar.gz放到/redis文件夹下，如下图：<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-1.jpg" alt="将所下载文件放入到Linux系统中"></p>
+<h3 id="4-将压缩文件解压并编译"><a href="#4-将压缩文件解压并编译" class="headerlink" title="4. 将压缩文件解压并编译"></a>4. 将压缩文件解压并编译</h3><p>解压：tar zxvf redis-3.0.1.tar.gz<br>编译：make<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-2.jpg" alt="解压"><br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-3.jpg" alt="编译"></p>
+<h3 id="5-启动redis服务器"><a href="#5-启动redis服务器" class="headerlink" title="5. 启动redis服务器"></a>5. 启动redis服务器</h3><p>切换到src目录下，并通过./redis-server /redis/redis-3.0.1/redis.conf启动 服务器<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/redis安装-5.jpg" alt="启动redis服务器"></p>
+<h3 id="6-验证服务器是否成功启动"><a href="#6-验证服务器是否成功启动" class="headerlink" title="6. 验证服务器是否成功启动"></a>6. 验证服务器是否成功启动</h3><p>通过./redis-cli -h 192.168.161.252 -p 6379连接到客户端，并设置相关值来验证服务器是否成功启动<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-6.jpg" alt="验证服务器是否成功启动"></p>
+<h3 id="7-其他相关命令参考"><a href="#7-其他相关命令参考" class="headerlink" title="7. 其他相关命令参考"></a>7. 其他相关命令参考</h3><p>查看redis相关线程：ps -ef|grep redis<br>关闭redis服务：./redis-cli -h 192.168.153.138 -p 6379<br>查看redis信息：./redis-cli -h 192.168.153.138 -p 6379 info</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -836,143 +974,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/05/14/大海如此宽广/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/05/14/大海如此宽广/" itemprop="url">大海如此宽广</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-14T21:21:31+08:00">
-                May 14 2015
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/05/14/大海如此宽广/" class="leancloud_visitors" data-flag-title="大海如此宽广">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>快坐上那艘船<br>山治，男人不能一直流泪<br>听好，再也不要回到这里了<br>大海如此宽广 有一天<br>有一天你一定会遇到温柔的人们<br>快跑<br>不要回头<br>快跑 山治</p>
-<div id="dplayer1" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","video":{"url":"http://yuechang.qiniudn.com/ONE_PIECE.mp4","pic":"http://yuechang.qiniudn.com/TheSeaIsSoWide.jpg"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1022,7 +1028,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
