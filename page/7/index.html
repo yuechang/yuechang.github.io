@@ -320,6 +320,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/" itemprop="url">MongoDB3.2配置文件directoryPerDB参数</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-25T21:52:32+08:00">
+                Jul 25 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/" class="leancloud_visitors" data-flag-title="MongoDB3.2配置文件directoryPerDB参数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">directoryPerDB: true</span><br></pre></td></tr></table></figure></p>
+<p>服务重启时报错信息如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">2016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED *****</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] MongoDB starting : pid=2740 port=27017 dbpath=/home/martin/mongodb/db 64-bit host=localhost.localdomain</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] db version v3.2.8</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] git version: ed70e33130c977bda0024c125b56d159573dbaf0</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] allocator: tcmalloc</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] modules: enterprise </span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] build environment:</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distmod: rhel62</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distarch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     target_arch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] options: &#123; config: "/home/martin/mongodb/bin/mongod.conf", net: &#123; bindIp: "0.0.0.0", port: 27017 &#125;, processManagement: &#123; fork: true, pidFilePath: "/home/martin/mongodb/mongod.pid" &#125;, security: &#123; authorization: "enabled" &#125;, storage: &#123; dbPath: "/home/martin/mongodb/db", directoryPerDB: true, journal: &#123; enabled: true &#125; &#125;, systemLog: &#123; destination: "file", logAppend: true, path: "/home/martin/mongodb/logs/mongod.log" &#125; &#125;</span><br><span class="line">2016-07-21T02:47:14.041-0700 I -        [initandlisten] Detected data files in /home/martin/mongodb/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.</span><br><span class="line">2016-07-21T02:47:14.042-0700 I STORAGE  [initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br><span class="line">2016-07-21T02:47:14.042-0700 I CONTROL  [initandlisten] dbexit:  rc: 100</span><br></pre></td></tr></table></figure></p>
+<p>根据错误日志提示：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br></pre></td></tr></table></figure></p>
+<p>初始化失败，当前directoryPerDB选项存储引擎有72个选项冲突，你要求true，但是当前存储服务已经设置为false，并且无法改变，程序终止。</p>
+<p>解决办法：<br>1、删除dbPath文件夹下所有文件，重启MongoDB服务；<br>2、导出MongoDB 存储文件，删除dbPath文件夹下所有文件，重启MongoDB服务，导入导出的数据；</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/20/MongoDB-3-2-7安装及用户角色配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -885,139 +1020,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/06/28/cvc-complex-type.2.4.a Invalid content was found starting with element init-param/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/28/cvc-complex-type.2.4.a Invalid content was found starting with element init-param/" itemprop="url">Invalid content was found starting with element 'init-param'</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-28T10:39:58+08:00">
-                Jun 28 2016
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/06/28/cvc-complex-type.2.4.a Invalid content was found starting with element init-param/" class="leancloud_visitors" data-flag-title="Invalid content was found starting with element 'init-param'">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>web.xml文件中:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Zblog<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">async-supported</span>&gt;</span>true<span class="tag">&lt;/<span class="name">async-supported</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:config/spring-servlet.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>第六行报错，报错信息如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cvc-complex-type.2.4.a: Invalid content was found starting with element 'init-param'. One of '&#123;"http://</span><br><span class="line"> java.sun.com/xml/ns/javaee":run-as, "http://java.sun.com/xml/ns/javaee":security-role-ref, </span><br><span class="line"> "http://java.sun.com/xml/ns/javaee":multipart-config&#125;' is expected.</span><br></pre></td></tr></table></figure></p>
-<p>解决办法：<br>将4、5行移到9行和10行之间，最终效果如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>Zblog<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:config/spring-servlet.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">async-supported</span>&gt;</span>true<span class="tag">&lt;/<span class="name">async-supported</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1072,7 +1074,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

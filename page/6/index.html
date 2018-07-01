@@ -320,6 +320,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/12/05/Spring-boot-Mybatis多数据源配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/05/Spring-boot-Mybatis多数据源配置/" itemprop="url">springboot-Mybatis多数据源配置</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-05T23:50:50+08:00">
+                Dec 5 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/12/05/Spring-boot-Mybatis多数据源配置/" class="leancloud_visitors" data-flag-title="springboot-Mybatis多数据源配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="环境信息："><a href="#环境信息：" class="headerlink" title="环境信息："></a>环境信息：</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Spring Boot:1.3.5</span><br><span class="line">Java:1.7</span><br></pre></td></tr></table></figure>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><p>application.yml配置文件配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># SPRING PROFILES</span><br><span class="line">spring:</span><br><span class="line">    datasource: </span><br><span class="line">        # 主数据源配置信息</span><br><span class="line">        primaryDataSource: </span><br><span class="line">            url: jdbc:oracle:thin:@192.168.10.111:1521:orcl</span><br><span class="line">            username: username</span><br><span class="line">            password: password</span><br><span class="line">            connectionTestQuery: SELECT 1+1 FROM DUAL</span><br><span class="line">            dataSourceClassName: oracle.jdbc.pool.OracleDataSource</span><br><span class="line">            typeAliasesPackage: com.hhly.template.entity.database</span><br><span class="line">            mapperLocations: classpath:com/hhly/template/dao/database/*.xml</span><br><span class="line">            configLocation: classpath:com/hhly/template/config/mybatis/mybatis-config.xml</span><br><span class="line">        # 中间库数据源配置信息</span><br><span class="line">        middleDataSource:</span><br><span class="line">            dataSourceClassName: oracle.jdbc.pool.OracleDataSource</span><br><span class="line">            url: jdbc:oracle:thin:@192.168.2.222:1521:orcl</span><br><span class="line">            username: username</span><br><span class="line">            password: password</span><br><span class="line">            max-idle: 10</span><br><span class="line">            max-wait: 10000</span><br><span class="line">            min-idle: 5</span><br><span class="line">            initial-size: 5</span><br><span class="line">            test-on-borrow: false</span><br><span class="line">            test-while-idle: true</span><br><span class="line">            time-between-eviction-runs-millis: 18800</span><br><span class="line">            cachePrepStmts: true</span><br><span class="line">            prepStmtsSize: 250</span><br><span class="line">            prepStmtsCacheSqlLimit: 2048</span><br><span class="line">            userServerPrepStmts: true</span><br><span class="line">            connectionTestQuery: SELECT 1+1 FROM DUAL</span><br><span class="line">            typeAliasesPackage: com.hhly.template.entity.middatabase</span><br><span class="line">            mapperLocations: classpath:com/hhly/template/dao/middatabase/*.xml</span><br><span class="line">            configLocation: classpath:com/hhly/template/config/mybatis/mybatis-config.xml</span><br></pre></td></tr></table></figure></p>
+<p>数据源1配置信息：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassName</span>: MybatisConfiguration</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 集成Mybatis</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Yue Chang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2016年9月7日 下午3:35:53</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(&#123; EnableTransactionManagement.class, EntityManager.class &#125;)</span><br><span class="line"><span class="meta">@MapperScan</span>(basePackages = &#123; <span class="string">"com.hhly.template.dao.database"</span> &#125;,sqlSessionFactoryRef=<span class="string">"primarySqlSessionFactory"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrimaryMybatisConfiguration</span> <span class="keyword">implements</span> <span class="title">EnvironmentAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Log logger = LogFactory.getLog(PrimaryMybatisConfiguration.class);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> RelaxedPropertyResolver propertyResolver;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Environment env;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.env = environment;</span><br><span class="line">		<span class="keyword">this</span>.propertyResolver = <span class="keyword">new</span> RelaxedPropertyResolver(environment, <span class="string">"spring.datasource.primaryDataSource."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"primaryDataSource"</span>,destroyMethod=<span class="string">"shutdown"</span>)</span><br><span class="line">	<span class="meta">@Primary</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		logger.info(<span class="string">"Configruing primaryDataSource start..."</span>);</span><br><span class="line">		HikariConfig config = <span class="keyword">new</span> HikariConfig();</span><br><span class="line">		config.setDataSourceClassName(propertyResolver.getProperty(<span class="string">"dataSourceClassName"</span>));</span><br><span class="line">		config.addDataSourceProperty(<span class="string">"url"</span>, propertyResolver.getProperty(<span class="string">"url"</span>));</span><br><span class="line">		config.setUsername(propertyResolver.getProperty(<span class="string">"username"</span>));</span><br><span class="line">		config.setPassword(propertyResolver.getProperty(<span class="string">"password"</span>));</span><br><span class="line">		config.setConnectionTestQuery(propertyResolver.getProperty(<span class="string">"connectionTestQuery"</span>))</span><br><span class="line">		logger.info(<span class="string">"Configruing primaryDataSource end..."</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> HikariDataSource(config);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"primarySqlSessionFactory"</span>)</span><br><span class="line">	<span class="meta">@Primary</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			SqlSessionFactoryBean sessionFactory = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">			sessionFactory.setDataSource(dataSource());</span><br><span class="line">			sessionFactory.setTypeAliasesPackage(propertyResolver.getProperty(<span class="string">"typeAliasesPackage"</span>));</span><br><span class="line">			sessionFactory.setMapperLocations(<span class="keyword">new</span> PathMatchingResourcePatternResolver()</span><br><span class="line">					.getResources(propertyResolver.getProperty(<span class="string">"mapperLocations"</span>)));</span><br><span class="line">			sessionFactory.setConfigLocation(</span><br><span class="line">					<span class="keyword">new</span> DefaultResourceLoader().getResource(propertyResolver.getProperty(<span class="string">"configLocation"</span>)));</span><br><span class="line"></span><br><span class="line">			logger.info(<span class="string">"初始化sqlSessionFactory成功！"</span>);</span><br><span class="line">			<span class="keyword">return</span> sessionFactory.getObject();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			logger.error(e.getMessage());</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"primaryTransactionManager"</span>)</span><br><span class="line">	<span class="meta">@Primary</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>数据源2配置信息：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassName</span>: MiddleMybatisConfiguration</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 中间库数据源配置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Yue Chang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2016年12月1日 下午3:33:26</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(&#123; EnableTransactionManagement.class, EntityManager.class &#125;)</span><br><span class="line"><span class="meta">@MapperScan</span>(basePackages = &#123; <span class="string">"com.hhly.template.dao.middatabase"</span> &#125;,sqlSessionFactoryRef=<span class="string">"midSqlSessionFactory"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MiddleMybatisConfiguration</span> <span class="keyword">implements</span> <span class="title">EnvironmentAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Log logger = LogFactory.getLog(MiddleMybatisConfiguration.class);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> RelaxedPropertyResolver propertyResolver;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Environment env;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.env = environment;</span><br><span class="line">		<span class="keyword">this</span>.propertyResolver = <span class="keyword">new</span> RelaxedPropertyResolver(environment, <span class="string">"spring.datasource.middleDataSource."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"middleDataSource"</span>,destroyMethod=<span class="string">"shutdown"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		logger.info(<span class="string">"Configruing MiddleDataSource start..."</span>);</span><br><span class="line">		HikariConfig config = <span class="keyword">new</span> HikariConfig();</span><br><span class="line">		config.setDataSourceClassName(propertyResolver.getProperty(<span class="string">"dataSourceClassName"</span>));</span><br><span class="line">		config.addDataSourceProperty(<span class="string">"url"</span>, propertyResolver.getProperty(<span class="string">"url"</span>));</span><br><span class="line">		config.setUsername(propertyResolver.getProperty(<span class="string">"username"</span>));</span><br><span class="line">		config.setPassword(propertyResolver.getProperty(<span class="string">"password"</span>));</span><br><span class="line">config.setConnectionTestQuery(propertyResolver.getProperty(<span class="string">"connectionTestQuery"</span>));</span><br><span class="line">		logger.info(<span class="string">"Configruing MiddleDataSource end..."</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> HikariDataSource(config);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"midSqlSessionFactory"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			SqlSessionFactoryBean sessionFactory = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">			sessionFactory.setDataSource(dataSource());</span><br><span class="line">			sessionFactory.setTypeAliasesPackage(propertyResolver.getProperty(<span class="string">"typeAliasesPackage"</span>));</span><br><span class="line">			sessionFactory.setMapperLocations(<span class="keyword">new</span> PathMatchingResourcePatternResolver().getResources(propertyResolver.getProperty(<span class="string">"mapperLocations"</span>)));</span><br><span class="line">			sessionFactory.setConfigLocation(<span class="keyword">new</span> DefaultResourceLoader().getResource(propertyResolver.getProperty(<span class="string">"configLocation"</span>)));</span><br><span class="line"></span><br><span class="line">			logger.info(<span class="string">"初始化sqlSessionFactory成功！"</span>);</span><br><span class="line">			<span class="keyword">return</span> sessionFactory.getObject();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			logger.error(e.getMessage());</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span>(name = <span class="string">"midTransactionManager"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>说明：<br>1、MapperScan中的basePackages 需要不同的目录<br>2、sqlSessionFactory和treansactionManager中如果使用下面方式可能会产生循环引用警告<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"primaryTransactionManager"</span>)</span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">(@Qualifier(<span class="string">"primaryDataSource"</span>)</span> DataSource primaryDataSource) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"primarySqlSessionFactory"</span>)</span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">(@Qualifier(<span class="string">"primaryDataSource"</span>)</span> DataSource primaryDataSource) </span>&#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<p>警告信息如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">10</span>:<span class="number">05</span>:<span class="number">36</span> [main] WARN  org.springframework.beans.factory.support.DefaultListableBeanFactory -Bean creation exception on non-lazy FactoryBean type check: org.springframework.beans.factory.BeanCreationException: Error creating bean with name <span class="string">'dictionaryMapper'</span> defined in file [D:\neon-workspace\template\target\classes\com\hhly\template\dao\database\DictionaryMapper.class]: Cannot resolve reference to bean <span class="string">'primarySqlSessionFactory'</span> <span class="keyword">while</span> setting bean property <span class="string">'sqlSessionFactory'</span>; nested exception is org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name <span class="string">'primarySqlSessionFactory'</span>: Requested bean is currently in creation: Is there an unresolvable circular reference?</span><br></pre></td></tr></table></figure></p>
+<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p>1、将dataSouce 在其他类中定义，再注入；<br>2、去掉参数，需要dataSource的时候，通过dataSource()方法获得，只会初始化一次。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/11/17/java-io-File中mkdir和mkdirs的差别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -855,141 +992,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://yuechang.qiniudn.com/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/" itemprop="url">MongoDB3.2配置文件directoryPerDB参数</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-25T21:52:32+08:00">
-                Jul 25 2016
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/" class="leancloud_visitors" data-flag-title="MongoDB3.2配置文件directoryPerDB参数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">directoryPerDB: true</span><br></pre></td></tr></table></figure></p>
-<p>服务重启时报错信息如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">2016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED *****</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] MongoDB starting : pid=2740 port=27017 dbpath=/home/martin/mongodb/db 64-bit host=localhost.localdomain</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] db version v3.2.8</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] git version: ed70e33130c977bda0024c125b56d159573dbaf0</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] allocator: tcmalloc</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] modules: enterprise </span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] build environment:</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distmod: rhel62</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distarch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     target_arch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] options: &#123; config: "/home/martin/mongodb/bin/mongod.conf", net: &#123; bindIp: "0.0.0.0", port: 27017 &#125;, processManagement: &#123; fork: true, pidFilePath: "/home/martin/mongodb/mongod.pid" &#125;, security: &#123; authorization: "enabled" &#125;, storage: &#123; dbPath: "/home/martin/mongodb/db", directoryPerDB: true, journal: &#123; enabled: true &#125; &#125;, systemLog: &#123; destination: "file", logAppend: true, path: "/home/martin/mongodb/logs/mongod.log" &#125; &#125;</span><br><span class="line">2016-07-21T02:47:14.041-0700 I -        [initandlisten] Detected data files in /home/martin/mongodb/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.</span><br><span class="line">2016-07-21T02:47:14.042-0700 I STORAGE  [initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br><span class="line">2016-07-21T02:47:14.042-0700 I CONTROL  [initandlisten] dbexit:  rc: 100</span><br></pre></td></tr></table></figure></p>
-<p>根据错误日志提示：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br></pre></td></tr></table></figure></p>
-<p>初始化失败，当前directoryPerDB选项存储引擎有72个选项冲突，你要求true，但是当前存储服务已经设置为false，并且无法改变，程序终止。</p>
-<p>解决办法：<br>1、删除dbPath文件夹下所有文件，重启MongoDB服务；<br>2、导出MongoDB 存储文件，删除dbPath文件夹下所有文件，重启MongoDB服务，导入导出的数据；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1044,7 +1046,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
