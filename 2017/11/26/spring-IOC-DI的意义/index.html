@@ -116,11 +116,11 @@
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring-IOC-DI的意义">
-<meta property="og:url" content="http://yuechang.github.io/2017/11/26/spring-IOC-DI的意义/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2017/11/26/Spring-IOC-DI的意义/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="spring-IOC-DI的意义通过做一个文档管理系统来展示spring-IOC-DI的意义 1、一般方式步骤如下：  1、建立一个接口Document，增加readDocument()和writeDocument()方法 2、建立一个类WordDocument，实现Document接口，以及readDocument()和writeDocument()方法 3、建立ExcelDocument,PD">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-26T13:21:41.453Z">
+<meta property="og:updated_time" content="2019-04-07T05:33:32.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring-IOC-DI的意义">
 <meta name="twitter:description" content="spring-IOC-DI的意义通过做一个文档管理系统来展示spring-IOC-DI的意义 1、一般方式步骤如下：  1、建立一个接口Document，增加readDocument()和writeDocument()方法 2、建立一个类WordDocument，实现Document接口，以及readDocument()和writeDocument()方法 3、建立ExcelDocument,PD">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2017/11/26/spring-IOC-DI的意义/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2017/11/26/Spring-IOC-DI的意义/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/26/spring-IOC-DI的意义/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/26/Spring-IOC-DI的意义/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2017/11/26/spring-IOC-DI的意义/" class="leancloud_visitors" data-flag-title="spring-IOC-DI的意义">
+             <span id="/2017/11/26/Spring-IOC-DI的意义/" class="leancloud_visitors" data-flag-title="spring-IOC-DI的意义">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,6 +412,7 @@
 <li>5、客户端<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DocumentTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1、创建一个具体的文档对象</span></span><br><span class="line"><span class="comment">         * 2、创建DocumentManager对象</span></span><br><span class="line"><span class="comment">         * 3、调用read和 write方法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        Document document = <span class="keyword">new</span> WordDocument();</span><br><span class="line">        DocumentManager documentManager = <span class="keyword">new</span> DocumentManager(document);</span><br><span class="line">        documentManager.read();</span><br><span class="line">        documentManager.write();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<a id="more"></a>
 <h4 id="2、用spring容器方式"><a href="#2、用spring容器方式" class="headerlink" title="2、用spring容器方式"></a>2、用spring容器方式</h4><p>步骤如下：</p>
 <ul>
 <li>1、建立一个接口Document，增加readDocument()和writeDocument()方法</li>
@@ -485,7 +486,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/26/spring 类扫描/" rel="next" title="spring 类扫描">
+              <a href="/2017/11/26/Spring 类扫描/" rel="next" title="spring 类扫描">
                 <i class="fa fa-chevron-left"></i> spring 类扫描
               </a>
             
@@ -495,7 +496,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/28/spring-AOP简介/" rel="prev" title="spring-AOP简介">
+              <a href="/2017/11/28/Spring-AOP简介/" rel="prev" title="spring-AOP简介">
                 spring-AOP简介 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -662,7 +663,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

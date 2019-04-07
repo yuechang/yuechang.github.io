@@ -116,11 +116,11 @@
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis-sentinel安装、配置与故障与故障转移演示">
-<meta property="og:url" content="http://yuechang.github.io/2017/05/12/redis-sentinel安装、配置与故障与故障转移演示/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="redis-sentinel安装、配置与故障与故障转移演示redis-sentinel安装、配置与故障与故障转移演示本次搭建，将会搭建一个redis-sentinel，其中包括一主两从三哨兵。架构图如下：123456789101112131415161718192021            +-------------+      +-------------+      +----------">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-09T01:45:44.606Z">
+<meta property="og:updated_time" content="2019-04-07T05:29:28.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis-sentinel安装、配置与故障与故障转移演示">
 <meta name="twitter:description" content="redis-sentinel安装、配置与故障与故障转移演示redis-sentinel安装、配置与故障与故障转移演示本次搭建，将会搭建一个redis-sentinel，其中包括一主两从三哨兵。架构图如下：123456789101112131415161718192021            +-------------+      +-------------+      +----------">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2017/05/12/redis-sentinel安装、配置与故障与故障转移演示/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/05/12/redis-sentinel安装、配置与故障与故障转移演示/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2017/05/12/redis-sentinel安装、配置与故障与故障转移演示/" class="leancloud_visitors" data-flag-title="redis-sentinel安装、配置与故障与故障转移演示">
+             <span id="/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/" class="leancloud_visitors" data-flag-title="redis-sentinel安装、配置与故障与故障转移演示">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -403,6 +403,7 @@
 
       
         <h2 id="redis-sentinel安装、配置与故障与故障转移演示"><a href="#redis-sentinel安装、配置与故障与故障转移演示" class="headerlink" title="redis-sentinel安装、配置与故障与故障转移演示"></a>redis-sentinel安装、配置与故障与故障转移演示</h2><p><a href="http://blog.csdn.net/yuechang5/article/details/71751692" target="_blank" rel="noopener">redis-sentinel安装、配置与故障与故障转移演示</a><br>本次搭建，将会搭建一个redis-sentinel，其中包括一主两从三哨兵。架构图如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">            </span><br><span class="line">+-------------+      +-------------+      +-------------+</span><br><span class="line">| Sentinel S1 |------| Sentinel S2 |------| Sentinel S3 |</span><br><span class="line">+-------------+      +-------------+      +-------------+</span><br><span class="line">      |                    |                    |</span><br><span class="line">      |                    |                    |</span><br><span class="line">      +------+------+------+------+------+------+</span><br><span class="line">                           |</span><br><span class="line">                           |                     </span><br><span class="line">                       +--------+</span><br><span class="line">                       | Master |</span><br><span class="line">                       +--------+</span><br><span class="line">                           |</span><br><span class="line">                           | </span><br><span class="line">            +------++------+------++------+</span><br><span class="line">            |                             |</span><br><span class="line">            |                             |           </span><br><span class="line">      +-----------+                 +-----------+</span><br><span class="line">      | Salve  S1 |                 | Salve  S2 |</span><br><span class="line">      +-----------+                 +-----------+</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="1、环境"><a href="#1、环境" class="headerlink" title="1、环境"></a>1、环境</h3><ul>
 <li>Linux：CentOS release 6.5 (Final) Kernel</li>
 <li>redis：3.2.8</li>
@@ -687,7 +688,7 @@ protected-mode no
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

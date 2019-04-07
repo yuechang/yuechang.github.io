@@ -112,18 +112,18 @@
 
 
 
-<meta name="description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true 服务重启时报错信息如下：1234567891011121314152016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED ***">
+<meta name="description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true">
 <meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB3.2配置文件directoryPerDB参数">
 <meta property="og:url" content="http://yuechang.github.io/2016/07/25/MongoDB3-2配置文件directoryPerDB参数/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true 服务重启时报错信息如下：1234567891011121314152016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED ***">
+<meta property="og:description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2016-07-25T13:53:14.568Z">
+<meta property="og:updated_time" content="2019-04-07T05:28:53.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB3.2配置文件directoryPerDB参数">
-<meta name="twitter:description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true 服务重启时报错信息如下：1234567891011121314152016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED ***">
+<meta name="twitter:description" content="MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：1directoryPerDB: true">
 
 
 
@@ -403,6 +403,7 @@
 
       
         <p>MongoDB3.2 使用过一段时间之后，想要配置下directoryPerDB参数，于是在mongod.conf配置文件storage下加入：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">directoryPerDB: true</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>服务重启时报错信息如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">2016-07-21T02:47:14.007-0700 I CONTROL  [main] ***** SERVER RESTARTED *****</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] MongoDB starting : pid=2740 port=27017 dbpath=/home/martin/mongodb/db 64-bit host=localhost.localdomain</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] db version v3.2.8</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] git version: ed70e33130c977bda0024c125b56d159573dbaf0</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] allocator: tcmalloc</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] modules: enterprise </span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] build environment:</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distmod: rhel62</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     distarch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten]     target_arch: x86_64</span><br><span class="line">2016-07-21T02:47:14.020-0700 I CONTROL  [initandlisten] options: &#123; config: "/home/martin/mongodb/bin/mongod.conf", net: &#123; bindIp: "0.0.0.0", port: 27017 &#125;, processManagement: &#123; fork: true, pidFilePath: "/home/martin/mongodb/mongod.pid" &#125;, security: &#123; authorization: "enabled" &#125;, storage: &#123; dbPath: "/home/martin/mongodb/db", directoryPerDB: true, journal: &#123; enabled: true &#125; &#125;, systemLog: &#123; destination: "file", logAppend: true, path: "/home/martin/mongodb/logs/mongod.log" &#125; &#125;</span><br><span class="line">2016-07-21T02:47:14.041-0700 I -        [initandlisten] Detected data files in /home/martin/mongodb/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.</span><br><span class="line">2016-07-21T02:47:14.042-0700 I STORAGE  [initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br><span class="line">2016-07-21T02:47:14.042-0700 I CONTROL  [initandlisten] dbexit:  rc: 100</span><br></pre></td></tr></table></figure></p>
 <p>根据错误日志提示：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[initandlisten] exception in initAndListen: 72 Requested option conflicts with current storage engine option for directoryPerDB; you requested true but the current server storage is already set to false and cannot be changed, terminating</span><br></pre></td></tr></table></figure></p>
 <p>初始化失败，当前directoryPerDB选项存储引擎有72个选项冲突，你要求true，但是当前存储服务已经设置为false，并且无法改变，程序终止。</p>
@@ -618,7 +619,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

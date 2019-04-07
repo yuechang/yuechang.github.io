@@ -116,11 +116,11 @@
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring IOC产生对象的时机">
-<meta property="og:url" content="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的时机/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="spring IOC产生对象的时机1、配置文件如下：12&amp;lt;bean id=&quot;helloWorld&quot; class=&quot;...&quot;  &amp;gt;&amp;lt;/bean&amp;gt;&amp;lt;bean id=&quot;helloWorld2&quot; class=&quot;...&quot;  &amp;gt;&amp;lt;/bean&amp;gt; 说明：1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同2、在默认情况下，在启动spri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-21T13:33:18.547Z">
+<meta property="og:updated_time" content="2019-04-07T05:33:53.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring IOC产生对象的时机">
 <meta name="twitter:description" content="spring IOC产生对象的时机1、配置文件如下：12&amp;lt;bean id=&quot;helloWorld&quot; class=&quot;...&quot;  &amp;gt;&amp;lt;/bean&amp;gt;&amp;lt;bean id=&quot;helloWorld2&quot; class=&quot;...&quot;  &amp;gt;&amp;lt;/bean&amp;gt; 说明：1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同2、在默认情况下，在启动spri">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的时机/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的时机/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2017/11/20/spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的时机">
+             <span id="/2017/11/20/Spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的时机">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -406,6 +406,7 @@
 <p>说明：<br>1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同<br>2、在默认情况下，在启动spring容器的时候创建对象<br>3、把service层和dao层所有的类放入spring容器中，在启动spring容器的时候创建对象<br>4、可以过早的检查发现错误<br>5、缺点：如果该类中有属性，并且属性为一个集合，那么在创建对象的时候，集合中如果有数据了，那么该数据会过早的加入到内存中</p>
 <p>为了避免上述情况的发生，尽量把数据放在局部变量中<br>（通过代理来做，需要的时候再加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemProperties</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initProperties</span><span class="params">()</span></span>&#123;</span><br><span class="line">        properties = ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>系统初始化的时候，加载数据库系统配置文件到Properties类中</p>
+<a id="more"></a>
 <p>2、配置延迟加载：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>default:默认=否<br>false：否，spring启动时创建对象<br>ture：是，调用时才创建对象</p>
 <p>在多例的情况下，不论是否设置lazy-init，都是在调用的时候才创建对象<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">lazy-init</span>=<span class="string">"ture"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -468,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/20/spring-IOC产生对象的生命周期/" rel="next" title="spring IOC产生对象的生命周期">
-                <i class="fa fa-chevron-left"></i> spring IOC产生对象的生命周期
+              <a href="/2017/09/26/Spring-IOC创建对象的方法/" rel="next" title="spring IOC创建对象的方法">
+                <i class="fa fa-chevron-left"></i> spring IOC创建对象的方法
               </a>
             
           </div>
@@ -478,8 +479,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/21/spring-IOC创建对象配置初始化方法和销毁方法/" rel="prev" title="spring IOC创建对象配置初始化方法和销毁方法">
-                spring IOC创建对象配置初始化方法和销毁方法 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/20/Spring-IOC产生对象的生命周期/" rel="prev" title="spring IOC产生对象的生命周期">
+                spring IOC产生对象的生命周期 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -645,7 +646,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

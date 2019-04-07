@@ -112,18 +112,18 @@
 
 
 
-<meta name="description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功 123456789101112131415161718192021222324252627private String path = &quot;D:/folder/subFolder&quot;;private String fileName = &quot;temp.txt&quot;;@Testpublic void test">
+<meta name="description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java.io.File中mkdir和mkdirs的差别">
 <meta property="og:url" content="http://yuechang.github.io/2016/11/17/java-io-File中mkdir和mkdirs的差别/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功 123456789101112131415161718192021222324252627private String path = &quot;D:/folder/subFolder&quot;;private String fileName = &quot;temp.txt&quot;;@Testpublic void test">
+<meta property="og:description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-01-20T10:05:04.664Z">
+<meta property="og:updated_time" content="2019-04-07T05:25:43.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java.io.File中mkdir和mkdirs的差别">
-<meta name="twitter:description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功 123456789101112131415161718192021222324252627private String path = &quot;D:/folder/subFolder&quot;;private String fileName = &quot;temp.txt&quot;;@Testpublic void test">
+<meta name="twitter:description" content="mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功">
 
 
 
@@ -403,6 +403,7 @@
 
       
         <p>mkdirs()可以成功建立多级文件夹， mkdir()只能成功建立一级的文件夹，多层目录就不能创建成功</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String path = <span class="string">"D:/folder/subFolder"</span>;</span><br><span class="line"><span class="keyword">private</span> String fileName = <span class="string">"temp.txt"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	</span><br><span class="line">	String tempPath = path.concat(File.separator).concat(fileName);</span><br><span class="line"></span><br><span class="line">	File file = <span class="keyword">new</span> File(tempPath);</span><br><span class="line">	<span class="keyword">if</span> (!file.getParentFile().exists()) &#123;</span><br><span class="line">		file.getParentFile().mkdir();</span><br><span class="line">	&#125;</span><br><span class="line">	file.createNewFile();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdirs</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	</span><br><span class="line">	String tempPath = path.concat(File.separator).concat(fileName);</span><br><span class="line"></span><br><span class="line">	File file = <span class="keyword">new</span> File(tempPath);</span><br><span class="line">	<span class="keyword">if</span> (!file.getParentFile().exists()) &#123;</span><br><span class="line">		file.getParentFile().mkdirs();</span><br><span class="line">	&#125;</span><br><span class="line">	file.createNewFile();</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序运行将抛出：java.io.IOException: 系统找不到指定的路径。因为mkdir()方法没有成功创建多层目录。</p>
 <p>建议使用：mkdirs()方法</p>
@@ -617,7 +618,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

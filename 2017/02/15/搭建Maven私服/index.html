@@ -112,13 +112,13 @@
 
 
 
-<meta name="description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz 1.3、启动进入/nexus-2.14.2-01/bin目录,看到Started Ne">
+<meta name="description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz">
 <meta name="keywords" content="maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建Maven私服">
 <meta property="og:url" content="http://yuechang.github.io/2017/02/15/搭建Maven私服/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz 1.3、启动进入/nexus-2.14.2-01/bin目录,看到Started Ne">
+<meta property="og:description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yuechang.qiniudn.com/nexus-download.png">
 <meta property="og:image" content="http://yuechang.qiniudn.com/nexus-start.png">
@@ -127,10 +127,10 @@
 <meta property="og:image" content="http://yuechang.qiniudn.com/nexus-user.png">
 <meta property="og:image" content="http://yuechang.qiniudn.com/nexus-configuration.png">
 <meta property="og:image" content="http://yuechang.qiniudn.com/nexus-updateIndex.png">
-<meta property="og:updated_time" content="2017-06-09T01:19:52.688Z">
+<meta property="og:updated_time" content="2019-04-07T05:38:59.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建Maven私服">
-<meta name="twitter:description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz 1.3、启动进入/nexus-2.14.2-01/bin目录,看到Started Ne">
+<meta name="twitter:description" content="本文地址：搭建Maven私服环境信息：Linux：CentOS release 6.5 (Final)Nexus：2.14.2-01   1、安装服务器1.1、下载下载如下文件(下载地址)： 1.2、解压解压下载的文件：1tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz">
 <meta name="twitter:image" content="http://yuechang.qiniudn.com/nexus-download.png">
 
 
@@ -414,6 +414,7 @@
 <hr>
 <h3 id="1、安装服务器"><a href="#1、安装服务器" class="headerlink" title="1、安装服务器"></a>1、安装服务器</h3><h4 id="1-1、下载"><a href="#1-1、下载" class="headerlink" title="1.1、下载"></a>1.1、下载</h4><p>下载如下文件(<a href="https://www.sonatype.com/download-oss-sonatype" target="_blank" rel="noopener">下载地址</a>)：<br><img src="http://yuechang.qiniudn.com/nexus-download.png" alt="下载nexus"></p>
 <h4 id="1-2、解压"><a href="#1-2、解压" class="headerlink" title="1.2、解压"></a>1.2、解压</h4><p>解压下载的文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzvf nexus-oss-webapp-1.8.0-bundle.tar.gz</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h4 id="1-3、启动"><a href="#1-3、启动" class="headerlink" title="1.3、启动"></a>1.3、启动</h4><p>进入/nexus-2.14.2-01/bin目录,看到Started Nexus OSS.就说明已经完成启动。<br><img src="http://yuechang.qiniudn.com/nexus-start.png" alt="启动nexus"></p>
 <h4 id="1-4、访问"><a href="#1-4、访问" class="headerlink" title="1.4、访问"></a>1.4、访问</h4><p>通过查看/nexus-2.14.2-01/logs/wrapper.log日志文件，查看对应的端口号<br><img src="http://yuechang.qiniudn.com/nexus-port.png" alt="nexus-port"></p>
 <p>也可以查看配置文件查看配置的端口号，application-port对应的配置即为对应的端口号，此时配置是8888，默认为8081<br>/nexus-2.14.2-01/conf/nexus.properties<br><img src="http://img.blog.csdn.net/20170515104620768?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveXVlY2hhbmc1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="nexus.properties"></p>
@@ -659,7 +660,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

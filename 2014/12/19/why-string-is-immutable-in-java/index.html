@@ -121,7 +121,7 @@
 <meta property="og:description" content="String is an immutable class in Java. An immutable class is simply a class whose instances cannot be modified. All information in an instance is initialized when the instance is created and the inform">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/String-Immutability-2.jpeg">
-<meta property="og:updated_time" content="2015-09-16T14:25:00.000Z">
+<meta property="og:updated_time" content="2019-04-07T05:38:20.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Why String is immutable in Java">
 <meta name="twitter:description" content="String is an immutable class in Java. An immutable class is simply a class whose instances cannot be modified. All information in an instance is initialized when the instance is created and the inform">
@@ -411,6 +411,7 @@
 <p>Here is how it looks:</p>
 <p><img src="http://7s1reu.com1.z0.glb.clouddn.com/String-Immutability-2.jpeg" alt=""></p>
 <p>If string is not immutable, changing the string with one reference will lead to the wrong value for the other references.</p>
+<a id="more"></a>
 <h3 id="2-Caching-Hashcode"><a href="#2-Caching-Hashcode" class="headerlink" title="2. Caching Hashcode"></a>2. Caching Hashcode</h3><p>The hashcode of string is frequently used in Java. For example, in a HashMap. Being immutable guarantees that hashcode will always the same, so that it can be cashed without worrying the changes.That means, there is no need to calculate hashcode every time it is used. This is more efficient.</p>
 <p>In String class, it has the following code:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> hash;<span class="comment">//this is used to cache hash code.</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="3-Facilitating-the-Use-of-Other-Objects"><a href="#3-Facilitating-the-Use-of-Other-Objects" class="headerlink" title="3. Facilitating the Use of Other Objects"></a>3. Facilitating the Use of Other Objects</h3><p>To make this concrete, consider the following program:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HashSet&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">set.add(<span class="keyword">new</span> String(<span class="string">"a"</span>));</span><br><span class="line">set.add(<span class="keyword">new</span> String(<span class="string">"b"</span>));</span><br><span class="line">set.add(<span class="keyword">new</span> String(<span class="string">"c"</span>));</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span>(String a: set)</span><br><span class="line">	a.value = <span class="string">"a"</span>;</span><br></pre></td></tr></table></figure></p>
@@ -656,7 +657,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

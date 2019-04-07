@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="代理模式  1、代理模式1.1、应用场景当程序涉及修改数据库中数据操作时，此时的一般操作流程是：  1、开启事务 2、修改操作 3、提交事务或者回滚事务  随着时间的推移，代码中开启事务、提交事务及回滚事务的代码将变得冗余。记录日志在程序中也是推荐使用，那么记录日志也将变得冗余，同时设计具体业务操作的时候，往往还得考虑事务、日志等方面的操作，不能专注于业务操作。 为了解决代码冗余以及业务对象专注">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-09T01:41:42.078Z">
+<meta property="og:updated_time" content="2019-04-07T05:39:43.542Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理模式">
 <meta name="twitter:description" content="代理模式  1、代理模式1.1、应用场景当程序涉及修改数据库中数据操作时，此时的一般操作流程是：  1、开启事务 2、修改操作 3、提交事务或者回滚事务  随着时间的推移，代码中开启事务、提交事务及回滚事务的代码将变得冗余。记录日志在程序中也是推荐使用，那么记录日志也将变得冗余，同时设计具体业务操作的时候，往往还得考虑事务、日志等方面的操作，不能专注于业务操作。 为了解决代码冗余以及业务对象专注">
@@ -421,6 +421,7 @@
 <li>3、interceptor(拦截器对象)</li>
 <li>4、client(客户端)</li>
 </ul>
+<a id="more"></a>
 <h3 id="2、静态代理模式"><a href="#2、静态代理模式" class="headerlink" title="2、静态代理模式"></a>2、静态代理模式</h3><p>通过代理类去完成目标类的目标方面，并且在该目标的类特定的代理类中附加上额外的功能</p>
 <p>静态代理模式代码实例：</p>
 <p>目标类接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@ClassName</span>: PersonDao</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span>: PersonDao接口</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> Yue Chang </span></span><br><span class="line"><span class="comment">* <span class="doctag">@date</span> 2017年3月23日 上午10:42:46 </span></span><br><span class="line"><span class="comment">* <span class="doctag">@since</span> 1.0</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PersonDao</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deletePerson</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updatePerson</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -520,7 +521,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/12/redis-sentinel安装、配置与故障与故障转移演示/" rel="prev" title="redis-sentinel安装、配置与故障与故障转移演示">
+              <a href="/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/" rel="prev" title="redis-sentinel安装、配置与故障与故障转移演示">
                 redis-sentinel安装、配置与故障与故障转移演示 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -687,7 +688,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

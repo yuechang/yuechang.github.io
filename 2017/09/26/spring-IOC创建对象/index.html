@@ -116,11 +116,11 @@
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring IOC创建对象">
-<meta property="og:url" content="http://yuechang.github.io/2017/09/26/spring-IOC创建对象/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2017/09/26/Spring-IOC创建对象/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="1、简介spring 是一个非常活跃的开源框架，它是一个基于core来架构多层Java EE系统的框架，它的主要目地是简化企业开发spring以一种非侵入式的方式来管理你的代码，spring提倡”最少侵入”，这也就意味着你可以适当的时候安装或卸载spring spring的控制反转(IOC)：把对象的创建、初始化/销毁等工作交给spring容器来做，由spring容器控制对象的生命周期。意义：对象">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-21T13:27:38.246Z">
+<meta property="og:updated_time" content="2019-04-07T05:33:45.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring IOC创建对象">
 <meta name="twitter:description" content="1、简介spring 是一个非常活跃的开源框架，它是一个基于core来架构多层Java EE系统的框架，它的主要目地是简化企业开发spring以一种非侵入式的方式来管理你的代码，spring提倡”最少侵入”，这也就意味着你可以适当的时候安装或卸载spring spring的控制反转(IOC)：把对象的创建、初始化/销毁等工作交给spring容器来做，由spring容器控制对象的生命周期。意义：对象">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2017/09/26/spring-IOC创建对象/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2017/09/26/Spring-IOC创建对象/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/09/26/spring-IOC创建对象/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/09/26/Spring-IOC创建对象/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2017/09/26/spring-IOC创建对象/" class="leancloud_visitors" data-flag-title="spring IOC创建对象">
+             <span id="/2017/09/26/Spring-IOC创建对象/" class="leancloud_visitors" data-flag-title="spring IOC创建对象">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -406,6 +406,7 @@
 <p>spring的控制反转(IOC)：把对象的创建、初始化/销毁等工作交给spring容器来做，由spring容器控制对象的生命周期。<br>意义：对象的创建交给spring容器来做，对于程序员来说，不用操心该对象是怎么样创建出来的。</p>
 <h3 id="2、创建对象"><a href="#2、创建对象" class="headerlink" title="2、创建对象"></a>2、创建对象</h3><h4 id="2-1、一般方式创建对象"><a href="#2-1、一般方式创建对象" class="headerlink" title="2.1、一般方式创建对象"></a>2.1、一般方式创建对象</h4><p>1、创建一个HelloWorld类<br>2、把java类编译成class文件<br>3、把class文件加载到jvm中<br>4、运行，调用方法</p>
 <p>通过new的方式创建对象并调用对象的方法</p>
+<a id="more"></a>
 <h4 id="2-2、spring方式创建对象"><a href="#2-2、spring方式创建对象" class="headerlink" title="2.2、spring方式创建对象"></a>2.2、spring方式创建对象</h4><p>1、创建一个HelloWorld类<br>2、以配置文件的形式吧HelloWorld类放入spring容器中<br>3、启动spring容器<br>4、从spring容器中把对象提取出来<br>5、对象调用方法</p>
 <p>首先pom.xml文件中引入以下依赖：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.11.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>创建HelloWorld类，里面定义一个hello()方法，打印出hello</p>
@@ -481,7 +482,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/26/spring-IOC创建对象的方法/" rel="prev" title="spring IOC创建对象的方法">
+              <a href="/2017/09/26/Spring-IOC创建对象的方法/" rel="prev" title="spring IOC创建对象的方法">
                 spring IOC创建对象的方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -648,7 +649,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

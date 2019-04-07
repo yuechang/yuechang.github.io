@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="你知道一个对象的唯一标志不能仅仅通过写一个漂亮的equals来实现太棒了，不过现在你也必须实现hashCode方法。 让我们看看为什么和怎么做才是正确的。 相等和哈希码相等是从一般的方面来讲，哈希码更加具有技术性。如果我们在理解方面存在困难,我们可以说,他们通过只是一个实现细节来提高了性能。 大多数的数据结构通过equals方法来判断他们是否包含一个元素，例如：12List&amp;lt;String&amp;g">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2016-07-16T02:40:31.601Z">
+<meta property="og:updated_time" content="2019-04-07T05:42:47.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何正确的实现Java中的hashCode方法">
 <meta name="twitter:description" content="你知道一个对象的唯一标志不能仅仅通过写一个漂亮的equals来实现太棒了，不过现在你也必须实现hashCode方法。 让我们看看为什么和怎么做才是正确的。 相等和哈希码相等是从一般的方面来讲，哈希码更加具有技术性。如果我们在理解方面存在困难,我们可以说,他们通过只是一个实现细节来提高了性能。 大多数的数据结构通过equals方法来判断他们是否包含一个元素，例如：12List&amp;lt;String&amp;g">
@@ -406,6 +406,7 @@
 <h2 id="相等和哈希码"><a href="#相等和哈希码" class="headerlink" title="相等和哈希码"></a>相等和哈希码</h2><p>相等是从一般的方面来讲，哈希码更加具有技术性。如果我们在理解方面存在困难,我们可以说,他们通过只是一个实现细节来提高了性能。</p>
 <p>大多数的数据结构通过equals方法来判断他们是否包含一个元素，例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line"><span class="keyword">boolean</span> contains = list.contains(<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure></p>
 <p>这个变量contains结果是true，因为,虽然”b”是不相同的实例(此外,忽略字符串驻留),但是他们是平等的。</p>
+<a id="more"></a>
 <p>通过比较实例的每个元素，然后将比较结果赋值给<code>contains</code>是比较浪费的，虽然整个类的数据结构进行了优化，能够提升性能。<br>他们通过使用一种快捷的方式(减少潜在的实例相等)进行比较，从而代替通过比较实例所包含的每个元素。<br>而快捷比较仅需要比较下面这些方面：</p>
 <p>快捷方式比较即通过比较哈希值，它可以将一个实例用一个整数值来代替。哈希码相同的实例不一定相等，但相等的实例一定具有有相同的哈希值。<br>(或应该有,我们很快就会讨论这个)这些数据结构经常通过这种这种技术来命名,可以通过<code>Hash</code>来识别他们的,其中，<code>HashMap</code>是其中最著名的代表。</p>
 <p>它们通常是这样这样运作的</p>
@@ -676,7 +677,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

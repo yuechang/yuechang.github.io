@@ -116,11 +116,11 @@
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis.conf配置文件详解">
-<meta property="og:url" content="http://yuechang.github.io/2015/07/08/redis-conf配置文件详解/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="redis配置文件redis.conf详细说明 1、daemonize123456# By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.# Redis默认不是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2015-09-16T13:43:06.000Z">
+<meta property="og:updated_time" content="2019-04-07T05:28:38.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis.conf配置文件详解">
 <meta name="twitter:description" content="redis配置文件redis.conf详细说明 1、daemonize123456# By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.# Redis默认不是">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2015/07/08/redis-conf配置文件详解/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/08/redis-conf配置文件详解/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2015/07/08/redis-conf配置文件详解/" class="leancloud_visitors" data-flag-title="redis.conf配置文件详解">
+             <span id="/2015/07/08/Redis-conf配置文件详解/" class="leancloud_visitors" data-flag-title="redis.conf配置文件详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,6 +405,7 @@
         <p>redis配置文件redis.conf详细说明</p>
 <h3 id="1、daemonize"><a href="#1、daemonize" class="headerlink" title="1、daemonize"></a>1、daemonize</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># By default Redis does not run as a daemon. Use 'yes' if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line"># Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程（守护进程</span><br><span class="line"># daemon）是指在UNIX或其他多任务操作系统中在后台执行的电脑程序，并不会接受电脑用户的直接操</span><br><span class="line"># 控。）</span><br><span class="line">daemonize no</span><br></pre></td></tr></table></figure>
 <h3 id="2、pidfile"><a href="#2、pidfile" class="headerlink" title="2、pidfile"></a>2、pidfile</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># When running daemonized, Redis writes a pid file in /var/run/redis.pid by</span><br><span class="line"># default. You can specify a custom pid file location here.</span><br><span class="line"># 当 Redis 以守护进程的方式运行的时候,Redis 默认会把 pid 文件放在/var/run/redis.pid,</span><br><span class="line"># 你可以配置到其他地址。当运行多个 redis 服务时,需要指定不同的 pid 文件和端口</span><br><span class="line"># pidfile /var/run/redis.pid</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="3、port"><a href="#3、port" class="headerlink" title="3、port"></a>3、port</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Accept connections on the specified port, default is 6379.</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line"># 端口没什么好说的</span><br><span class="line">port 6379</span><br></pre></td></tr></table></figure>
 <h3 id="4、bind"><a href="#4、bind" class="headerlink" title="4、bind"></a>4、bind</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># If you want you can bind a single interface, if the bind option is not</span><br><span class="line"># specified all the interfaces will listen for incoming connections.</span><br><span class="line"># 指定Redis可接收请求的IP地址,不设置将处理所有请求,建议生产环境中设置</span><br><span class="line"># bind 127.0.0.1</span><br></pre></td></tr></table></figure>
 <h3 id="5、timeout"><a href="#5、timeout" class="headerlink" title="5、timeout"></a>5、timeout</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Close the connection after a client is idle for N seconds (0 to disable)</span><br><span class="line"># 客户端连接的超时时间,单位为秒,超时后会关闭连接</span><br><span class="line">timeout 0</span><br></pre></td></tr></table></figure>
@@ -664,7 +665,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

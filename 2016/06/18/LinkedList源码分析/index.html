@@ -112,18 +112,18 @@
 
 
 
-<meta name="description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量： 123456789101112">
+<meta name="description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量：">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LinkedList源码分析">
 <meta property="og:url" content="http://yuechang.github.io/2016/06/18/LinkedList源码分析/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量： 123456789101112">
+<meta property="og:description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2016-07-16T02:08:49.013Z">
+<meta property="og:updated_time" content="2019-04-07T05:27:06.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LinkedList源码分析">
-<meta name="twitter:description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量： 123456789101112">
+<meta name="twitter:description" content="Java版本：123java version &quot;1.7.0_79&quot;Java(TM) SE Runtime Environment (build 1.7.0_79-b15)Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode) LinkedList由双向链表实现。LinkedList主要成员变量：">
 
 
 
@@ -404,6 +404,7 @@
       
         <p>Java版本：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version "1.7.0_79"</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</span><br></pre></td></tr></table></figure></p>
 <p>LinkedList由双向链表实现。<br>LinkedList主要成员变量：</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Pointer to first node.</span></span><br><span class="line"><span class="comment"> * Invariant: (first == null &amp;&amp; last == null) ||</span></span><br><span class="line"><span class="comment"> *            (first.prev == null &amp;&amp; first.item != null)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Pointer to last node.</span></span><br><span class="line"><span class="comment"> * Invariant: (first == null &amp;&amp; last == null) ||</span></span><br><span class="line"><span class="comment"> *            (last.next == null &amp;&amp; last.item != null)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</span><br><span class="line"></span><br><span class="line"><span class="comment">//核心数据结构代码：</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.item = element ;</span><br><span class="line">        <span class="keyword">this</span>.next = next ;</span><br><span class="line">        <span class="keyword">this</span>.prev = prev ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过定义的内部类，包括三个成员变量，数据对象，前一个节点对象，以及后一个节点对象。</p>
 <p>add()/get()/remove()方法举例：</p>
@@ -619,7 +620,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

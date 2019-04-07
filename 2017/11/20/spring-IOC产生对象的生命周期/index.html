@@ -116,11 +116,11 @@
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring IOC产生对象的生命周期">
-<meta property="og:url" content="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的生命周期/index.html">
+<meta property="og:url" content="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的生命周期/index.html">
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="spring IOC产生对象的生命周期1、HelloWorld在默认的配置情况下是单例的。验证过程：1、创建HelloWorld类        2、把该类放入到spring容器中        3、启动调用 将来在做项目的时候，会把service层和dao层所有的类放入到spring容器中，service层所有的类和dao层所有的类都是单例的，不能一个对象放在属性上（因为是共享的） 2、多例，需">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-20T14:28:34.137Z">
+<meta property="og:updated_time" content="2019-04-07T05:34:50.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring IOC产生对象的生命周期">
 <meta name="twitter:description" content="spring IOC产生对象的生命周期1、HelloWorld在默认的配置情况下是单例的。验证过程：1、创建HelloWorld类        2、把该类放入到spring容器中        3、启动调用 将来在做项目的时候，会把service层和dao层所有的类放入到spring容器中，service层所有的类和dao层所有的类都是单例的，不能一个对象放在属性上（因为是共享的） 2、多例，需">
@@ -153,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的生命周期/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的生命周期/"/>
 
 
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/spring-IOC产生对象的生命周期/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -371,7 +371,7 @@
 
           
           
-             <span id="/2017/11/20/spring-IOC产生对象的生命周期/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的生命周期">
+             <span id="/2017/11/20/Spring-IOC产生对象的生命周期/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的生命周期">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -404,7 +404,9 @@
       
         <h3 id="spring-IOC产生对象的生命周期"><a href="#spring-IOC产生对象的生命周期" class="headerlink" title="spring IOC产生对象的生命周期"></a>spring IOC产生对象的生命周期</h3><p>1、HelloWorld在默认的配置情况下是单例的。<br>验证过程：1、创建HelloWorld类<br>        2、把该类放入到spring容器中<br>        3、启动调用</p>
 <p>将来在做项目的时候，会把service层和dao层所有的类放入到spring容器中，service层所有的类和dao层所有的类都是单例的，不能一个对象放在属性上（因为是共享的）</p>
-<p>2、多例，需要配置scope<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>2、多例，需要配置scope</p>
+<a id="more"></a>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>singleton：单例(默认)<br>prototype：多例<br>request：每一次HTTP请求产生一个新的bean，同时该bean仅在当前HTTP request内有效<br>session：每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效<br>global session：每一次HTTP请求都会产生一个新的bean，同时该bean全局HTTP session内有效</p>
 <p>singleton：<br>返回单例的对象，只会初始化一次</p>
 <p>prototype：<br>每次都会new一个对象返回，也就是多例的，另外对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。 清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用 bean的后置处理器，该处理器持有要被清除的bean的引用。）</p>
@@ -469,8 +471,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/26/spring-IOC创建对象的方法/" rel="next" title="spring IOC创建对象的方法">
-                <i class="fa fa-chevron-left"></i> spring IOC创建对象的方法
+              <a href="/2017/11/20/Spring-IOC产生对象的时机/" rel="next" title="spring IOC产生对象的时机">
+                <i class="fa fa-chevron-left"></i> spring IOC产生对象的时机
               </a>
             
           </div>
@@ -479,8 +481,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/20/spring-IOC产生对象的时机/" rel="prev" title="spring IOC产生对象的时机">
-                spring IOC产生对象的时机 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" rel="prev" title="spring IOC创建对象配置初始化方法和销毁方法">
+                spring IOC创建对象配置初始化方法和销毁方法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -646,7 +648,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
