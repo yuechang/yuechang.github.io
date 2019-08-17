@@ -196,9 +196,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about.html" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             关于
           </a>
@@ -465,6 +465,9 @@
 
 
           
+
+  
+ 	<div id="gitalk-container"></div>
 
   
 
@@ -768,6 +771,22 @@
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '06c98f2f4e86c78db9e0',
+          clientSecret: 'e2299e880fa4782500f6e9c6e351f9df5e5654fd',
+          repo: 'https://github.com/yuechang/blog-comment',
+          owner: 'yuechang',
+          admin: ['yuechang'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
 
 
 
