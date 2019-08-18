@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="google-site-verification" content="FQ4s-NjVsojslMD8_pxEjX8DvHIf5l9M6jnGMxHAqzU" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="redis配置文件redis.conf详细说明 1、daemonize123456# By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.# Redis默认不是">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis.conf配置文件详解">
+<meta property="og:url" content="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/index.html">
+<meta property="og:site_name" content="漠北空城">
+<meta property="og:description" content="redis配置文件redis.conf详细说明 1、daemonize123456# By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.# Redis默认不是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-07T05:28:38.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis.conf配置文件详解">
+<meta name="twitter:description" content="redis配置文件redis.conf详细说明 1、daemonize123456# By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.# Note that Redis will write a pid file in /var/run/redis.pid when daemonized.# Redis默认不是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'BBGGBMEBHY',
+      apiKey: 'a8034b03f1ed5ebe16b4fc52a5d16939',
+      indexName: 'prod_blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"没有找到任何结果关于: ${query}","hits_stats":"找到 ${hits} 个结果，耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/"/>
+
+
+
+
+
+  <title>redis.conf配置文件详解 | 漠北空城</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">漠北空城</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">听海观潮</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://picture.yuech.net/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis.conf配置文件详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-08T11:49:04+08:00">
+                Jul 8 2015
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/07/08/Redis-conf配置文件详解/" class="leancloud_visitors" data-flag-title="redis.conf配置文件详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>redis配置文件redis.conf详细说明</p>
+<h3 id="1、daemonize"><a href="#1、daemonize" class="headerlink" title="1、daemonize"></a>1、daemonize</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># By default Redis does not run as a daemon. Use 'yes' if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line"># Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程（守护进程</span><br><span class="line"># daemon）是指在UNIX或其他多任务操作系统中在后台执行的电脑程序，并不会接受电脑用户的直接操</span><br><span class="line"># 控。）</span><br><span class="line">daemonize no</span><br></pre></td></tr></table></figure>
+<h3 id="2、pidfile"><a href="#2、pidfile" class="headerlink" title="2、pidfile"></a>2、pidfile</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># When running daemonized, Redis writes a pid file in /var/run/redis.pid by</span><br><span class="line"># default. You can specify a custom pid file location here.</span><br><span class="line"># 当 Redis 以守护进程的方式运行的时候,Redis 默认会把 pid 文件放在/var/run/redis.pid,</span><br><span class="line"># 你可以配置到其他地址。当运行多个 redis 服务时,需要指定不同的 pid 文件和端口</span><br><span class="line"># pidfile /var/run/redis.pid</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="3、port"><a href="#3、port" class="headerlink" title="3、port"></a>3、port</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Accept connections on the specified port, default is 6379.</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line"># 端口没什么好说的</span><br><span class="line">port 6379</span><br></pre></td></tr></table></figure>
+<h3 id="4、bind"><a href="#4、bind" class="headerlink" title="4、bind"></a>4、bind</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># If you want you can bind a single interface, if the bind option is not</span><br><span class="line"># specified all the interfaces will listen for incoming connections.</span><br><span class="line"># 指定Redis可接收请求的IP地址,不设置将处理所有请求,建议生产环境中设置</span><br><span class="line"># bind 127.0.0.1</span><br></pre></td></tr></table></figure>
+<h3 id="5、timeout"><a href="#5、timeout" class="headerlink" title="5、timeout"></a>5、timeout</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Close the connection after a client is idle for N seconds (0 to disable)</span><br><span class="line"># 客户端连接的超时时间,单位为秒,超时后会关闭连接</span><br><span class="line">timeout 0</span><br></pre></td></tr></table></figure>
+<h3 id="6、logfile"><a href="#6、logfile" class="headerlink" title="6、logfile"></a>6、logfile</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Specify the log file name. Also 'stdout' can be used to force</span><br><span class="line"># Redis to log on the standard output. Note that if you use standard</span><br><span class="line"># output for logging but daemonize, logs will be sent to /dev/null</span><br><span class="line"># 配置 log 文件地址,默认打印在命令行终端的窗口上</span><br><span class="line">logfile stdout</span><br></pre></td></tr></table></figure>
+<h3 id="7、databases"><a href="#7、databases" class="headerlink" title="7、databases"></a>7、databases</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Set the number of databases. The default database is DB 0, you can select</span><br><span class="line"># a different one on a per-connection basis using SELECT <span class="tag">&lt;<span class="name">dbid</span>&gt;</span> where</span><br><span class="line"># dbid is a number between 0 and 'databases'-1</span><br><span class="line"># 设置数据库的个数,可以使用 SELECT <span class="tag">&lt;<span class="name">dbid</span>&gt;</span>命令来切换数据库。默认使用的数据库是 0</span><br><span class="line">databases 16</span><br></pre></td></tr></table></figure>
+<h3 id="8、save"><a href="#8、save" class="headerlink" title="8、save"></a>8、save</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># Save the DB on disk:</span><br><span class="line">#</span><br><span class="line"># save <span class="tag">&lt;<span class="name">seconds</span>&gt;</span> <span class="tag">&lt;<span class="name">changes</span>&gt;</span></span><br><span class="line">#</span><br><span class="line"># Will save the DB if both the given number of seconds and the given</span><br><span class="line"># number of write operations against the DB occurred.</span><br><span class="line">#</span><br><span class="line"># In the example below the behaviour will be to save:</span><br><span class="line"># after 900 sec (15 min) if at least 1 key changed</span><br><span class="line"># after 300 sec (5 min) if at least 10 keys changed</span><br><span class="line"># after 60 sec if at least 10000 keys changed</span><br><span class="line">#</span><br><span class="line"># Note: you can disable saving at all commenting all the "save" lines.</span><br><span class="line"># 设置 Redis 进行数据库镜像的频率。</span><br><span class="line"># 900秒之内有1个keys发生变化时</span><br><span class="line"># 30秒之内有10个keys发生变化时</span><br><span class="line"># 60秒之内有10000个keys发生变化时</span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
+<h3 id="9、rdbcompression"><a href="#9、rdbcompression" class="headerlink" title="9、rdbcompression"></a>9、rdbcompression</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Compress string objects using LZF when dump .rdb databases?</span><br><span class="line"># For default that's set to 'yes' as it's almost always a win.</span><br><span class="line"># If you want to save some CPU in the saving child set it to 'no' but</span><br><span class="line"># the dataset will likely be bigger if you have compressible values or keys.</span><br><span class="line"># 在进行镜像备份时,是否进行压缩</span><br><span class="line">rdbcompression yes</span><br></pre></td></tr></table></figure>
+<h3 id="10、dbfinename"><a href="#10、dbfinename" class="headerlink" title="10、dbfinename"></a>10、dbfinename</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># The filename where to dump the DB</span><br><span class="line">#镜像备份文件的文件名</span><br><span class="line">dbfilename dump.rdb</span><br></pre></td></tr></table></figure>
+<h3 id="11、dir"><a href="#11、dir" class="headerlink" title="11、dir"></a>11、dir</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># The working directory.</span><br><span class="line">#</span><br><span class="line"># The DB will be written inside this directory, with the filename specified</span><br><span class="line"># above using the 'dbfilename' configuration directive.</span><br><span class="line"># </span><br><span class="line"># Also the Append Only File will be created inside this directory.</span><br><span class="line"># </span><br><span class="line"># Note that you must specify a directory here, not a file name.</span><br><span class="line"># 数据库镜像备份的文件放置的路径。这里的路径跟文件名要分开配置是因为 Redis 在进行备份时,</span><br><span class="line"># 先会将当前数据库的状态写入到一个临时文件中,等备份完成时,再把该该临时文件替换为上面所指</span><br><span class="line"># 定的文件,而这里的临时文件和上面所配置的备份文件都会放在这个指定的路径当中</span><br><span class="line">dir ./</span><br></pre></td></tr></table></figure>
+<h3 id="12、slaveof"><a href="#12、slaveof" class="headerlink" title="12、slaveof"></a>12、slaveof</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Master-Slave replication. Use slaveof to make a Redis instance a copy of</span><br><span class="line"># another Redis server. Note that the configuration is local to the slave</span><br><span class="line"># so for example it is possible to configure the slave to save the DB with a</span><br><span class="line"># different interval, or to listen to another port, and so on.</span><br><span class="line"># 设置该数据库为其他数据库的从数据库</span><br><span class="line"># slaveof <span class="tag">&lt;<span class="name">masterip</span>&gt;</span> <span class="tag">&lt;<span class="name">masterport</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="13、masterauth"><a href="#13、masterauth" class="headerlink" title="13、masterauth"></a>13、masterauth</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># If the master is password protected (using the "requirepass" configuration</span><br><span class="line"># directive below) it is possible to tell the slave to authenticate before</span><br><span class="line"># starting the replication synchronization process, otherwise the master will</span><br><span class="line"># refuse the slave request.</span><br><span class="line"># 指定与主数据库连接时需要的密码验证</span><br><span class="line"># masterauth <span class="tag">&lt;<span class="name">master-password</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="14、requirepass"><a href="#14、requirepass" class="headerlink" title="14、requirepass"></a>14、requirepass</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Require clients to issue AUTH <span class="tag">&lt;<span class="name">PASSWORD</span>&gt;</span> before processing any other</span><br><span class="line"># commands. This might be useful in environments in which you do not trust</span><br><span class="line"># others with access to the host running redis-server.</span><br><span class="line">#</span><br><span class="line"># This should stay commented out for backward compatibility and because most</span><br><span class="line"># people do not need auth (e.g. they run their own servers).</span><br><span class="line"># </span><br><span class="line"># Warning: since Redis is pretty fast an outside user can try up to</span><br><span class="line"># 150k passwords per second against a good box. This means that you should</span><br><span class="line"># use a very strong password otherwise it will be very easy to break.</span><br><span class="line"># 设置客户端连接后进行任何其他指定前需要使用的密码。</span><br><span class="line"># 警告:redis速度相当快,一个外部的用户可以在一秒钟进行150K次的密码尝试,</span><br><span class="line"># 你需要指定非常非常强大的密码来防止暴力破解。</span><br><span class="line"></span><br><span class="line"># requirepass foobared</span><br></pre></td></tr></table></figure>
+<h3 id="15、maxclient"><a href="#15、maxclient" class="headerlink" title="15、maxclient"></a>15、maxclient</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Set the max number of connected clients at the same time. By default there</span><br><span class="line"># is no limit, and it's up to the number of file descriptors the Redis process</span><br><span class="line"># is able to open. The special value '0' means no limits.</span><br><span class="line"># Once the limit is reached Redis will close all the new connections sending</span><br><span class="line"># an error 'max number of clients reached'.</span><br><span class="line"># 限制同时连接的客户数量。当连接数超过这个值时,</span><br><span class="line"># redis 将不再接收其他连接请求,客户端尝试连接时将收到 error 信息</span><br><span class="line"># maxclients 128</span><br></pre></td></tr></table></figure>
+<h3 id="16、maxmemory"><a href="#16、maxmemory" class="headerlink" title="16、maxmemory"></a>16、maxmemory</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># Don't use more memory than the specified amount of bytes.</span><br><span class="line"># When the memory limit is reached Redis will try to remove keys</span><br><span class="line"># accordingly to the eviction policy selected (see maxmemmory-policy).</span><br><span class="line">#</span><br><span class="line"># If Redis can't remove keys according to the policy, or if the policy is</span><br><span class="line"># set to 'noeviction', Redis will start to reply with errors to commands</span><br><span class="line"># that would use more memory, like SET, LPUSH, and so on, and will continue</span><br><span class="line"># to reply to read-only commands like GET.</span><br><span class="line">#</span><br><span class="line"># This option is usually useful when using Redis as an LRU cache, or to set</span><br><span class="line"># an hard memory limit for an instance (using the 'noeviction' policy).</span><br><span class="line">#</span><br><span class="line"># WARNING: If you have slaves attached to an instance with maxmemory on,</span><br><span class="line"># the size of the output buffers needed to feed the slaves are subtracted</span><br><span class="line"># from the used memory count, so that network problems / resyncs will</span><br><span class="line"># not trigger a loop where keys are evicted, and in turn the output</span><br><span class="line"># buffer of slaves is full with DELs of keys evicted triggering the deletion</span><br><span class="line"># of more keys, and so forth until the database is completely emptied.</span><br><span class="line">#</span><br><span class="line"># In short… if you have slaves attached it is suggested that you set a lower</span><br><span class="line"># limit for maxmemory so that there is some free RAM on the system for slave</span><br><span class="line"># output buffers (but this is not needed if the policy is 'noeviction').</span><br><span class="line"># 设置redis能够使用的最大内存。</span><br><span class="line"># 当内存满了的时候,如果还接收到set命令,redis将先尝试剔除设置过expire信息的key,</span><br><span class="line"># 而不管该key的过期时间还没有到达。</span><br><span class="line"># 在删除时,将按照过期时间进行删除,最早将要被过期的key将最先被删除。</span><br><span class="line"># 如果带有expire信息的key都删光了,那么将返回错误。</span><br><span class="line"># 这样,redis将不再接收写请求,只接收get请求。</span><br><span class="line"># maxmemory的设置比较适合于把redis当作于类似memcached 的缓存来使用</span><br><span class="line"># maxmemory <span class="tag">&lt;<span class="name">bytes</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="17、appendonly"><a href="#17、appendonly" class="headerlink" title="17、appendonly"></a>17、appendonly</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># By default Redis asynchronously dumps the dataset on disk. If you can live</span><br><span class="line"># with the idea that the latest records will be lost if something like a crash</span><br><span class="line"># happens this is the preferred way to run Redis. If instead you care a lot</span><br><span class="line"># about your data and don't want to that a single record can get lost you should</span><br><span class="line"># enable the append only mode: when this mode is enabled Redis will append</span><br><span class="line"># every write operation received in the file appendonly.aof. This file will</span><br><span class="line"># be read on startup in order to rebuild the full dataset in memory.</span><br><span class="line">#</span><br><span class="line"># Note that you can have both the async dumps and the append only file if you</span><br><span class="line"># like (you have to comment the "save" statements above to disable the dumps).</span><br><span class="line"># Still if append only mode is enabled Redis will load the data from the</span><br><span class="line"># log file at startup ignoring the dump.rdb file.</span><br><span class="line">#</span><br><span class="line"># IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append</span><br><span class="line"># log file in background when it gets too big.</span><br><span class="line"># 默认情况下,redis会在后台异步的把数据库镜像备份到磁盘,但是该备份是非常耗时的,</span><br><span class="line"># 而且备份也不能很频繁,如果发生诸如拉闸限电、拔插头等状况,那么将造成比较大范围的数据丢失。</span><br><span class="line"># 所以redis提供了另外一种更加高效的数据库备份及灾难恢复方式。</span><br><span class="line"># 开启append only模式之后,redis会把所接收到的每一次写操作请求都追加到appendonly.aof 文件中,</span><br><span class="line"># 当redis重新启动时,会从该文件恢复出之前的状态。但是这样会造成 appendonly.aof 文件过大,</span><br><span class="line"># 所以redis还支持了BGREWRITEAOF 指令,对appendonly.aof进行重新整理</span><br><span class="line">appendonly no</span><br></pre></td></tr></table></figure>
+<h3 id="18、appendfsync"><a href="#18、appendfsync" class="headerlink" title="18、appendfsync"></a>18、appendfsync</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># The fsync() call tells the Operating System to actually write data on disk</span><br><span class="line"># instead to wait for more data in the output buffer. Some OS will really flush </span><br><span class="line"># data on disk, some other OS will just try to do it ASAP.</span><br><span class="line">#</span><br><span class="line"># Redis supports three different modes:</span><br><span class="line">#</span><br><span class="line"># no: don't fsync, just let the OS flush the data when it wants. Faster.</span><br><span class="line"># always: fsync after every write to the append only log . Slow, Safest.</span><br><span class="line"># everysec: fsync only if one second passed since the last fsync. Compromise.</span><br><span class="line">#</span><br><span class="line"># The default is "everysec" that's usually the right compromise between</span><br><span class="line"># speed and data safety. It's up to you to understand if you can relax this to</span><br><span class="line"># "no" that will will let the operating system flush the output buffer when</span><br><span class="line"># it wants, for better performances (but if you can live with the idea of</span><br><span class="line"># some data loss consider the default persistence mode that's snapshotting),</span><br><span class="line"># or on the contrary, use "always" that's very slow but a bit safer than</span><br><span class="line"># everysec.</span><br><span class="line">#</span><br><span class="line"># If unsure, use "everysec".</span><br><span class="line"># 设置对 appendonly.aof 文件进行同步的频率。</span><br><span class="line"># always 表示每次有写操作都进行同步,everysec表示对写操作进行累积,每秒同步一次。</span><br><span class="line"># appendfsync always</span><br><span class="line">appendfsync everysec</span><br><span class="line"># appendfsync no</span><br></pre></td></tr></table></figure>
+<h3 id="19、vm-enabled"><a href="#19、vm-enabled" class="headerlink" title="19、vm-enabled"></a>19、vm-enabled</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Virtual Memory allows Redis to work with datasets bigger than the actual</span><br><span class="line"># amount of RAM needed to hold the whole dataset in memory.</span><br><span class="line"># In order to do so very used keys are taken in memory while the other keys</span><br><span class="line"># are swapped into a swap file, similarly to what operating systems do</span><br><span class="line"># with memory pages.</span><br><span class="line">#</span><br><span class="line"># To enable VM just set 'vm-enabled' to yes, and set the following three</span><br><span class="line"># VM parameters accordingly to your needs.</span><br><span class="line"># 是否开启虚拟内存支持。因为redis 是一个内存数据库,而且当内存满的时候,无法接收新的写请求,</span><br><span class="line"># 所以在redis2.0中,提供了虚拟内存的支持。</span><br><span class="line"># 但是需要注意的是,redis中,所有的key都会放在内存中,在内存不够时,只会把value值放入交换区。</span><br><span class="line"># 这样保证了虽然使用虚拟内存,但性能基本不受影响,</span><br><span class="line"># 同时,你需要注意的是你要把vm-max-memory设置到足够来放下你的所有的key</span><br><span class="line">vm-enabled no</span><br><span class="line"># vm-enabled yes</span><br></pre></td></tr></table></figure>
+<h3 id="20、vm-swap-file"><a href="#20、vm-swap-file" class="headerlink" title="20、vm-swap-file"></a>20、vm-swap-file</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># This is the path of the Redis swap file. As you can guess, swap files</span><br><span class="line"># can&apos;t be shared by different Redis instances, so make sure to use a swap</span><br><span class="line"># file for every redis process you are running. Redis will complain if the</span><br><span class="line"># swap file is already in use.</span><br><span class="line">#</span><br><span class="line"># The best kind of storage for the Redis swap file (that&apos;s accessed at random) </span><br><span class="line"># is a Solid State Disk (SSD).</span><br><span class="line">#</span><br><span class="line"># *** WARNING *** if you are using a shared hosting the default of putting</span><br><span class="line"># the swap file under /tmp is not secure. Create a dir with access granted</span><br><span class="line"># only to Redis user and configure Redis to create the swap file there.</span><br><span class="line"># 设置虚拟内存的交换文件路径</span><br><span class="line">vm-swap-file /tmp/redis.swap</span><br></pre></td></tr></table></figure>
+<h3 id="21、vm-max-memory"><a href="#21、vm-max-memory" class="headerlink" title="21、vm-max-memory"></a>21、vm-max-memory</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># vm-max-memory configures the VM to use at max the specified amount of</span><br><span class="line"># RAM. Everything that deos not fit will be swapped on disk *if* possible, that</span><br><span class="line"># is, if there is still enough contiguous space in the swap file.</span><br><span class="line">#</span><br><span class="line"># With vm-max-memory 0 the system will swap everything it can. Not a good</span><br><span class="line"># default, just specify the max amount of RAM you can in bytes, but it's</span><br><span class="line"># better to leave some margin. For instance specify an amount of RAM</span><br><span class="line"># that's more or less between 60 and 80% of your free RAM.</span><br><span class="line"># 这里设置开启虚拟内存之后,redis将使用的最大物理内存的大小。</span><br><span class="line"># 默认为0,redis将把他所有的能放到交换文件的都放到交换文件中,以尽量少的使用物理内存。</span><br><span class="line"># 在生产环境下,需要根据实际情况设置该值,最好不要使用默认的 0</span><br><span class="line">vm-max-memory 0</span><br></pre></td></tr></table></figure>
+<h3 id="22、vm-page-size"><a href="#22、vm-page-size" class="headerlink" title="22、vm-page-size"></a>22、vm-page-size</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Redis swap files is split into pages. An object can be saved using multiple</span><br><span class="line"># contiguous pages, but pages can't be shared between different objects.</span><br><span class="line"># So if your page is too big, small objects swapped out on disk will waste</span><br><span class="line"># a lot of space. If you page is too small, there is less space in the swap</span><br><span class="line"># file (assuming you configured the same number of total swap file pages).</span><br><span class="line">#</span><br><span class="line"># If you use a lot of small objects, use a page size of 64 or 32 bytes.</span><br><span class="line"># If you use a lot of big objects, use a bigger page size.</span><br><span class="line"># If unsure, use the default </span><br><span class="line"># 设置虚拟内存的页大小,如果你的value值比较大,比如说你要在value中放置博客、</span><br><span class="line"># 新闻之类的所有文章内容,就设大一点,如果要放置的都是很小的内容,那就设小一点</span><br><span class="line">vm-page-size 32</span><br></pre></td></tr></table></figure>
+<h3 id="23、vm-pages"><a href="#23、vm-pages" class="headerlink" title="23、vm-pages"></a>23、vm-pages</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># Number of total memory pages in the swap file.</span><br><span class="line"># Given that the page table (a bitmap of free/used pages) is taken in memory,</span><br><span class="line"># every 8 pages on disk will consume 1 byte of RAM.</span><br><span class="line">#</span><br><span class="line"># The total swap size is vm-page-size * vm-pages</span><br><span class="line">#</span><br><span class="line"># With the default of 32-bytes memory pages and 134217728 pages Redis will</span><br><span class="line"># use a 4 GB swap file, that will use 16 MB of RAM for the page table.</span><br><span class="line">#</span><br><span class="line"># It's better to use the smallest acceptable value for your application,</span><br><span class="line"># but the default is large in order to work in most conditions.</span><br><span class="line"># 设置交换文件的总的 page 数量,</span><br><span class="line"># 需要注意的是,page table信息会放在物理内存中,每8个page就会占据RAM中的1个byte。</span><br><span class="line"># 总的虚拟内存大小 = vm-page-size * vm-pages</span><br><span class="line">vm-pages 134217728</span><br></pre></td></tr></table></figure>
+<h3 id="24、vm-max-threads"><a href="#24、vm-max-threads" class="headerlink" title="24、vm-max-threads"></a>24、vm-max-threads</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Max number of VM I/O threads running at the same time.</span><br><span class="line"># This threads are used to read/write data from/to swap file, since they</span><br><span class="line"># also encode and decode objects from disk to memory or the reverse, a bigger</span><br><span class="line"># number of threads can help with big objects even if they can't help with</span><br><span class="line"># I/O itself as the physical device may not be able to couple with many</span><br><span class="line"># reads/writes operations at the same time.</span><br><span class="line">#</span><br><span class="line"># The special value of 0 turn off threaded I/O and enables the blocking</span><br><span class="line"># Virtual Memory implementation.</span><br><span class="line"># 设置 VM IO 同时使用的线程数量。</span><br><span class="line">vm-max-threads 4</span><br></pre></td></tr></table></figure>
+<h3 id="25、hash-max-zipmap"><a href="#25、hash-max-zipmap" class="headerlink" title="25、hash-max-zipmap"></a>25、hash-max-zipmap</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Hashes are encoded in a special way (much more memory efficient) when they</span><br><span class="line"># have at max a given numer of elements, and the biggest element does not</span><br><span class="line"># exceed a given threshold. You can configure this limits with the following</span><br><span class="line"># configuration directives.</span><br><span class="line"># redis 2.0 中引入了 hash 数据结构。 </span><br><span class="line"># hash中包含超过指定元素个数并且最大的元素当没有超过临界时,</span><br><span class="line"># hash 将以zipmap(又称为 small hash大大减少内存使用)来存储,这里可以设置这两个临界值</span><br><span class="line">hash-max-zipmap-entries 512</span><br><span class="line">hash-max-zipmap-value 64</span><br></pre></td></tr></table></figure>
+<h3 id="26、activerehashing"><a href="#26、activerehashing" class="headerlink" title="26、activerehashing"></a>26、activerehashing</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in</span><br><span class="line"># order to help rehashing the main Redis hash table (the one mapping top-level</span><br><span class="line"># keys to values). The hash table implementation redis uses (see dict.c)</span><br><span class="line"># performs a lazy rehashing: the more operation you run into an hash table</span><br><span class="line"># that is rhashing, the more rehashing "steps" are performed, so if the</span><br><span class="line"># server is idle the rehashing is never complete and some more memory is used</span><br><span class="line"># by the hash table.</span><br><span class="line"># </span><br><span class="line"># The default is to use this millisecond 10 times every second in order to</span><br><span class="line"># active rehashing the main dictionaries, freeing memory when possible.</span><br><span class="line">#</span><br><span class="line"># If unsure:</span><br><span class="line"># use "activerehashing no" if you have hard latency requirements and it is</span><br><span class="line"># not a good thing in your environment that Redis can reply form time to time</span><br><span class="line"># to queries with 2 milliseconds delay.</span><br><span class="line">#</span><br><span class="line"># use "activerehashing yes" if you don't have such hard requirements but</span><br><span class="line"># want to free memory asap when possible.</span><br><span class="line"># 开启之后, redis将在每100毫秒时使用1毫秒的CPU时间来对redis的hash表进行重新hash,</span><br><span class="line"># 可以降低内存的使用。</span><br><span class="line"># 当你的使用场景中,有非常严格的实时性需要,不能够接受Redis时不时的对请求有2毫秒的延迟的话,</span><br><span class="line"># 把这项配置为 no。</span><br><span class="line"># 如果没有这么严格的实时性要求,可以设置为 yes,以便能够尽可能快的释放内存</span><br><span class="line">activerehashing yes</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/07/Redis的安装/" rel="next" title="Redis的安装">
+                <i class="fa fa-chevron-left"></i> Redis的安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/12/ConcurrentModificationException异常总结-多线程方式/" rel="prev" title="ConcurrentModificationException异常总结-多线程方式">
+                ConcurrentModificationException异常总结-多线程方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+ 	<div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://picture.yuech.net/naruto.jpg"
+                alt="Yue Chang" />
+            
+              <p class="site-author-name" itemprop="name">Yue Chang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、daemonize"><span class="nav-number">1.</span> <span class="nav-text">1、daemonize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、pidfile"><span class="nav-number">2.</span> <span class="nav-text">2、pidfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、port"><span class="nav-number">3.</span> <span class="nav-text">3、port</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、bind"><span class="nav-number">4.</span> <span class="nav-text">4、bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、timeout"><span class="nav-number">5.</span> <span class="nav-text">5、timeout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、logfile"><span class="nav-number">6.</span> <span class="nav-text">6、logfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、databases"><span class="nav-number">7.</span> <span class="nav-text">7、databases</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、save"><span class="nav-number">8.</span> <span class="nav-text">8、save</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、rdbcompression"><span class="nav-number">9.</span> <span class="nav-text">9、rdbcompression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、dbfinename"><span class="nav-number">10.</span> <span class="nav-text">10、dbfinename</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、dir"><span class="nav-number">11.</span> <span class="nav-text">11、dir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12、slaveof"><span class="nav-number">12.</span> <span class="nav-text">12、slaveof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13、masterauth"><span class="nav-number">13.</span> <span class="nav-text">13、masterauth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14、requirepass"><span class="nav-number">14.</span> <span class="nav-text">14、requirepass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15、maxclient"><span class="nav-number">15.</span> <span class="nav-text">15、maxclient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16、maxmemory"><span class="nav-number">16.</span> <span class="nav-text">16、maxmemory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17、appendonly"><span class="nav-number">17.</span> <span class="nav-text">17、appendonly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18、appendfsync"><span class="nav-number">18.</span> <span class="nav-text">18、appendfsync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19、vm-enabled"><span class="nav-number">19.</span> <span class="nav-text">19、vm-enabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20、vm-swap-file"><span class="nav-number">20.</span> <span class="nav-text">20、vm-swap-file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21、vm-max-memory"><span class="nav-number">21.</span> <span class="nav-text">21、vm-max-memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22、vm-page-size"><span class="nav-number">22.</span> <span class="nav-text">22、vm-page-size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23、vm-pages"><span class="nav-number">23.</span> <span class="nav-text">23、vm-pages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24、vm-max-threads"><span class="nav-number">24.</span> <span class="nav-text">24、vm-max-threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25、hash-max-zipmap"><span class="nav-number">25.</span> <span class="nav-text">25、hash-max-zipmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26、activerehashing"><span class="nav-number">26.</span> <span class="nav-text">26、activerehashing</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yue Chang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div style="text-align:center;width:100%;height:50">
+  粤ICP备18054530号-2
+  <span id="busuanzi_container_site_pv">
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="busuanzi_value_site_pv"></span>
+  </span> 
+
+  <span id="busuanzi_container_site_uv" class="theme-info">
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="busuanzi_value_site_uv"></span>
+  </span>
+<div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '06c98f2f4e86c78db9e0',
+          clientSecret: 'e2299e880fa4782500f6e9c6e351f9df5e5654fd',
+          repo: 'blog-comment',
+          owner: 'yuechang',
+          admin: ['yuechang'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("gxjtQDQU8Po0WNAWg2EuOQPj-gzGzoHsz", "igR8qwpo2ez9JtsjOwu04w6Q");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
