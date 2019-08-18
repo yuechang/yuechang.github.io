@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="spring IOC创建对象配置初始化方法和销毁方法1、创建一个类public class HelloWorld {     public HelloWorld(){         System.out.println(&quot;hello world&quot;);     }      public void init(){         System.out.println(&quot;init&quot;);     }">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-07T05:35:24.240Z">
+<meta property="og:updated_time" content="2019-08-18T01:17:39.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring IOC创建对象配置初始化方法和销毁方法">
 <meta name="twitter:description" content="spring IOC创建对象配置初始化方法和销毁方法1、创建一个类public class HelloWorld {     public HelloWorld(){         System.out.println(&quot;hello world&quot;);     }      public void init(){         System.out.println(&quot;init&quot;);     }">
@@ -351,7 +351,6 @@
     }
 }
 </code></pre>
-<a id="more"></a>
 <h4 id="2、spring配置文件中"><a href="#2、spring配置文件中" class="headerlink" title="2、spring配置文件中"></a>2、spring配置文件中</h4><pre><code class="xml"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> </span>
 <span class="tag">      <span class="attr">class</span>=<span class="string">"com.ithiema07.spring.ioc.initdestroy.HelloWorld"</span></span>
 <span class="tag">      <span class="attr">init-method</span>=<span class="string">"init"</span></span>

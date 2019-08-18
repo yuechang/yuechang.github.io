@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解">
+<meta name="description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解如果含有，则进行解析，形式1：1234@">
 <meta name="keywords" content="spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring 类扫描">
 <meta property="og:url" content="http://yuechang.github.io/2017/11/26/Spring 类扫描/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解">
+<meta property="og:description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解如果含有，则进行解析，形式1：1234@">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-07T05:30:16.636Z">
+<meta property="og:updated_time" content="2019-08-18T01:07:21.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring 类扫描">
-<meta name="twitter:description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解">
+<meta name="twitter:description" content="spring 类扫描1、启动spring容器，spring容器会解析到以下配置1&amp;lt;context:component-scan base-package=&quot;...&quot;&amp;gt;&amp;lt;/context:component-scan&amp;gt; 2、spring容器会在base-package包及子包中扫描所有的类3、检查这些类中是否含有@Component注解如果含有，则进行解析，形式1：1234@">
 
 
 
@@ -333,8 +333,7 @@
 
       
         <h3 id="spring-类扫描"><a href="#spring-类扫描" class="headerlink" title="spring 类扫描"></a>spring 类扫描</h3><h4 id="1、启动spring容器，spring容器会解析到以下配置"><a href="#1、启动spring容器，spring容器会解析到以下配置" class="headerlink" title="1、启动spring容器，spring容器会解析到以下配置"></a>1、启动spring容器，spring容器会解析到以下配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="2、spring容器会在base-package包及子包中扫描所有的类"><a href="#2、spring容器会在base-package包及子包中扫描所有的类" class="headerlink" title="2、spring容器会在base-package包及子包中扫描所有的类"></a>2、spring容器会在base-package包及子包中扫描所有的类</h4><h4 id="3、检查这些类中是否含有-Component注解"><a href="#3、检查这些类中是否含有-Component注解" class="headerlink" title="3、检查这些类中是否含有@Component注解"></a>3、检查这些类中是否含有@Component注解</h4><a id="more"></a>
-<p>如果含有，则进行解析，<br>形式1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、spring容器会在base-package包及子包中扫描所有的类"><a href="#2、spring容器会在base-package包及子包中扫描所有的类" class="headerlink" title="2、spring容器会在base-package包及子包中扫描所有的类"></a>2、spring容器会在base-package包及子包中扫描所有的类</h4><h4 id="3、检查这些类中是否含有-Component注解"><a href="#3、检查这些类中是否含有-Component注解" class="headerlink" title="3、检查这些类中是否含有@Component注解"></a>3、检查这些类中是否含有@Component注解</h4><p>如果含有，则进行解析，<br>形式1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>形式2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"aa"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"aa"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>

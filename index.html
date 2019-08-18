@@ -834,16 +834,53 @@
 
       
         
-          <h3 id="spring-AOP-配置"><a href="#spring-AOP-配置" class="headerlink" title="spring-AOP-配置"></a>spring-AOP-配置</h3><p>spring-AOP-配置</p>
+          
+            <h3 id="spring-AOP-配置"><a href="#spring-AOP-配置" class="headerlink" title="spring-AOP-配置"></a>spring-AOP-配置</h3><p>spring-AOP-配置</p>
 <h4 id="1、步骤"><a href="#1、步骤" class="headerlink" title="1、步骤"></a>1、步骤</h4><h5 id="1-1、创建一个接口PersonDao"><a href="#1-1、创建一个接口PersonDao" class="headerlink" title="1.1、创建一个接口PersonDao"></a>1.1、创建一个接口PersonDao</h5><h5 id="1-2、创建一个目标类PersonDaoImpl"><a href="#1-2、创建一个目标类PersonDaoImpl" class="headerlink" title="1.2、创建一个目标类PersonDaoImpl"></a>1.2、创建一个目标类PersonDaoImpl</h5><h5 id="1-3、创建一个事务Transaction"><a href="#1-3、创建一个事务Transaction" class="headerlink" title="1.3、创建一个事务Transaction"></a>1.3、创建一个事务Transaction</h5><h5 id="1-4、把目标类和事务放入到spring容器中"><a href="#1-4、把目标类和事务放入到spring容器中" class="headerlink" title="1.4、把目标类和事务放入到spring容器中"></a>1.4、把目标类和事务放入到spring容器中</h5><h5 id="1-5、进行aop的配置"><a href="#1-5、进行aop的配置" class="headerlink" title="1.5、进行aop的配置"></a>1.5、进行aop的配置</h5><h6 id="1-5-1、引入aop的命名空间"><a href="#1-5-1、引入aop的命名空间" class="headerlink" title="1.5.1、引入aop的命名空间"></a>1.5.1、引入aop的命名空间</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlns:aop="http://www.springframework.org/schema/aop"</span><br><span class="line">http://www.springframework.org/schema/aop </span><br><span class="line">http://www.springframework.org/schema/aop/spring-aop-2.5.xsd</span><br></pre></td></tr></table></figure>
 <h6 id="1-5-2、把PersonDao和Transaction放入到spring容器中"><a href="#1-5-2、把PersonDao和Transaction放入到spring容器中" class="headerlink" title="1.5.2、把PersonDao和Transaction放入到spring容器中"></a>1.5.2、把PersonDao和Transaction放入到spring容器中</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"personDao"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transaction"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/28/Spring-AOP-配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<h6 id="1-5-3、进行aop的配置"><a href="#1-5-3、进行aop的配置" class="headerlink" title="1.5.3、进行aop的配置"></a>1.5.3、进行aop的配置</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">        切入点表达式</span></span><br><span class="line"><span class="comment">        id为该切面点表达式的唯一标示</span></span><br><span class="line"><span class="comment">     --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">"execution(* com.yc.spring.PersonDaoImpl.*(..))"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"perform"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">        一个aspect代表一个切面</span></span><br><span class="line"><span class="comment">     --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"transaction"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">            前置通知：</span></span><br><span class="line"><span class="comment">                1、在目标方法执行之前执行；</span></span><br><span class="line"><span class="comment">                2、在前置通知中有一个参数：JoinPoint，该参数可以获取目标方法的一些信息；</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">"beginTransaction"</span> <span class="attr">pointcut-ref</span>=<span class="string">"perform"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">            后置通知</span></span><br><span class="line"><span class="comment">                1、在目标方法执行之后；</span></span><br><span class="line"><span class="comment">                2、如果目标方法遇到异常，则后置通知将不在执行；</span></span><br><span class="line"><span class="comment">                3、方法中也有两个参数：</span></span><br><span class="line"><span class="comment">                    JoinPoint：</span></span><br><span class="line"><span class="comment">                    Object：该参数的名称要与returing配置的参数名称一致</span></span><br><span class="line"><span class="comment">                4、能够获取目标方法的返回值；</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:after-returning</span> <span class="attr">method</span>=<span class="string">"commit"</span> <span class="attr">pointcut-ref</span>=<span class="string">"perform"</span> <span class="attr">returning</span>=<span class="string">"obj"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">            最终通知</span></span><br><span class="line"><span class="comment">                无论目标方法是否遇到异常，都会执行</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">"finallyMethod"</span> <span class="attr">pointcut-ref</span>=<span class="string">"perform"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">            异常通知</span></span><br><span class="line"><span class="comment">                1、获取目标方法获取的异常信息</span></span><br><span class="line"><span class="comment">                2、throwing="ex",异常通知中的异常的名称必须是ex</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:after-throwing</span> <span class="attr">method</span>=<span class="string">"throwingMethod"</span> <span class="attr">pointcut-ref</span>=<span class="string">"perform"</span> <span class="attr">throwing</span>=<span class="string">"ex"</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">            环绕通知</span></span><br><span class="line"><span class="comment">                1、控制目标方法的执行；</span></span><br><span class="line"><span class="comment">                2、该方法中有一个ProceedingJoinPoint参数；</span></span><br><span class="line"><span class="comment">                3、该参数的proceed()方法调用的是目标方法，,如果该方法不调用，则目标方法不会执行；</span></span><br><span class="line"><span class="comment">                4、可以从ProceedingJoinPoint中得到目标方法的一些信息；</span></span><br><span class="line"><span class="comment">                5、需要返回时，环绕通知方法也需要返回</span></span><br><span class="line"><span class="comment">                6、环绕通知和前置通知/后置通知一般不同时存在</span></span><br><span class="line"><span class="comment">                7、前置通知和后置通知不能控制目标方法的执行；</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">aop:around</span> <span class="attr">method</span>=<span class="string">"aroundMethod"</span> <span class="attr">pointcut-ref</span>=<span class="string">"perform"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2、原理："><a href="#2、原理：" class="headerlink" title="2、原理："></a>2、原理：</h4><ul>
+<li>1、启动spring容器，把personDao和transaction实例化</li>
+<li>2、当spring容器解析到aop:config配置的时候，会解析切入点表达式</li>
+<li>3、把切入点表达式解析出来以后，和spring容器中的bean做匹配，如果匹配成功，则为该bean创建代理对象;</li>
+<li>4、代理对象的方法的创建过程就把通知和目标方法结合在一起了</li>
+<li>5、当在客户端执行context.getBean时，先检查跟bean是否有代理对象，如果有代理对象，则返回代理对象;如果没有代理对象，则返回对象本身<br><strong><em>注意：如果切入点表达式在spring容器中没有找到匹配的对象，则会报错</em></strong></li>
+</ul>
+<h4 id="3、切入点配置说明"><a href="#3、切入点配置说明" class="headerlink" title="3、切入点配置说明"></a>3、切入点配置说明</h4><p>下面是spring切入点的配置说明：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">execution(modifiers-pattern? ret-type-pattern declaring-type-pattern?name-pattern(param-pattern)<span class="keyword">throws</span>-pattern?)</span><br></pre></td></tr></table></figure></p>
+<p>直接看的话，还是不是很好理解<br>通过一个方法声明的来对比说明一下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> java.lang.Object.wait(<span class="keyword">long</span>) <span class="keyword">throws</span> java.lang.InterruptedException</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>修饰符类型</th>
+<th>返回值类型</th>
+<th>声明类型</th>
+<th>方法名</th>
+<th>参数类型</th>
+<th>异常类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>modifiers-pattern?</td>
+<td>ret-type-pattern</td>
+<td>declaring-type-pattern?</td>
+<td>name-pattern</td>
+<td>param-pattern</td>
+<td>throws-pattern?</td>
+</tr>
+<tr>
+<td>public</td>
+<td>void</td>
+<td>java.lang.Object</td>
+<td>wait</td>
+<td>long</td>
+<td>throws java.lang.InterruptedException</td>
+</tr>
+</tbody>
+</table>
+<p>切入点配置举例：<br>execution (public <em> </em>(..) ) : 表示任意公共方法<br>execution (<em> set</em>(..) ) : 表示以set开头的任意方法<br>execution (<em> com.xyz.service.AccountService.</em>(..) )  : 表示com.xyz.service.AccountService类中的所有方法<br>execution (<em> com.xyz.service.</em>.<em>(..) ) ：表示com.xyz.service包下的所有的类的所有的方法<br>execution (</em> com.xyz.service..<em>.</em>(..) ) ：表示com.xyz.service包下及其子包下的所有的类的所有的方法</p>
+
+          
         
       
     </div>
@@ -971,16 +1008,23 @@
 
       
         
-          <h3 id="spring-AOP简介"><a href="#spring-AOP简介" class="headerlink" title="spring-AOP简介"></a>spring-AOP简介</h3><p>spring面向切面编程</p>
+          
+            <h3 id="spring-AOP简介"><a href="#spring-AOP简介" class="headerlink" title="spring-AOP简介"></a>spring-AOP简介</h3><p>spring面向切面编程</p>
 <h4 id="1、切面"><a href="#1、切面" class="headerlink" title="1、切面"></a>1、切面</h4><p>事务、日志、安全性框架、权限等都是切面</p>
 <h4 id="2、通知"><a href="#2、通知" class="headerlink" title="2、通知"></a>2、通知</h4><p>通知就是切面中的方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Transaction类为一个切面</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Transaction</span> </span>&#123;</span><br><span class="line">    <span class="comment">// beginTransaction()方法为一个通知</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beginTransaction</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"begin transaction"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// commit()方法为另一个通知</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commit</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"commit"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/28/Spring-AOP简介/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<h4 id="3、切入点"><a href="#3、切入点" class="headerlink" title="3、切入点"></a>3、切入点</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(method.getName().contains(<span class="string">"save"</span>)</span><br><span class="line">        ||method.getName().contains(<span class="string">"update"</span>)</span><br><span class="line">        ||method.getName().contains(<span class="string">"delete"</span>))&#123;</span><br><span class="line">    <span class="comment">//1、开启事务</span></span><br><span class="line">    <span class="keyword">this</span>.transaction.beginTransaction();</span><br><span class="line">    <span class="comment">//2、完成目标方法</span></span><br><span class="line">    obj = method.invoke(<span class="keyword">this</span>.target, args);</span><br><span class="line">    <span class="comment">//3、事务的提交</span></span><br><span class="line">    <span class="keyword">this</span>.transaction.commit();</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//2、完成目标方法</span></span><br><span class="line">    obj = method.invoke(<span class="keyword">this</span>.target, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中if语句块的内容就是切入点，只有满足了切入点以后，才能让通知和目标方法结合在一起</p>
+<h4 id="4、连接点"><a href="#4、连接点" class="headerlink" title="4、连接点"></a>4、连接点</h4><p>代理对象调用哪个方法，该方法就称为连接点（在程序执行过程中某一个特定的点）</p>
+<h4 id="5、织入："><a href="#5、织入：" class="headerlink" title="5、织入："></a>5、织入：</h4><p>形成代理对象方法体的过程，一个动作</p>
+<h4 id="6、说明："><a href="#6、说明：" class="headerlink" title="6、说明："></a>6、说明：</h4><ul>
+<li>1、代理对象的方法=通知+目标方法</li>
+<li>2、除了目标方法以外的内容都可以看做切面中的通知（比如目标方法有CRUD，除了CRUD之外的都是通知，如开启事务、事务提交及事务回滚等）</li>
+<li>3、连接点代表了一个方法，在客户端被调用的一个方法（这个方法目标方法和代理对象中都存在）</li>
+<li>4、通知就是切面中的一个方法</li>
+<li>5、在开发的过程中，通知和目标方法完全是松耦合的</li>
+</ul>
+
+          
         
       
     </div>
