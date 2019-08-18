@@ -105,11 +105,11 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '0SIHCUP0IO',
-      apiKey: '679d45989315bff1606630bbd597f23d',
-      indexName: 'blog_index_name',
+      applicationID: 'BBGGBMEBHY',
+      apiKey: 'a8034b03f1ed5ebe16b4fc52a5d16939',
+      indexName: 'prod_blog',
       hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      labels: {"input_placeholder":"搜索","hits_empty":"没有找到任何结果关于: ${query}","hits_stats":"找到 ${hits} 个结果，耗时 ${time} ms"}
     }
   };
 </script>
@@ -219,9 +219,47 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -468,7 +506,7 @@
         
           
             <p>快坐上那艘船<br>山治，男人不能一直流泪<br>听好，再也不要回到这里了<br>大海如此宽广 有一天<br>有一天你一定会遇到温柔的人们<br>快跑<br>不要回头<br>快跑 山治</p>
-<div id="dplayer1" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer1"),"theme":"#FADFA3","video":{"url":"http://picture.yuech.net/ONE_PIECE.mp4","pic":"http://picture.yuech.net/TheSeaIsSoWide.jpg"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
+<div id="dplayer3" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer3"),"theme":"#FADFA3","video":{"url":"http://picture.yuech.net/ONE_PIECE.mp4","pic":"http://picture.yuech.net/TheSeaIsSoWide.jpg"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
 
           
         
@@ -598,7 +636,7 @@
 
       
         
-          <div id="dplayer3" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer3"),"theme":"#FADFA3","video":{"url":"http://picture.yuech.net/TheLastWomanStanding.mp4","pic":"http://picture.yuech.net/wish.JPG"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
+          <div id="dplayer2" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer2"),"theme":"#FADFA3","video":{"url":"http://picture.yuech.net/TheLastWomanStanding.mp4","pic":"http://picture.yuech.net/wish.JPG"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015/05/13/剩者为王片段/#more" rel="contents">
@@ -1208,6 +1246,19 @@
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 
