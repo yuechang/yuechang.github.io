@@ -288,171 +288,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI简介/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://picture.yuech.net/naruto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/21/Spring-DI简介/" itemprop="url">spring DI简介</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:30:10+08:00">
-                Nov 21 2017
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/21/Spring-DI简介/" class="leancloud_visitors" data-flag-title="spring DI简介">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="spring-DI简介"><a href="#spring-DI简介" class="headerlink" title="spring DI简介"></a>spring DI简介</h3><p>DI:依赖注入<br>概念：给属性赋值</p>
-<ul>
-<li>1、调用set方法<br>   基础类型<br>   引用类型</li>
-<li>2、调用构造器</li>
-<li>3、利用注解的形式</li>
-</ul>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>{
-
-}    
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>{
-  <span class="keyword">private</span> Long pid;
-  <span class="keyword">private</span> String name;
-  <span class="keyword">private</span> Student student;
-  <span class="keyword">private</span> List list;
-  <span class="keyword">private</span> Set set;
-  <span class="keyword">private</span> Map map;
-  <span class="keyword">private</span> Properties properties;
-}
-</code></pre>
-<p>步骤：</p>
-<ul>
-<li>1、创建一个Student类</li>
-<li>2、创建一个Person类</li>
-<li>3、创建一个spring的配置文件，把student类和person类      放入到spring容器中</li>
-<li>4、装配各个属性</li>
-</ul>
-<p>执行流程：</p>
-<ul>
-<li>1、启动spring容器</li>
-<li>2、创建依赖对象(Student对象)</li>
-<li>3、创建Person对象</li>
-<li><p>4、给person对象中的属性进行装配的操作</p>
-<p>注意：<br>  如果把Student的配置方式改成scope=”prototype”,<br>  因为其他的类的创建和属性的装配的过程全部发生在spring容器启动的时候，所以Student对象的创建被提前了<br>  ，但是还是用一次即创建一次对象</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI-setter注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -595,7 +430,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI简介/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -614,7 +449,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" itemprop="url">spring IOC创建对象配置初始化方法和销毁方法</a></h1>
+                <a class="post-title-link" href="/2017/11/21/Spring-DI简介/" itemprop="url">Spring DI简介</a></h1>
         
 
         <div class="post-meta">
@@ -626,7 +461,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:22:10+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:30:10+08:00">
                 Nov 21 2017
               </time>
             
@@ -644,7 +479,7 @@
 
           
           
-             <span id="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" class="leancloud_visitors" data-flag-title="spring IOC创建对象配置初始化方法和销毁方法">
+             <span id="/2017/11/21/Spring-DI简介/" class="leancloud_visitors" data-flag-title="Spring DI简介">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -677,7 +512,172 @@
       
         
           
-            <h3 id="spring-IOC创建对象配置初始化方法和销毁方法"><a href="#spring-IOC创建对象配置初始化方法和销毁方法" class="headerlink" title="spring IOC创建对象配置初始化方法和销毁方法"></a>spring IOC创建对象配置初始化方法和销毁方法</h3><h4 id="1、创建一个类"><a href="#1、创建一个类" class="headerlink" title="1、创建一个类"></a>1、创建一个类</h4><pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>{
+            <h3 id="Spring-DI简介"><a href="#Spring-DI简介" class="headerlink" title="Spring DI简介"></a>Spring DI简介</h3><p>DI:依赖注入<br>概念：给属性赋值</p>
+<ul>
+<li>1、调用set方法<br>   基础类型<br>   引用类型</li>
+<li>2、调用构造器</li>
+<li>3、利用注解的形式</li>
+</ul>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>{
+
+}    
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>{
+  <span class="keyword">private</span> Long pid;
+  <span class="keyword">private</span> String name;
+  <span class="keyword">private</span> Student student;
+  <span class="keyword">private</span> List list;
+  <span class="keyword">private</span> Set set;
+  <span class="keyword">private</span> Map map;
+  <span class="keyword">private</span> Properties properties;
+}
+</code></pre>
+<p>步骤：</p>
+<ul>
+<li>1、创建一个Student类</li>
+<li>2、创建一个Person类</li>
+<li>3、创建一个spring的配置文件，把student类和person类      放入到spring容器中</li>
+<li>4、装配各个属性</li>
+</ul>
+<p>执行流程：</p>
+<ul>
+<li>1、启动spring容器</li>
+<li>2、创建依赖对象(Student对象)</li>
+<li>3、创建Person对象</li>
+<li><p>4、给person对象中的属性进行装配的操作</p>
+<p>注意：<br>  如果把Student的配置方式改成scope=”prototype”,<br>  因为其他的类的创建和属性的装配的过程全部发生在spring容器启动的时候，所以Student对象的创建被提前了<br>  ，但是还是用一次即创建一次对象</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://picture.yuech.net/naruto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" itemprop="url">Spring IOC创建对象配置初始化方法和销毁方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:22:10+08:00">
+                Nov 21 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" class="leancloud_visitors" data-flag-title="Spring IOC创建对象配置初始化方法和销毁方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Spring-IOC创建对象配置初始化方法和销毁方法"><a href="#Spring-IOC创建对象配置初始化方法和销毁方法" class="headerlink" title="Spring IOC创建对象配置初始化方法和销毁方法"></a>Spring IOC创建对象配置初始化方法和销毁方法</h3><h4 id="1、创建一个类"><a href="#1、创建一个类" class="headerlink" title="1、创建一个类"></a>1、创建一个类</h4><pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>{
     <span class="function"><span class="keyword">public</span> <span class="title">HelloWorld</span><span class="params">()</span></span>{
         System.out.println(<span class="string">"hello world"</span>);
     }
@@ -763,7 +763,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的生命周期/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -782,7 +782,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的生命周期/" itemprop="url">spring IOC产生对象的生命周期</a></h1>
+                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的时机/" itemprop="url">Spring IOC产生对象的时机</a></h1>
         
 
         <div class="post-meta">
@@ -812,7 +812,7 @@
 
           
           
-             <span id="/2017/11/20/Spring-IOC产生对象的生命周期/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的生命周期">
+             <span id="/2017/11/20/Spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="Spring IOC产生对象的时机">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -845,15 +845,13 @@
       
         
           
-            <h3 id="spring-IOC产生对象的生命周期"><a href="#spring-IOC产生对象的生命周期" class="headerlink" title="spring IOC产生对象的生命周期"></a>spring IOC产生对象的生命周期</h3><p>1、HelloWorld在默认的配置情况下是单例的。<br>验证过程：1、创建HelloWorld类<br>        2、把该类放入到spring容器中<br>        3、启动调用</p>
-<p>将来在做项目的时候，会把service层和dao层所有的类放入到spring容器中，service层所有的类和dao层所有的类都是单例的，不能一个对象放在属性上（因为是共享的）</p>
-<p>2、多例，需要配置scope</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>singleton：单例(默认)<br>prototype：多例<br>request：每一次HTTP请求产生一个新的bean，同时该bean仅在当前HTTP request内有效<br>session：每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效<br>global session：每一次HTTP请求都会产生一个新的bean，同时该bean全局HTTP session内有效</p>
-<p>singleton：<br>返回单例的对象，只会初始化一次</p>
-<p>prototype：<br>每次都会new一个对象返回，也就是多例的，另外对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。 清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用 bean的后置处理器，该处理器持有要被清除的bean的引用。）</p>
-<p>singleton和prototype二者选择的原则：有状态的bean都使用Prototype作用域，而对无状态的bean则应该使用singleton作用域。</p>
-<p>因为stuts2中的action是多例的，所以将来struts2中的action要放入spring容器中也是多例的</p>
+            <h3 id="Spring-IOC产生对象的时机"><a href="#Spring-IOC产生对象的时机" class="headerlink" title="Spring IOC产生对象的时机"></a>Spring IOC产生对象的时机</h3><p>1、配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld2"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：<br>1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同<br>2、在默认情况下，在启动spring容器的时候创建对象<br>3、把service层和dao层所有的类放入spring容器中，在启动spring容器的时候创建对象<br>4、可以过早的检查发现错误<br>5、缺点：如果该类中有属性，并且属性为一个集合，那么在创建对象的时候，集合中如果有数据了，那么该数据会过早的加入到内存中</p>
+<p>为了避免上述情况的发生，尽量把数据放在局部变量中<br>（通过代理来做，需要的时候再加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemProperties</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initProperties</span><span class="params">()</span></span>&#123;</span><br><span class="line">        properties = ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>系统初始化的时候，加载数据库系统配置文件到Properties类中</p>
+<p>2、配置延迟加载：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>default:默认=否<br>false：否，spring启动时创建对象<br>ture：是，调用时才创建对象</p>
+<p>在多例的情况下，不论是否设置lazy-init，都是在调用的时候才创建对象<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">lazy-init</span>=<span class="string">"ture"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -902,7 +900,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -921,7 +919,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的时机/" itemprop="url">spring IOC产生对象的时机</a></h1>
+                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的生命周期/" itemprop="url">Spring IOC产生对象的生命周期</a></h1>
         
 
         <div class="post-meta">
@@ -951,7 +949,7 @@
 
           
           
-             <span id="/2017/11/20/Spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="spring IOC产生对象的时机">
+             <span id="/2017/11/20/Spring-IOC产生对象的生命周期/" class="leancloud_visitors" data-flag-title="Spring IOC产生对象的生命周期">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -984,13 +982,15 @@
       
         
           
-            <h3 id="spring-IOC产生对象的时机"><a href="#spring-IOC产生对象的时机" class="headerlink" title="spring IOC产生对象的时机"></a>spring IOC产生对象的时机</h3><p>1、配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld2"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>说明：<br>1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同<br>2、在默认情况下，在启动spring容器的时候创建对象<br>3、把service层和dao层所有的类放入spring容器中，在启动spring容器的时候创建对象<br>4、可以过早的检查发现错误<br>5、缺点：如果该类中有属性，并且属性为一个集合，那么在创建对象的时候，集合中如果有数据了，那么该数据会过早的加入到内存中</p>
-<p>为了避免上述情况的发生，尽量把数据放在局部变量中<br>（通过代理来做，需要的时候再加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemProperties</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initProperties</span><span class="params">()</span></span>&#123;</span><br><span class="line">        properties = ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>系统初始化的时候，加载数据库系统配置文件到Properties类中</p>
-<p>2、配置延迟加载：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>default:默认=否<br>false：否，spring启动时创建对象<br>ture：是，调用时才创建对象</p>
-<p>在多例的情况下，不论是否设置lazy-init，都是在调用的时候才创建对象<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">lazy-init</span>=<span class="string">"ture"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+            <h3 id="Spring-IOC产生对象的生命周期"><a href="#Spring-IOC产生对象的生命周期" class="headerlink" title="Spring IOC产生对象的生命周期"></a>Spring IOC产生对象的生命周期</h3><p>1、HelloWorld在默认的配置情况下是单例的。<br>验证过程：1、创建HelloWorld类<br>        2、把该类放入到spring容器中<br>        3、启动调用</p>
+<p>将来在做项目的时候，会把service层和dao层所有的类放入到spring容器中，service层所有的类和dao层所有的类都是单例的，不能一个对象放在属性上（因为是共享的）</p>
+<p>2、多例，需要配置scope</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>singleton：单例(默认)<br>prototype：多例<br>request：每一次HTTP请求产生一个新的bean，同时该bean仅在当前HTTP request内有效<br>session：每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效<br>global session：每一次HTTP请求都会产生一个新的bean，同时该bean全局HTTP session内有效</p>
+<p>singleton：<br>返回单例的对象，只会初始化一次</p>
+<p>prototype：<br>每次都会new一个对象返回，也就是多例的，另外对于prototype作用域的bean，有一点非常重要，那就是Spring不能对一个prototype bean的整个生命周期负责，容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法，而对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。 清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责。（让Spring容器释放被singleton作用域bean占用资源的一种可行方式是，通过使用 bean的后置处理器，该处理器持有要被清除的bean的引用。）</p>
+<p>singleton和prototype二者选择的原则：有状态的bean都使用Prototype作用域，而对无状态的bean则应该使用singleton作用域。</p>
+<p>因为stuts2中的action是多例的，所以将来struts2中的action要放入spring容器中也是多例的</p>
 
           
         

@@ -307,7 +307,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/26/Spring-IOC创建对象的方法/" itemprop="url">spring IOC创建对象的方法</a></h1>
+                <a class="post-title-link" href="/2017/09/26/Spring-IOC创建对象的方法/" itemprop="url">Spring IOC创建对象的方法</a></h1>
         
 
         <div class="post-meta">
@@ -337,7 +337,7 @@
 
           
           
-             <span id="/2017/09/26/Spring-IOC创建对象的方法/" class="leancloud_visitors" data-flag-title="spring IOC创建对象的方法">
+             <span id="/2017/09/26/Spring-IOC创建对象的方法/" class="leancloud_visitors" data-flag-title="Spring IOC创建对象的方法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -370,7 +370,7 @@
       
         
           
-            <h3 id="spring-IOC创建对象的方法"><a href="#spring-IOC创建对象的方法" class="headerlink" title="spring IOC创建对象的方法"></a>spring IOC创建对象的方法</h3><h4 id="1、默认的构造器函数"><a href="#1、默认的构造器函数" class="headerlink" title="1、默认的构造器函数"></a>1、默认的构造器函数</h4><p>在默认的配置情况下，spring容器是利用默认的构造器给类创建对象的</p>
+            <h3 id="Spring-IOC创建对象的方法"><a href="#Spring-IOC创建对象的方法" class="headerlink" title="Spring IOC创建对象的方法"></a>Spring IOC创建对象的方法</h3><h4 id="1、默认的构造器函数"><a href="#1、默认的构造器函数" class="headerlink" title="1、默认的构造器函数"></a>1、默认的构造器函数</h4><p>在默认的配置情况下，spring容器是利用默认的构造器给类创建对象的</p>
 <h4 id="2、静态工厂模式"><a href="#2、静态工厂模式" class="headerlink" title="2、静态工厂模式"></a>2、静态工厂模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 步骤：</span></span><br><span class="line"><span class="comment">// 1、静态工厂</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HelloWorld <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloWorld();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2、提供一个HelloWorld类</span></span><br><span class="line"><span class="comment">// 3、在spring的配置文件中进行配置</span></span><br><span class="line">&lt;bean id=<span class="string">"helloWorldCreateByStaticFactory"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.yc.spring.ioc.HelloWorldFactory"</span> factory-method=<span class="string">"getInstance"</span> /&gt;</span><br></pre></td></tr></table></figure>
 <p>spring容器做的事：调用静态工厂方法创建对象，但是创建对象的方法的代码在工厂方法中</p>
 <h4 id="3、实例工厂模式"><a href="#3、实例工厂模式" class="headerlink" title="3、实例工厂模式"></a>3、实例工厂模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 步骤</span></span><br><span class="line"><span class="comment">// 1、创建实例工厂类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloWorld <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloWorld();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2、提供一个HelloWorld类</span></span><br><span class="line"><span class="comment">// 3、在spring的配置文件中进行配置</span></span><br><span class="line">	&lt;!-- 配置实例工厂--&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"helloWorldFactory"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.yc.spring.ioc.HelloWorld2Factory"</span> /&gt;</span><br><span class="line">	&lt;!-- </span><br><span class="line">		配置helloWorld3</span><br><span class="line">		factory-bean：指向了实例工厂</span><br><span class="line">		factory-method:指向了实例的工厂方法</span><br><span class="line">	--&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"helloWorld3"</span> factory-bean=<span class="string">"helloWorldFactory"</span> factory-method=<span class="string">"getInstance"</span>/&gt;</span><br></pre></td></tr></table></figure>
@@ -440,7 +440,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/26/Spring-IOC创建对象/" itemprop="url">spring IOC创建对象</a></h1>
+                <a class="post-title-link" href="/2017/09/26/Spring-IOC创建对象/" itemprop="url">Spring IOC创建对象</a></h1>
         
 
         <div class="post-meta">
@@ -470,7 +470,7 @@
 
           
           
-             <span id="/2017/09/26/Spring-IOC创建对象/" class="leancloud_visitors" data-flag-title="spring IOC创建对象">
+             <span id="/2017/09/26/Spring-IOC创建对象/" class="leancloud_visitors" data-flag-title="Spring IOC创建对象">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -503,8 +503,8 @@
       
         
           
-            <h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>spring 是一个非常活跃的开源框架，它是一个基于core来架构多层Java EE系统的框架，它的主要目地是简化企业开发<br>spring以一种非侵入式的方式来管理你的代码，spring提倡”最少侵入”，这也就意味着你可以适当的时候安装或卸载spring</p>
-<p>spring的控制反转(IOC)：把对象的创建、初始化/销毁等工作交给spring容器来做，由spring容器控制对象的生命周期。<br>意义：对象的创建交给spring容器来做，对于程序员来说，不用操心该对象是怎么样创建出来的。</p>
+            <h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>Spring 是一个非常活跃的开源框架，它是一个基于core来架构多层Java EE系统的框架，它的主要目地是简化企业开发<br>Spring以一种非侵入式的方式来管理你的代码，Spring提倡”最少侵入”，这也就意味着你可以适当的时候安装或卸载Spring</p>
+<p>Spring的控制反转(IOC)：把对象的创建、初始化/销毁等工作交给spring容器来做，由spring容器控制对象的生命周期。<br>意义：对象的创建交给Spring容器来做，对于程序员来说，不用操心该对象是怎么样创建出来的。</p>
 <h3 id="2、创建对象"><a href="#2、创建对象" class="headerlink" title="2、创建对象"></a>2、创建对象</h3><h4 id="2-1、一般方式创建对象"><a href="#2-1、一般方式创建对象" class="headerlink" title="2.1、一般方式创建对象"></a>2.1、一般方式创建对象</h4><p>1、创建一个HelloWorld类<br>2、把java类编译成class文件<br>3、把class文件加载到jvm中<br>4、运行，调用方法</p>
 <p>通过new的方式创建对象并调用对象的方法</p>
 <h4 id="2-2、spring方式创建对象"><a href="#2-2、spring方式创建对象" class="headerlink" title="2.2、spring方式创建对象"></a>2.2、spring方式创建对象</h4><p>1、创建一个HelloWorld类<br>2、以配置文件的形式吧HelloWorld类放入spring容器中<br>3、启动spring容器<br>4、从spring容器中把对象提取出来<br>5、对象调用方法</p>
