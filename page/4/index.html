@@ -288,6 +288,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的时机/" itemprop="url">Spring IOC产生对象的时机</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T21:22:10+08:00">
+                Nov 20 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/20/Spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="Spring IOC产生对象的时机">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Spring-IOC产生对象的时机"><a href="#Spring-IOC产生对象的时机" class="headerlink" title="Spring IOC产生对象的时机"></a>Spring IOC产生对象的时机</h3><p>1、配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld2"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：<br>1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同<br>2、在默认情况下，在启动spring容器的时候创建对象<br>3、把service层和dao层所有的类放入spring容器中，在启动spring容器的时候创建对象<br>4、可以过早的检查发现错误<br>5、缺点：如果该类中有属性，并且属性为一个集合，那么在创建对象的时候，集合中如果有数据了，那么该数据会过早的加入到内存中</p>
+<p>为了避免上述情况的发生，尽量把数据放在局部变量中<br>（通过代理来做，需要的时候再加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemProperties</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initProperties</span><span class="params">()</span></span>&#123;</span><br><span class="line">        properties = ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>系统初始化的时候，加载数据库系统配置文件到Properties类中</p>
+<p>2、配置延迟加载：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>default:默认=否<br>false：否，spring启动时创建对象<br>ture：是，调用时才创建对象</p>
+<p>在多例的情况下，不论是否设置lazy-init，都是在调用的时候才创建对象<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">lazy-init</span>=<span class="string">"ture"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/09/26/Spring-IOC创建对象的方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -865,141 +1002,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/" itemprop="url">redis-sentinel安装、配置与故障与故障转移演示</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T18:39:08+08:00">
-                May 12 2017
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/" class="leancloud_visitors" data-flag-title="redis-sentinel安装、配置与故障与故障转移演示">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="redis-sentinel安装、配置与故障与故障转移演示"><a href="#redis-sentinel安装、配置与故障与故障转移演示" class="headerlink" title="redis-sentinel安装、配置与故障与故障转移演示"></a>redis-sentinel安装、配置与故障与故障转移演示</h2><p><a href="http://blog.csdn.net/yuechang5/article/details/71751692" target="_blank" rel="noopener">redis-sentinel安装、配置与故障与故障转移演示</a><br>本次搭建，将会搭建一个redis-sentinel，其中包括一主两从三哨兵。架构图如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">            </span><br><span class="line">+-------------+      +-------------+      +-------------+</span><br><span class="line">| Sentinel S1 |------| Sentinel S2 |------| Sentinel S3 |</span><br><span class="line">+-------------+      +-------------+      +-------------+</span><br><span class="line">      |                    |                    |</span><br><span class="line">      |                    |                    |</span><br><span class="line">      +------+------+------+------+------+------+</span><br><span class="line">                           |</span><br><span class="line">                           |                     </span><br><span class="line">                       +--------+</span><br><span class="line">                       | Master |</span><br><span class="line">                       +--------+</span><br><span class="line">                           |</span><br><span class="line">                           | </span><br><span class="line">            +------++------+------++------+</span><br><span class="line">            |                             |</span><br><span class="line">            |                             |           </span><br><span class="line">      +-----------+                 +-----------+</span><br><span class="line">      | Salve  S1 |                 | Salve  S2 |</span><br><span class="line">      +-----------+                 +-----------+</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/12/Redis-sentinel安装、配置与故障与故障转移演示/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1054,7 +1056,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1067,7 +1069,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

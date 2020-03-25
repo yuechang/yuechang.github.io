@@ -288,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI简介/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/22/注解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -307,7 +307,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/21/Spring-DI简介/" itemprop="url">Spring DI简介</a></h1>
+                <a class="post-title-link" href="/2017/11/22/注解/" itemprop="url">注解</a></h1>
         
 
         <div class="post-meta">
@@ -319,8 +319,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:30:10+08:00">
-                Nov 21 2017
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T22:45:10+08:00">
+                Nov 22 2017
               </time>
             
 
@@ -337,7 +337,7 @@
 
           
           
-             <span id="/2017/11/21/Spring-DI简介/" class="leancloud_visitors" data-flag-title="Spring DI简介">
+             <span id="/2017/11/22/注解/" class="leancloud_visitors" data-flag-title="注解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -369,44 +369,14 @@
 
       
         
-          
-            <h3 id="Spring-DI简介"><a href="#Spring-DI简介" class="headerlink" title="Spring DI简介"></a>Spring DI简介</h3><p>DI:依赖注入<br>概念：给属性赋值</p>
-<ul>
-<li>1、调用set方法<br>   基础类型<br>   引用类型</li>
-<li>2、调用构造器</li>
-<li>3、利用注解的形式</li>
-</ul>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>{
-
-}    
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>{
-  <span class="keyword">private</span> Long pid;
-  <span class="keyword">private</span> String name;
-  <span class="keyword">private</span> Student student;
-  <span class="keyword">private</span> List list;
-  <span class="keyword">private</span> Set set;
-  <span class="keyword">private</span> Map map;
-  <span class="keyword">private</span> Properties properties;
-}
-</code></pre>
-<p>步骤：</p>
-<ul>
-<li>1、创建一个Student类</li>
-<li>2、创建一个Person类</li>
-<li>3、创建一个spring的配置文件，把student类和person类      放入到spring容器中</li>
-<li>4、装配各个属性</li>
-</ul>
-<p>执行流程：</p>
-<ul>
-<li>1、启动spring容器</li>
-<li>2、创建依赖对象(Student对象)</li>
-<li>3、创建Person对象</li>
-<li><p>4、给person对象中的属性进行装配的操作</p>
-<p>注意：<br>  如果把Student的配置方式改成scope=”prototype”,<br>  因为其他的类的创建和属性的装配的过程全部发生在spring容器启动的时候，所以Student对象的创建被提前了<br>  ，但是还是用一次即创建一次对象</p>
-</li>
-</ul>
-
-          
+          <h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><h4 id="1、起一个标志的作用"><a href="#1、起一个标志的作用" class="headerlink" title="1、起一个标志的作用"></a>1、起一个标志的作用</h4><h4 id="2、注解不能单独存在"><a href="#2、注解不能单独存在" class="headerlink" title="2、注解不能单独存在"></a>2、注解不能单独存在</h4><h4 id="3、注解使用的位置"><a href="#3、注解使用的位置" class="headerlink" title="3、注解使用的位置"></a>3、注解使用的位置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    <span class="comment">// 类与接口</span></span><br><span class="line">    TYPE,</span><br><span class="line">    <span class="comment">// 属性</span></span><br><span class="line">    FIELD,</span><br><span class="line">    <span class="comment">// 方法</span></span><br><span class="line">    METHOD,</span><br><span class="line">    <span class="comment">// 参数</span></span><br><span class="line">    PARAMETER,</span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">    CONSTRUCTOR,</span><br><span class="line">    <span class="comment">// 局部变量</span></span><br><span class="line">    LOCAL_VARIABLE,</span><br><span class="line">    <span class="comment">// 注解类型Annotation type declaration</span></span><br><span class="line">    ANNOTATION_TYPE,</span><br><span class="line">    <span class="comment">// 包类型 Package declaration</span></span><br><span class="line">    PACKAGE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/22/注解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -547,6 +517,171 @@
 </li>
 </ul>
 <p>注意：<br>如果在student对象scope对象配置为prototype，在student类的构造方法中写入输出student语句，将会打印出4个student。<br>第一个因为有ref引用，spring将对象创建提前了，创建了一个student对象；<br>后面三个是一个ref创建一个student对象；</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/21/Spring-DI简介/" itemprop="url">Spring DI简介</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:30:10+08:00">
+                Nov 21 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/21/Spring-DI简介/" class="leancloud_visitors" data-flag-title="Spring DI简介">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Spring-DI简介"><a href="#Spring-DI简介" class="headerlink" title="Spring DI简介"></a>Spring DI简介</h3><p>DI:依赖注入<br>概念：给属性赋值</p>
+<ul>
+<li>1、调用set方法<br>   基础类型<br>   引用类型</li>
+<li>2、调用构造器</li>
+<li>3、利用注解的形式</li>
+</ul>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>{
+
+}    
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>{
+  <span class="keyword">private</span> Long pid;
+  <span class="keyword">private</span> String name;
+  <span class="keyword">private</span> Student student;
+  <span class="keyword">private</span> List list;
+  <span class="keyword">private</span> Set set;
+  <span class="keyword">private</span> Map map;
+  <span class="keyword">private</span> Properties properties;
+}
+</code></pre>
+<p>步骤：</p>
+<ul>
+<li>1、创建一个Student类</li>
+<li>2、创建一个Person类</li>
+<li>3、创建一个spring的配置文件，把student类和person类      放入到spring容器中</li>
+<li>4、装配各个属性</li>
+</ul>
+<p>执行流程：</p>
+<ul>
+<li>1、启动spring容器</li>
+<li>2、创建依赖对象(Student对象)</li>
+<li>3、创建Person对象</li>
+<li><p>4、给person对象中的属性进行装配的操作</p>
+<p>注意：<br>  如果把Student的配置方式改成scope=”prototype”,<br>  因为其他的类的创建和属性的装配的过程全部发生在spring容器启动的时候，所以Student对象的创建被提前了<br>  ，但是还是用一次即创建一次对象</p>
+</li>
+</ul>
 
           
         
@@ -889,143 +1024,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/20/Spring-IOC产生对象的时机/" itemprop="url">Spring IOC产生对象的时机</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T21:22:10+08:00">
-                Nov 20 2017
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/20/Spring-IOC产生对象的时机/" class="leancloud_visitors" data-flag-title="Spring IOC产生对象的时机">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Spring-IOC产生对象的时机"><a href="#Spring-IOC产生对象的时机" class="headerlink" title="Spring IOC产生对象的时机"></a>Spring IOC产生对象的时机</h3><p>1、配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld2"</span> <span class="attr">class</span>=<span class="string">"..."</span>  &gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>说明：<br>1、只要声明一个bean，spring容器就会为之创建对象，不管class是否相同<br>2、在默认情况下，在启动spring容器的时候创建对象<br>3、把service层和dao层所有的类放入spring容器中，在启动spring容器的时候创建对象<br>4、可以过早的检查发现错误<br>5、缺点：如果该类中有属性，并且属性为一个集合，那么在创建对象的时候，集合中如果有数据了，那么该数据会过早的加入到内存中</p>
-<p>为了避免上述情况的发生，尽量把数据放在局部变量中<br>（通过代理来做，需要的时候再加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemProperties</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Properties properties;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initProperties</span><span class="params">()</span></span>&#123;</span><br><span class="line">        properties = ...;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>系统初始化的时候，加载数据库系统配置文件到Properties类中</p>
-<p>2、配置延迟加载：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>default:默认=否<br>false：否，spring启动时创建对象<br>ture：是，调用时才创建对象</p>
-<p>在多例的情况下，不论是否设置lazy-init，都是在调用的时候才创建对象<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> <span class="attr">class</span>=<span class="string">"..."</span>  <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">lazy-init</span>=<span class="string">"ture"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1080,7 +1078,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1093,7 +1091,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
