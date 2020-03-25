@@ -88,13 +88,13 @@
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="dubbo-admin-2.0.0管理控制台安装dubbo-admin-2.0.0管理控制台安装 环境  Maven:                 Apache Maven 3.3.3 Server version:        Apache Tomcat/9.0.6 OS Name:               Linux JVM Version:           1.8.0_161-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/yuechang/blog-comment/blob/master/blog-picture/mvn-clean-package.jpg">
-<meta property="og:image" content="https://github.com/yuechang/blog-comment/blob/master/blog-picture/dubbo-admin.jpg">
-<meta property="og:updated_time" content="2020-03-25T15:07:14.436Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/mvn-clean-package.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/dubbo-admin.jpg">
+<meta property="og:updated_time" content="2020-03-25T15:17:35.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dubbo-admin-2.0.0管理控制台安装">
 <meta name="twitter:description" content="dubbo-admin-2.0.0管理控制台安装dubbo-admin-2.0.0管理控制台安装 环境  Maven:                 Apache Maven 3.3.3 Server version:        Apache Tomcat/9.0.6 OS Name:               Linux JVM Version:           1.8.0_161-">
-<meta name="twitter:image" content="https://github.com/yuechang/blog-comment/blob/master/blog-picture/mvn-clean-package.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/mvn-clean-package.jpg">
 
 
 
@@ -386,13 +386,13 @@
 <h4 id="1、在github上获得dubbo-admin源码"><a href="#1、在github上获得dubbo-admin源码" class="headerlink" title="1、在github上获得dubbo-admin源码"></a>1、在github上获得dubbo-admin源码</h4><p>通过下面命令克隆dubbo-admin项目<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/incubator-dubbo-ops.git</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h4 id="2、将dubbo-admin编译并打包"><a href="#2、将dubbo-admin编译并打包" class="headerlink" title="2、将dubbo-admin编译并打包"></a>2、将dubbo-admin编译并打包</h4><p>进入incubator-dubbo-ops\dubbo-admin目录，输入下面命令<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></p>
-<p>打包成功之后将在incubator-dubbo-ops\dubbo-admin\target目录下生成dubbo-admin-2.0.0.war<br><img src="https://github.com/yuechang/blog-comment/blob/master/blog-picture/mvn-clean-package.jpg" alt="mvn-clean-package"></p>
+<p>打包成功之后将在incubator-dubbo-ops\dubbo-admin\target目录下生成dubbo-admin-2.0.0.war<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/mvn-clean-package.jpg" alt="mvn-clean-package"></p>
 <h4 id="3、部署"><a href="#3、部署" class="headerlink" title="3、部署"></a>3、部署</h4><p>将dubbo-admin-2.0.0.war放入apache-tomcat-9.0.6-dubbo-admin/webapps目录下，<br>并启动tomcat,启动成功后，关闭tomcat</p>
 <p>通过以下命令，删除对应的war包以及原来的ROOT目录，将dubbo-admin-2.0.0重命名为ROOT<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf dubbo-admin-2.0.0.war</span><br><span class="line">rm -rf ROOT</span><br><span class="line"></span><br><span class="line">mv dubbo-admin-2.0.0 ROOT</span><br></pre></td></tr></table></figure></p>
 <h4 id="4、修改配置文件"><a href="#4、修改配置文件" class="headerlink" title="4、修改配置文件"></a>4、修改配置文件</h4><p>修改dubbo.properties配置文件<br>apache-tomcat-9.0.6-dubbo-admin/webapps/ROOT/WEB-INF/dubbo.properties</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dubbo.registry.address=zookeeper://127.0.0.1:2181?backup=127.0.0.1:2182,127.0.0.1:2183</span><br><span class="line">dubbo.admin.root.password=root</span><br><span class="line">dubbo.admin.guest.password=guest</span><br></pre></td></tr></table></figure>
 <p>修改完成，再次启动tomcat</p>
-<h4 id="5、访问"><a href="#5、访问" class="headerlink" title="5、访问"></a>5、访问</h4><p>通过<a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a>进行dubbo-admin管理控制台进行访问<br>出现下面界面则说明成功了：<br><img src="https://github.com/yuechang/blog-comment/blob/master/blog-picture/dubbo-admin.jpg" alt="dubbo-admin"></p>
+<h4 id="5、访问"><a href="#5、访问" class="headerlink" title="5、访问"></a>5、访问</h4><p>通过<a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a>进行dubbo-admin管理控制台进行访问<br>出现下面界面则说明成功了：<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/dubbo-admin.jpg" alt="dubbo-admin"></p>
 <h4 id="6、参考文档"><a href="#6、参考文档" class="headerlink" title="6、参考文档"></a>6、参考文档</h4><ul>
 <li><a href="http://dubbo.io/books/dubbo-admin-book/install/admin-console.html" target="_blank" rel="noopener">管理控制台安装</a></li>
 </ul>
