@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yuechang.github.io/2015/07/07/Redis%E7%9A%84%E5%AE%89%E8%A3%85/</loc>
+    
+    <lastmod>2020-04-09T15:53:03.495Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yuechang.github.io/2015/05/19/%E5%81%9A%E4%B8%80%E4%B8%AA%E5%86%85%E5%BF%83%E5%BC%BA%E5%A4%A7%E7%9A%84%E4%BA%BA/</loc>
     
     <lastmod>2020-04-06T04:52:52.829Z</lastmod>
@@ -292,13 +299,6 @@
     <loc>http://yuechang.github.io/2017/05/12/Redis-sentinel%E5%AE%89%E8%A3%85%E3%80%81%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%95%85%E9%9A%9C%E4%B8%8E%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB%E6%BC%94%E7%A4%BA/</loc>
     
     <lastmod>2019-04-07T05:29:28.604Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yuechang.github.io/2015/07/07/Redis%E7%9A%84%E5%AE%89%E8%A3%85/</loc>
-    
-    <lastmod>2019-04-07T05:29:21.383Z</lastmod>
     
   </url>
   

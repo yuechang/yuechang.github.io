@@ -88,16 +88,16 @@
 <meta property="og:site_name" content="漠北空城">
 <meta property="og:description" content="redis是比较流行的NOSQL数据库之一，下面来记录下redis的安装过程： 1. 安装环境介绍：Redis版本：redis-3.0.1Linux版本：Red Hat Enterprise Linux Workstation release 7.0 (Maipo) 2. 下载所需Redis文件在http://redis.io下载最新的稳定版本。这里下载的是redis-3.0.1.tar.gz 3">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-1.jpg">
-<meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-2.jpg">
-<meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-3.jpg">
-<meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/redis安装-5.jpg">
-<meta property="og:image" content="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-6.jpg">
-<meta property="og:updated_time" content="2019-04-07T05:29:21.383Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-upload.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-unzip.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-make.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-start.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-check.jpg">
+<meta property="og:updated_time" content="2020-04-09T15:53:03.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的安装">
 <meta name="twitter:description" content="redis是比较流行的NOSQL数据库之一，下面来记录下redis的安装过程： 1. 安装环境介绍：Redis版本：redis-3.0.1Linux版本：Red Hat Enterprise Linux Workstation release 7.0 (Maipo) 2. 下载所需Redis文件在http://redis.io下载最新的稳定版本。这里下载的是redis-3.0.1.tar.gz 3">
-<meta name="twitter:image" content="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-1.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-upload.jpg">
 
 
 
@@ -379,11 +379,11 @@
         <p>redis是比较流行的NOSQL数据库之一，下面来记录下redis的安装过程：</p>
 <h3 id="1-安装环境介绍："><a href="#1-安装环境介绍：" class="headerlink" title="1. 安装环境介绍："></a>1. 安装环境介绍：</h3><p>Redis版本：redis-3.0.1<br>Linux版本：Red Hat Enterprise Linux Workstation release 7.0 (Maipo)</p>
 <h3 id="2-下载所需Redis文件"><a href="#2-下载所需Redis文件" class="headerlink" title="2. 下载所需Redis文件"></a>2. 下载所需Redis文件</h3><p>在<a href="[http://redis.io]">http://redis.io</a>下载最新的稳定版本。这里下载的是redis-3.0.1.tar.gz</p>
-<h3 id="3-将所下载文件放入Linux系统中"><a href="#3-将所下载文件放入Linux系统中" class="headerlink" title="3. 将所下载文件放入Linux系统中"></a>3. 将所下载文件放入Linux系统中</h3><p>通过Xmanager中Xftp工具连接到对应机器，将redis-3.0.1.tar.gz放到/redis文件夹下，如下图：<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-1.jpg" alt="将所下载文件放入到Linux系统中"></p>
+<h3 id="3-将所下载文件放入Linux系统中"><a href="#3-将所下载文件放入Linux系统中" class="headerlink" title="3. 将所下载文件放入Linux系统中"></a>3. 将所下载文件放入Linux系统中</h3><p>通过Xmanager中Xftp工具连接到对应机器，将redis-3.0.1.tar.gz放到/redis文件夹下，如下图：<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-upload.jpg" alt="将所下载文件放入到Linux系统中"></p>
 <a id="more"></a>
-<h3 id="4-将压缩文件解压并编译"><a href="#4-将压缩文件解压并编译" class="headerlink" title="4. 将压缩文件解压并编译"></a>4. 将压缩文件解压并编译</h3><p>解压：tar zxvf redis-3.0.1.tar.gz<br>编译：make<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-2.jpg" alt="解压"><br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-3.jpg" alt="编译"></p>
-<h3 id="5-启动redis服务器"><a href="#5-启动redis服务器" class="headerlink" title="5. 启动redis服务器"></a>5. 启动redis服务器</h3><p>切换到src目录下，并通过./redis-server /redis/redis-3.0.1/redis.conf启动 服务器<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/redis安装-5.jpg" alt="启动redis服务器"></p>
-<h3 id="6-验证服务器是否成功启动"><a href="#6-验证服务器是否成功启动" class="headerlink" title="6. 验证服务器是否成功启动"></a>6. 验证服务器是否成功启动</h3><p>通过./redis-cli -h 192.168.161.252 -p 6379连接到客户端，并设置相关值来验证服务器是否成功启动<br><img src="http://7s1reu.com1.z0.glb.clouddn.com/reids安装-6.jpg" alt="验证服务器是否成功启动"></p>
+<h3 id="4-将压缩文件解压并编译"><a href="#4-将压缩文件解压并编译" class="headerlink" title="4. 将压缩文件解压并编译"></a>4. 将压缩文件解压并编译</h3><p>解压：tar zxvf redis-3.0.1.tar.gz<br>编译：make<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-unzip.jpg" alt="解压"><br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-make.jpg" alt="编译"></p>
+<h3 id="5-启动redis服务器"><a href="#5-启动redis服务器" class="headerlink" title="5. 启动redis服务器"></a>5. 启动redis服务器</h3><p>切换到src目录下，并通过./redis-server /redis/redis-3.0.1/redis.conf启动 服务器<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-start.jpg" alt="启动redis服务器"></p>
+<h3 id="6-验证服务器是否成功启动"><a href="#6-验证服务器是否成功启动" class="headerlink" title="6. 验证服务器是否成功启动"></a>6. 验证服务器是否成功启动</h3><p>通过./redis-cli -h 192.168.161.252 -p 6379连接到客户端，并设置相关值来验证服务器是否成功启动<br><img src="https://raw.githubusercontent.com/yuechang/blog-comment/master/blog-picture/redis-check.jpg" alt="验证服务器是否成功启动"></p>
 <h3 id="7-其他相关命令参考"><a href="#7-其他相关命令参考" class="headerlink" title="7. 其他相关命令参考"></a>7. 其他相关命令参考</h3><p>查看redis相关线程：ps -ef|grep redis<br>关闭redis服务：./redis-cli -h 192.168.153.138 -p 6379<br>查看redis信息：./redis-cli -h 192.168.153.138 -p 6379 info</p>
 
       
