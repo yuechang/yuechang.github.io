@@ -288,6 +288,145 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/06/11/ArrayList源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/11/ArrayList源码分析/" itemprop="url">ArrayList源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-11T11:16:45+08:00">
+                Jun 11 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/06/11/ArrayList源码分析/" class="leancloud_visitors" data-flag-title="ArrayList源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Java版本：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version "1.7.0_79"</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.7.0_79-b15)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)</span><br></pre></td></tr></table></figure></p>
+<p>ArrayList采用动态数组实现。</p>
+<p>ArrayList主要成员变量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The array buffer into which the elements of the ArrayList are stored.</span></span><br><span class="line"><span class="comment">  * The capacity of the ArrayList is the length of this array buffer. Any</span></span><br><span class="line"><span class="comment">  * empty ArrayList with elementData == EMPTY_ELEMENTDATA will be expanded to</span></span><br><span class="line"><span class="comment">  * DEFAULT_CAPACITY when the first element is added.</span></span><br><span class="line"><span class="comment">  * 底层存储数据的数组</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The size of the ArrayList (the number of elements it contains).</span></span><br><span class="line"><span class="comment">  * 大小</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@serial</span></span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></table></figure></p>
+<p>其中，transient表示： java 的transient关键字为我们提供了便利，你只需要实现Serilizable接口，将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中。</p>
+<p>ArrayList扩容核心代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Increases the capacity to ensure that it can hold at least the</span></span><br><span class="line"><span class="comment">  * number of elements specified by the minimum capacity argument.</span></span><br><span class="line"><span class="comment">  * </span></span><br><span class="line"><span class="comment">  * <span class="doctag">@paramminCapacity</span> the desired minimum capacity</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function">privatevoid <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    intoldCapacity=elementData.length;</span><br><span class="line">    intnewCapacity=oldCapacity+ (oldCapacity&gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span>(newCapacity-minCapacity&lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity=minCapacity;</span><br><span class="line">    <span class="keyword">if</span>(newCapacity-MAX_ARRAY_SIZE&gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity=hugeCapacity(minCapacity);</span><br><span class="line">    <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">    elementData= Arrays.copyOf(elementData,newCapacity);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>ArrayList默认初始容量为10，扩容机制：oldCapacity+ (oldCapacity&gt;&gt; 1); （初始容量*1.5），<br>最终的数组复制均是通过System.arraycopy()方法来复制，<br>其中native表示 “A native method is a Java method whose implementation is provided by non-java code.”<br>public static native void arraycopy(Object src,int srcPos,Object dest,int destPos,int length);</p>
+<p>add()、remove()方法最终均调用System.arraycopy()来实现。</p>
+<p>add()/get()/remove()方法举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Appends the specified element to the end of this list.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@parame</span> element to be appended to this list</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@return</span>&lt;tt&gt;true&lt;/tt&gt;(as specified by&#123;<span class="doctag">@link</span> Collection#add&#125;)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    ensureCapacityInternal(size+ <span class="number">1</span>); <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] =e;</span><br><span class="line">    returntrue;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(elementData==EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        minCapacity= Math.max(DEFAULT_CAPACITY,minCapacity);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     ensureExplicitCapacity(minCapacity);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span>(minCapacity-elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">         grow(minCapacity);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Removes the element at the specified position in this list.</span></span><br><span class="line"><span class="comment">  * Shifts any subsequent elements to the left (subtracts one from their</span></span><br><span class="line"><span class="comment">  * indices).</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@paramindex</span> the index of the element to be removed</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@returnthe</span> element that was removed from the list</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@throwsIndexOutOfBoundsException</span>&#123;<span class="doctag">@inheritDoc</span>&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function">publicE <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">     rangeCheck(index);</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line">     EoldValue= elementData(index);</span><br><span class="line"></span><br><span class="line">    intnumMoved=size-index- <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(numMoved&gt; <span class="number">0</span>)</span><br><span class="line">         System.arraycopy(elementData,index+<span class="number">1</span>,elementData,index,</span><br><span class="line">                         numMoved);</span><br><span class="line">    elementData[--size] =<span class="keyword">null</span>;<span class="comment">// clear to let GC do its work</span></span><br><span class="line"></span><br><span class="line">    returnoldValue;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line"> <span class="function">E <span class="title">elementData</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (E)elementData[index];</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Returns the element at the specified position in this list.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@param</span>  index index of the element to return</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@returnthe</span> element at the specified position in this list</span></span><br><span class="line"><span class="comment">  *<span class="doctag">@throwsIndexOutOfBoundsException</span>&#123;<span class="doctag">@inheritDoc</span>&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function">publicE <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">     rangeCheck(index);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> elementData(index);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/06/04/HashMap源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -817,141 +956,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/10/21/ShardedJedisPool详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/10/21/ShardedJedisPool详解/" itemprop="url">ShardedJedisPool详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-21T17:08:15+08:00">
-                Oct 21 2015
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/10/21/ShardedJedisPool详解/" class="leancloud_visitors" data-flag-title="ShardedJedisPool详解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="ShardedJedisPool详解"><a href="#ShardedJedisPool详解" class="headerlink" title="ShardedJedisPool详解"></a>ShardedJedisPool详解</h3><p>ShardedJedisPool类有四个构造函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ShardedJedisPool</span><span class="params">(<span class="keyword">final</span> GenericObjectPoolConfig poolConfig, List&lt;JedisShardInfo&gt; shards)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(poolConfig, shards, Hashing.MURMUR_HASH);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ShardedJedisPool</span><span class="params">(<span class="keyword">final</span> GenericObjectPoolConfig poolConfig, List&lt;JedisShardInfo&gt; shards,</span></span></span><br><span class="line"><span class="function"><span class="params">    Hashing algo)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(poolConfig, shards, algo, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ShardedJedisPool</span><span class="params">(<span class="keyword">final</span> GenericObjectPoolConfig poolConfig, List&lt;JedisShardInfo&gt; shards,</span></span></span><br><span class="line"><span class="function"><span class="params">    Pattern keyTagPattern)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(poolConfig, shards, Hashing.MURMUR_HASH, keyTagPattern);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ShardedJedisPool</span><span class="params">(<span class="keyword">final</span> GenericObjectPoolConfig poolConfig, List&lt;JedisShardInfo&gt; shards,</span></span></span><br><span class="line"><span class="function"><span class="params">    Hashing algo, Pattern keyTagPattern)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">super</span>(poolConfig, <span class="keyword">new</span> ShardedJedisFactory(shards, algo, keyTagPattern));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/10/21/ShardedJedisPool详解/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1006,7 +1010,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1019,7 +1023,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
