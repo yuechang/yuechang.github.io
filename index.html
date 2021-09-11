@@ -288,6 +288,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2021/09/11/TCP的三次握手和四次挥手/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/11/TCP的三次握手和四次挥手/" itemprop="url">TCP的三次握手和四次挥手</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-11T16:59:08+08:00">
+                Sep 11 2021
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/09/11/TCP的三次握手和四次挥手/" class="leancloud_visitors" data-flag-title="TCP的三次握手和四次挥手">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="TCP的三次握手和四次挥手"><a href="#TCP的三次握手和四次挥手" class="headerlink" title="TCP的三次握手和四次挥手"></a>TCP的三次握手和四次挥手</h2><blockquote>
+<p><a href="http://blog.csdn.net/yuechang5/article/details/72598337" target="_blank" rel="noopener">TCP的三次握手和四次挥手</a></p>
+</blockquote>
+<h3 id="1、TCP头部的规范定义"><a href="#1、TCP头部的规范定义" class="headerlink" title="1、TCP头部的规范定义"></a>1、TCP头部的规范定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>                                        <span class="number">15</span>|<span class="number">16</span>                                       <span class="number">31</span></span><br><span class="line">+------------------------------------------+------------------------------------------+</span><br><span class="line">|                  <span class="number">16</span>位源端口号             |              <span class="number">16</span>位目的端口号                |</span><br><span class="line">+------------------------------------------+------------------------------------------+</span><br><span class="line">|                          <span class="number">32</span>位序号/<span class="function">Sequence <span class="title">number</span> <span class="params">(seq)</span>                              |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                          32位确认号/Acknowledge <span class="title">number</span> <span class="params">(ack)</span>                         |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|4位头部信息|6位保留|URG|ACK|PSH|RST|SYN|FIN |               16位窗口大小                 |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                  16位校验和               |              16位紧急指针                 |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                                      选项最多40字节                                   |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、TCP的三次握手："><a href="#2、TCP的三次握手：" class="headerlink" title="2、TCP的三次握手："></a>2、TCP的三次握手：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Client(SYN_SENT)      --&gt;         SYN=<span class="number">1</span>,seq=k              --&gt;   Server(SYN_RCVD)</span><br><span class="line">Client(ESTABLISHED)   &lt;--    SYN=<span class="number">1</span>，ACK=<span class="number">1</span>,ack=k+<span class="number">1</span>,seq=m    &lt;--   Server(SYN_RCVD)</span><br><span class="line">Client(ESTABLISHED)   --&gt;         ACK=<span class="number">1</span>,seq=m+<span class="number">1</span>,seq=l      --&gt;   Server(ESTABLISHED)</span><br></pre></td></tr></table></figure>
+<p>为什么需要三次握手：<br>能够避免server端资源的浪费。<br>1、当Client端发送连接请求并没有丢失，而是在某个网络接点上滞留了，以至于延迟到连接释放以后的某个节点才到达Server；<br>2、本来只是一个早已失效的报文段，Server端接收到之后误认为这是Client端的一个新的请求，于是发送了连接确认报文；<br>3、如果不采用”三次握手”，只要等Server发送确认，新的连接就已经建立了；<br>4、等待Client端发送数据，但是此时Client不会理睬Server端的确认，也不会向Server端发送数据；<br>5、但是Server端认为连接已经建立还在等着Client的数据，此时就会存在Server端资源的浪费；</p>
+<h3 id="3、TCP的四次挥手"><a href="#3、TCP的四次挥手" class="headerlink" title="3、TCP的四次挥手"></a>3、TCP的四次挥手</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Client(FIN_WAIT_1)      --&gt;         FIN=<span class="number">1</span>,seq=k              --&gt;   Server(CLOSE_WAIT)</span><br><span class="line">Client(FIN_WAIT_2)      &lt;--      ACK=<span class="number">1</span>,ack=k+<span class="number">1</span>,seq=m         &lt;--   Server(CLOSE_WAIT)</span><br><span class="line">Client(FIN_WAIT_2)      &lt;--         FIN=<span class="number">1</span>,seq=i              &lt;--   Server(LAST_ACK)</span><br><span class="line">Client(TIME_WAIT/<span class="number">2</span>MSL)  --&gt;      ACK=<span class="number">1</span>,ack=i+<span class="number">1</span>,seq=l         --&gt;   Server(CLOSE)</span><br></pre></td></tr></table></figure>
+<h3 id="4、为什么需要四次挥手"><a href="#4、为什么需要四次挥手" class="headerlink" title="4、为什么需要四次挥手"></a>4、为什么需要四次挥手</h3><p>首先TCP是一种面向连接的、可靠的、基于字节流的运输层通讯协议，TCP是全双工模式<br>建立连接时，通过SYN+ACK能够确定双方均在线即可正常收发报文；<br>由于双工模式，假设Client端没有需要发送的报文了，于是发送FIN报文，Server端收到后给出了ACK确认报文；<br>但是有可能Server端还存在需要发送的报文，这个时候就需要Server端发送一次FIN报文，让Client端来确认</p>
+<h3 id="5、为什么需要等待2MSL？"><a href="#5、为什么需要等待2MSL？" class="headerlink" title="5、为什么需要等待2MSL？"></a>5、为什么需要等待2MSL？</h3><p>MSL：报文段最大生存时间，它是任何报文在丢弃前在网络内的最长时间。<br>第一点：保证TCP全双工能够正常可靠关闭；<br>第二点：保证这次连续的重复数据段从网络中消失；</p>
+<h3 id="6、参考博客"><a href="#6、参考博客" class="headerlink" title="6、参考博客"></a>6、参考博客</h3><blockquote>
+<p><a href="https://www.cnblogs.com/onesea/p/13053697.html" target="_blank" rel="noopener">一文彻底搞懂 TCP三次握手、四次挥手过程及原理</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2020/04/11/UML类图六种关系说明与Java代码展示/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -934,151 +1076,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2018/03/26/dubbo-admin-2.0.0控制台安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/26/dubbo-admin-2.0.0控制台安装/" itemprop="url">dubbo-admin-2.0.0管理控制台安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T22:16:41+08:00">
-                Mar 26 2018
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/26/dubbo-admin-2.0.0控制台安装/" class="leancloud_visitors" data-flag-title="dubbo-admin-2.0.0管理控制台安装">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="dubbo-admin-2-0-0管理控制台安装"><a href="#dubbo-admin-2-0-0管理控制台安装" class="headerlink" title="dubbo-admin-2.0.0管理控制台安装"></a>dubbo-admin-2.0.0管理控制台安装</h3><p>dubbo-admin-2.0.0管理控制台安装</p>
-<p>环境</p>
-<ul>
-<li>Maven:                 Apache Maven 3.3.3</li>
-<li>Server version:        Apache Tomcat/9.0.6</li>
-<li>OS Name:               Linux</li>
-<li>JVM Version:           1.8.0_161-b12</li>
-<li>OS Version:            3.10.0-514.26.2.el7.x86_64</li>
-<li>Dubbo admin:           2.0.0</li>
-</ul>
-<h4 id="1、在github上获得dubbo-admin源码"><a href="#1、在github上获得dubbo-admin源码" class="headerlink" title="1、在github上获得dubbo-admin源码"></a>1、在github上获得dubbo-admin源码</h4><p>通过下面命令克隆dubbo-admin项目<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/incubator-dubbo-ops.git</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/26/dubbo-admin-2.0.0控制台安装/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1133,7 +1130,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1146,7 +1143,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1184,7 +1181,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

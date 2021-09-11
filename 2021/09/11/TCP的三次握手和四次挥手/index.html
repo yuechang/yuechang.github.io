@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="google-site-verification" content="FQ4s-NjVsojslMD8_pxEjX8DvHIf5l9M6jnGMxHAqzU" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tcp," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="TCP的三次握手和四次挥手 TCP的三次握手和四次挥手  1、TCP头部的规范定义12345678910111213140                                        15|16                                       31+------------------------------------------+---------">
+<meta name="keywords" content="tcp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP的三次握手和四次挥手">
+<meta property="og:url" content="http://yuechang.github.io/2021/09/11/TCP的三次握手和四次挥手/index.html">
+<meta property="og:site_name" content="漠北空城">
+<meta property="og:description" content="TCP的三次握手和四次挥手 TCP的三次握手和四次挥手  1、TCP头部的规范定义12345678910111213140                                        15|16                                       31+------------------------------------------+---------">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-09-11T09:14:33.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP的三次握手和四次挥手">
+<meta name="twitter:description" content="TCP的三次握手和四次挥手 TCP的三次握手和四次挥手  1、TCP头部的规范定义12345678910111213140                                        15|16                                       31+------------------------------------------+---------">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'BBGGBMEBHY',
+      apiKey: 'a8034b03f1ed5ebe16b4fc52a5d16939',
+      indexName: 'prod_blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"搜索","hits_empty":"没有找到任何结果关于: ${query}","hits_stats":"找到 ${hits} 个结果，耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yuechang.github.io/2021/09/11/TCP的三次握手和四次挥手/"/>
+
+
+
+
+
+  <title>TCP的三次握手和四次挥手 | 漠北空城</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">漠北空城</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">听海观潮</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2021/09/11/TCP的三次握手和四次挥手/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TCP的三次握手和四次挥手</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-11T16:59:08+08:00">
+                Sep 11 2021
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/09/11/TCP的三次握手和四次挥手/" class="leancloud_visitors" data-flag-title="TCP的三次握手和四次挥手">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="TCP的三次握手和四次挥手"><a href="#TCP的三次握手和四次挥手" class="headerlink" title="TCP的三次握手和四次挥手"></a>TCP的三次握手和四次挥手</h2><blockquote>
+<p><a href="http://blog.csdn.net/yuechang5/article/details/72598337" target="_blank" rel="noopener">TCP的三次握手和四次挥手</a></p>
+</blockquote>
+<h3 id="1、TCP头部的规范定义"><a href="#1、TCP头部的规范定义" class="headerlink" title="1、TCP头部的规范定义"></a>1、TCP头部的规范定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>                                        <span class="number">15</span>|<span class="number">16</span>                                       <span class="number">31</span></span><br><span class="line">+------------------------------------------+------------------------------------------+</span><br><span class="line">|                  <span class="number">16</span>位源端口号             |              <span class="number">16</span>位目的端口号                |</span><br><span class="line">+------------------------------------------+------------------------------------------+</span><br><span class="line">|                          <span class="number">32</span>位序号/<span class="function">Sequence <span class="title">number</span> <span class="params">(seq)</span>                              |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                          32位确认号/Acknowledge <span class="title">number</span> <span class="params">(ack)</span>                         |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|4位头部信息|6位保留|URG|ACK|PSH|RST|SYN|FIN |               16位窗口大小                 |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                  16位校验和               |              16位紧急指针                 |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br><span class="line"><span class="function">|                                      选项最多40字节                                   |</span></span><br><span class="line"><span class="function">+------------------------------------------+------------------------------------------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、TCP的三次握手："><a href="#2、TCP的三次握手：" class="headerlink" title="2、TCP的三次握手："></a>2、TCP的三次握手：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Client(SYN_SENT)      --&gt;         SYN=<span class="number">1</span>,seq=k              --&gt;   Server(SYN_RCVD)</span><br><span class="line">Client(ESTABLISHED)   &lt;--    SYN=<span class="number">1</span>，ACK=<span class="number">1</span>,ack=k+<span class="number">1</span>,seq=m    &lt;--   Server(SYN_RCVD)</span><br><span class="line">Client(ESTABLISHED)   --&gt;         ACK=<span class="number">1</span>,seq=m+<span class="number">1</span>,seq=l      --&gt;   Server(ESTABLISHED)</span><br></pre></td></tr></table></figure>
+<p>为什么需要三次握手：<br>能够避免server端资源的浪费。<br>1、当Client端发送连接请求并没有丢失，而是在某个网络接点上滞留了，以至于延迟到连接释放以后的某个节点才到达Server；<br>2、本来只是一个早已失效的报文段，Server端接收到之后误认为这是Client端的一个新的请求，于是发送了连接确认报文；<br>3、如果不采用”三次握手”，只要等Server发送确认，新的连接就已经建立了；<br>4、等待Client端发送数据，但是此时Client不会理睬Server端的确认，也不会向Server端发送数据；<br>5、但是Server端认为连接已经建立还在等着Client的数据，此时就会存在Server端资源的浪费；</p>
+<h3 id="3、TCP的四次挥手"><a href="#3、TCP的四次挥手" class="headerlink" title="3、TCP的四次挥手"></a>3、TCP的四次挥手</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Client(FIN_WAIT_1)      --&gt;         FIN=<span class="number">1</span>,seq=k              --&gt;   Server(CLOSE_WAIT)</span><br><span class="line">Client(FIN_WAIT_2)      &lt;--      ACK=<span class="number">1</span>,ack=k+<span class="number">1</span>,seq=m         &lt;--   Server(CLOSE_WAIT)</span><br><span class="line">Client(FIN_WAIT_2)      &lt;--         FIN=<span class="number">1</span>,seq=i              &lt;--   Server(LAST_ACK)</span><br><span class="line">Client(TIME_WAIT/<span class="number">2</span>MSL)  --&gt;      ACK=<span class="number">1</span>,ack=i+<span class="number">1</span>,seq=l         --&gt;   Server(CLOSE)</span><br></pre></td></tr></table></figure>
+<h3 id="4、为什么需要四次挥手"><a href="#4、为什么需要四次挥手" class="headerlink" title="4、为什么需要四次挥手"></a>4、为什么需要四次挥手</h3><p>首先TCP是一种面向连接的、可靠的、基于字节流的运输层通讯协议，TCP是全双工模式<br>建立连接时，通过SYN+ACK能够确定双方均在线即可正常收发报文；<br>由于双工模式，假设Client端没有需要发送的报文了，于是发送FIN报文，Server端收到后给出了ACK确认报文；<br>但是有可能Server端还存在需要发送的报文，这个时候就需要Server端发送一次FIN报文，让Client端来确认</p>
+<h3 id="5、为什么需要等待2MSL？"><a href="#5、为什么需要等待2MSL？" class="headerlink" title="5、为什么需要等待2MSL？"></a>5、为什么需要等待2MSL？</h3><p>MSL：报文段最大生存时间，它是任何报文在丢弃前在网络内的最长时间。<br>第一点：保证TCP全双工能够正常可靠关闭；<br>第二点：保证这次连续的重复数据段从网络中消失；</p>
+<h3 id="6、参考博客"><a href="#6、参考博客" class="headerlink" title="6、参考博客"></a>6、参考博客</h3><blockquote>
+<p><a href="https://www.cnblogs.com/onesea/p/13053697.html" target="_blank" rel="noopener">一文彻底搞懂 TCP三次握手、四次挥手过程及原理</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tcp/" rel="tag"># tcp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/11/UML类图六种关系说明与Java代码展示/" rel="next" title="UML类图六种关系说明与Java代码展示">
+                <i class="fa fa-chevron-left"></i> UML类图六种关系说明与Java代码展示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+ 	<div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/portrait.jpg"
+                alt="Yue Chang" />
+            
+              <p class="site-author-name" itemprop="name">Yue Chang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP的三次握手和四次挥手"><span class="nav-number">1.</span> <span class="nav-text">TCP的三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、TCP头部的规范定义"><span class="nav-number">1.1.</span> <span class="nav-text">1、TCP头部的规范定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、TCP的三次握手："><span class="nav-number">1.2.</span> <span class="nav-text">2、TCP的三次握手：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、TCP的四次挥手"><span class="nav-number">1.3.</span> <span class="nav-text">3、TCP的四次挥手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、为什么需要四次挥手"><span class="nav-number">1.4.</span> <span class="nav-text">4、为什么需要四次挥手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、为什么需要等待2MSL？"><span class="nav-number">1.5.</span> <span class="nav-text">5、为什么需要等待2MSL？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、参考博客"><span class="nav-number">1.6.</span> <span class="nav-text">6、参考博客</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yue Chang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div style="text-align:center;width:100%;height:50">
+  粤ICP备18054530号-2
+  <span id="busuanzi_container_site_pv">
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="busuanzi_value_site_pv"></span>
+  </span> 
+
+  <span id="busuanzi_container_site_uv" class="theme-info">
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span id="busuanzi_value_site_uv"></span>
+  </span>
+<div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '06c98f2f4e86c78db9e0',
+          clientSecret: 'e2299e880fa4782500f6e9c6e351f9df5e5654fd',
+          repo: 'blog-comment',
+          owner: 'yuechang',
+          admin: ['yuechang'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("gxjtQDQU8Po0WNAWg2EuOQPj-gzGzoHsz", "igR8qwpo2ez9JtsjOwu04w6Q");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -288,6 +288,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" itemprop="url">Spring IOC创建对象配置初始化方法和销毁方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:22:10+08:00">
+                Nov 21 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/21/Spring-IOC创建对象配置初始化方法和销毁方法/" class="leancloud_visitors" data-flag-title="Spring IOC创建对象配置初始化方法和销毁方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Spring-IOC创建对象配置初始化方法和销毁方法"><a href="#Spring-IOC创建对象配置初始化方法和销毁方法" class="headerlink" title="Spring IOC创建对象配置初始化方法和销毁方法"></a>Spring IOC创建对象配置初始化方法和销毁方法</h3><h4 id="1、创建一个类"><a href="#1、创建一个类" class="headerlink" title="1、创建一个类"></a>1、创建一个类</h4><pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorld</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"hello world"</span>);
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"init"</span>);
+    }
+
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"destroy"</span>);
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"hello"</span>);
+    }
+}
+</code></pre>
+<h4 id="2、spring配置文件中"><a href="#2、spring配置文件中" class="headerlink" title="2、spring配置文件中"></a>2、spring配置文件中</h4><pre><code class="xml"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloWorld"</span> </span>
+<span class="tag">      <span class="attr">class</span>=<span class="string">"com.ithiema07.spring.ioc.initdestroy.HelloWorld"</span></span>
+<span class="tag">      <span class="attr">init-method</span>=<span class="string">"init"</span></span>
+<span class="tag">      <span class="attr">destroy-method</span>=<span class="string">"destroy"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span>
+</code></pre>
+<h4 id="3、执行顺序："><a href="#3、执行顺序：" class="headerlink" title="3、执行顺序："></a>3、执行顺序：</h4><ul>
+<li>1、启动spring容器</li>
+<li>2、创建对象</li>
+<li>3、执行init方法<br>   该方法是由spring容器内部调用的</li>
+<li><p>4、执行destroy方法<br>   该方法是由spring容器内部调用的<br>   前提：在spring容器关闭的时候执行,仅单例<br>   注意点：如果一个bean是多例，则spring容器不负责销毁</p>
+<h4 id="4、到目前为止spring容器的执行顺序："><a href="#4、到目前为止spring容器的执行顺序：" class="headerlink" title="4、到目前为止spring容器的执行顺序："></a>4、到目前为止spring容器的执行顺序：</h4></li>
+<li><p>1、启动spring容器</p>
+</li>
+<li>2、如果该bean为单例，并且lazy-init为”default/false”,这个时候为该bean创建对象</li>
+<li>3、执行该bean的init方法</li>
+<li>4、在客户端利用context.getBean得到该对象<br>   如果是多例，或者lazy-init为”true”,则在这步创建对象</li>
+<li>5、在客户端对象调用方法</li>
+<li>6、当spring容器关闭的时候，如果该bean是单例，则调用destroy方法</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/20/Spring-IOC产生对象的时机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -824,150 +992,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/05/22/Spring-boot整合Dubbo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/22/Spring-boot整合Dubbo/" itemprop="url">Spring boot 整合Dubbo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T22:24:08+08:00">
-                May 22 2017
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/22/Spring-boot整合Dubbo/" class="leancloud_visitors" data-flag-title="Spring boot 整合Dubbo">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Spring-boot-整合Dubbo"><a href="#Spring-boot-整合Dubbo" class="headerlink" title="Spring boot 整合Dubbo"></a>Spring boot 整合Dubbo</h2><blockquote>
-<p><a href="http://blog.csdn.net/yuechang5/article/details/72630853" target="_blank" rel="noopener">Spring boot 整合Dubbo</a></p>
-</blockquote>
-<p>环境</p>
-<ul>
-<li>Spring boot：1.5.3.RELEASE</li>
-<li>zookeeper：3.4.10</li>
-<li>dubbo：2.5.3</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-</span><br><span class="line">              +----------------+</span><br><span class="line">              |dubbo-interface |</span><br><span class="line">              +----------------+</span><br><span class="line">                       |</span><br><span class="line">                       | </span><br><span class="line">        +------++------+------++------+</span><br><span class="line">        |                             |</span><br><span class="line">        |                             |           </span><br><span class="line">+----------------+             +----------------+</span><br><span class="line">| dubbo-provider |             | dubbo-comsumer |</span><br><span class="line">+----------------+             +----------------+</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/22/Spring-boot整合Dubbo/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1022,7 +1046,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1035,7 +1059,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1073,7 +1097,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
