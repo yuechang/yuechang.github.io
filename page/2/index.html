@@ -288,6 +288,138 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2018/06/19/ThreadLocal之两则应用场景/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/19/ThreadLocal之两则应用场景/" itemprop="url">ThreadLocal之两则应用场景</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T23:00:31+08:00">
+                2018-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="ThreadLocal之两则应用场景"><a href="#ThreadLocal之两则应用场景" class="headerlink" title="ThreadLocal之两则应用场景"></a>ThreadLocal之两则应用场景</h3><h4 id="应用场景两则"><a href="#应用场景两则" class="headerlink" title="应用场景两则"></a>应用场景两则</h4><ul>
+<li>1、利用ThreadLocal管理登录用户信息实现随用随取</li>
+<li>2、可以记录Controller各个请求的执行时间</li>
+</ul>
+<h4 id="场景1spring-boot实现步骤："><a href="#场景1spring-boot实现步骤：" class="headerlink" title="场景1spring boot实现步骤："></a>场景1spring boot实现步骤：</h4><ul>
+<li>1、新建实现WebMvcConfigurerAdapter的类，重写addInterceptors方法，registry添加实现了HandlerInterceptorAdapter类的拦截器，<br>同时设置需要拦截与不需要拦截的路径正则表达式；</li>
+<li>2、在拦截器类中从session中取出用户信息，存入ThreadLocal中；</li>
+<li>3、引入spring-boot-starter-aop依赖，设置切入点(Pointcut)为controller中的各个方法，在AOP的后置最终通知(@After)中删除ThreadLocal中的信息<br>注意：当然需要在登录时将登录用户信息存入session中</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/19/ThreadLocal之两则应用场景/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2018/03/26/dubbo-admin-2.0.0控制台安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -848,140 +980,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/26/Spring 类扫描/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/26/Spring 类扫描/" itemprop="url">spring 类扫描</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T20:30:10+08:00">
-                2017-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="spring-类扫描"><a href="#spring-类扫描" class="headerlink" title="spring 类扫描"></a>spring 类扫描</h3><h4 id="1、启动spring容器，spring容器会解析到以下配置"><a href="#1、启动spring容器，spring容器会解析到以下配置" class="headerlink" title="1、启动spring容器，spring容器会解析到以下配置"></a>1、启动spring容器，spring容器会解析到以下配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="2、spring容器会在base-package包及子包中扫描所有的类"><a href="#2、spring容器会在base-package包及子包中扫描所有的类" class="headerlink" title="2、spring容器会在base-package包及子包中扫描所有的类"></a>2、spring容器会在base-package包及子包中扫描所有的类</h4><h4 id="3、检查这些类中是否含有-Component注解"><a href="#3、检查这些类中是否含有-Component注解" class="headerlink" title="3、检查这些类中是否含有@Component注解"></a>3、检查这些类中是否含有@Component注解</h4><p>如果含有，则进行解析，<br>形式1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>形式2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"aa"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"aa"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="4、会查找spring容器中的bean-看哪些bean中有-Resource注解，并且按照该注解的规则给属性赋值"><a href="#4、会查找spring容器中的bean-看哪些bean中有-Resource注解，并且按照该注解的规则给属性赋值" class="headerlink" title="4、会查找spring容器中的bean,看哪些bean中有@Resource注解，并且按照该注解的规则给属性赋值"></a>4、会查找spring容器中的bean,看哪些bean中有@Resource注解，并且按照该注解的规则给属性赋值</h4><h4 id="5、优缺点"><a href="#5、优缺点" class="headerlink" title="5、优缺点"></a>5、优缺点</h4><p> 这样的写法很简单，但是效率比较低<br>扫描两次</p>
-<ul>
-<li>扫描base-package以及子包所有的类，看哪些类上面加了注解(Component/Service等)</li>
-<li>扫描哪些类上加了Rescource/Autowired注解</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1031,7 +1034,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1044,7 +1047,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1082,7 +1085,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>

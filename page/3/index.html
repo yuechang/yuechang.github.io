@@ -288,6 +288,135 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/26/Spring 类扫描/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/26/Spring 类扫描/" itemprop="url">spring 类扫描</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T20:30:10+08:00">
+                2017-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="spring-类扫描"><a href="#spring-类扫描" class="headerlink" title="spring 类扫描"></a>spring 类扫描</h3><h4 id="1、启动spring容器，spring容器会解析到以下配置"><a href="#1、启动spring容器，spring容器会解析到以下配置" class="headerlink" title="1、启动spring容器，spring容器会解析到以下配置"></a>1、启动spring容器，spring容器会解析到以下配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2、spring容器会在base-package包及子包中扫描所有的类"><a href="#2、spring容器会在base-package包及子包中扫描所有的类" class="headerlink" title="2、spring容器会在base-package包及子包中扫描所有的类"></a>2、spring容器会在base-package包及子包中扫描所有的类</h4><h4 id="3、检查这些类中是否含有-Component注解"><a href="#3、检查这些类中是否含有-Component注解" class="headerlink" title="3、检查这些类中是否含有@Component注解"></a>3、检查这些类中是否含有@Component注解</h4><p>如果含有，则进行解析，<br>形式1：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>形式2：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"aa"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这种形式的将会解析成：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"aa"</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="4、会查找spring容器中的bean-看哪些bean中有-Resource注解，并且按照该注解的规则给属性赋值"><a href="#4、会查找spring容器中的bean-看哪些bean中有-Resource注解，并且按照该注解的规则给属性赋值" class="headerlink" title="4、会查找spring容器中的bean,看哪些bean中有@Resource注解，并且按照该注解的规则给属性赋值"></a>4、会查找spring容器中的bean,看哪些bean中有@Resource注解，并且按照该注解的规则给属性赋值</h4><h4 id="5、优缺点"><a href="#5、优缺点" class="headerlink" title="5、优缺点"></a>5、优缺点</h4><p> 这样的写法很简单，但是效率比较低<br>扫描两次</p>
+<ul>
+<li>扫描base-package以及子包所有的类，看哪些类上面加了注解(Component/Service等)</li>
+<li>扫描哪些类上加了Rescource/Autowired注解</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/25/Spring-DI-注解注入/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -807,165 +936,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2017/11/21/Spring-DI简介/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/21/Spring-DI简介/" itemprop="url">Spring DI简介</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T22:30:10+08:00">
-                2017-11-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Spring-DI简介"><a href="#Spring-DI简介" class="headerlink" title="Spring DI简介"></a>Spring DI简介</h3><p>DI:依赖注入<br>概念：给属性赋值</p>
-<ul>
-<li>1、调用set方法<br>   基础类型<br>   引用类型</li>
-<li>2、调用构造器</li>
-<li>3、利用注解的形式</li>
-</ul>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>{
-
-}    
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>{
-  <span class="keyword">private</span> Long pid;
-  <span class="keyword">private</span> String name;
-  <span class="keyword">private</span> Student student;
-  <span class="keyword">private</span> List list;
-  <span class="keyword">private</span> Set set;
-  <span class="keyword">private</span> Map map;
-  <span class="keyword">private</span> Properties properties;
-}
-</code></pre>
-<p>步骤：</p>
-<ul>
-<li>1、创建一个Student类</li>
-<li>2、创建一个Person类</li>
-<li>3、创建一个spring的配置文件，把student类和person类      放入到spring容器中</li>
-<li>4、装配各个属性</li>
-</ul>
-<p>执行流程：</p>
-<ul>
-<li>1、启动spring容器</li>
-<li>2、创建依赖对象(Student对象)</li>
-<li>3、创建Person对象</li>
-<li><p>4、给person对象中的属性进行装配的操作</p>
-<p>注意：<br>  如果把Student的配置方式改成scope=”prototype”,<br>  因为其他的类的创建和属性的装配的过程全部发生在spring容器启动的时候，所以Student对象的创建被提前了<br>  ，但是还是用一次即创建一次对象</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1015,7 +990,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1028,7 +1003,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1066,7 +1041,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>
