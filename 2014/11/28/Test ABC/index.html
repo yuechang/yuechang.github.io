@@ -80,19 +80,17 @@
 
 
 
-<meta name="description" content="问题描述通过Spring MVC + MySQL配置事务，事务配置没有问题，删除数据之后，抛出异常，但是事务没有回滚。 解决办法最后发现原来是MySQL表的引擎为：MyISAM，导致不支持事务。修改对应建表语句，指定引擎为 1ENGINE=InnoDB DEFAULT CHARSET=utf8; 原因验证可以通过下面方式来验证，是否是这个原因导致事务不会滚。在Navicat Premium工具中，">
+<meta name="description" content="Test ABC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringMVC事务管理器不起作用">
-<meta property="og:url" content="http://yuechang.github.io/2016/07/06/SpringMVC事务管理器不起作用/index.html">
+<meta property="og:title" content="Test ABC">
+<meta property="og:url" content="http://yuechang.github.io/2014/11/28/Test ABC/index.html">
 <meta property="og:site_name" content="漠北空城">
-<meta property="og:description" content="问题描述通过Spring MVC + MySQL配置事务，事务配置没有问题，删除数据之后，抛出异常，但是事务没有回滚。 解决办法最后发现原来是MySQL表的引擎为：MyISAM，导致不支持事务。修改对应建表语句，指定引擎为 1ENGINE=InnoDB DEFAULT CHARSET=utf8; 原因验证可以通过下面方式来验证，是否是这个原因导致事务不会滚。在Navicat Premium工具中，">
+<meta property="og:description" content="Test ABC">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20160706181516969">
-<meta property="og:updated_time" content="2016-07-16T02:38:48.000Z">
+<meta property="og:updated_time" content="2022-02-28T10:14:35.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringMVC事务管理器不起作用">
-<meta name="twitter:description" content="问题描述通过Spring MVC + MySQL配置事务，事务配置没有问题，删除数据之后，抛出异常，但是事务没有回滚。 解决办法最后发现原来是MySQL表的引擎为：MyISAM，导致不支持事务。修改对应建表语句，指定引擎为 1ENGINE=InnoDB DEFAULT CHARSET=utf8; 原因验证可以通过下面方式来验证，是否是这个原因导致事务不会滚。在Navicat Premium工具中，">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160706181516969">
+<meta name="twitter:title" content="Test ABC">
+<meta name="twitter:description" content="Test ABC">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yuechang.github.io/2016/07/06/SpringMVC事务管理器不起作用/"/>
+  <link rel="canonical" href="http://yuechang.github.io/2014/11/28/Test ABC/"/>
 
 
 
 
 
-  <title>SpringMVC事务管理器不起作用 | 漠北空城</title>
+  <title>Test ABC | 漠北空城</title>
   
 
 
@@ -293,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2016/07/06/SpringMVC事务管理器不起作用/">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2014/11/28/Test ABC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yue Chang">
@@ -310,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SpringMVC事务管理器不起作用</h1>
+          <h1 class="post-title" itemprop="name headline">Test ABC</h1>
         
 
         <div class="post-meta">
@@ -322,8 +320,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-06T18:23:11+08:00">
-                2016-07-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-11-28T14:23:50+08:00">
+                2014-11-28
               </time>
             
 
@@ -365,10 +363,7 @@
       
 
       
-        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>通过Spring MVC + MySQL配置事务，事务配置没有问题，删除数据之后，抛出异常，但是事务没有回滚。</p>
-<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>最后发现原来是MySQL表的引擎为：MyISAM，导致不支持事务。修改对应建表语句，指定引擎为</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
-<h3 id="原因验证"><a href="#原因验证" class="headerlink" title="原因验证"></a>原因验证</h3><p>可以通过下面方式来验证，是否是这个原因导致事务不会滚。<br>在Navicat Premium工具中，右击对应的表，进入Object Information，进入DDL标签：<br><img src="http://img.blog.csdn.net/20160706181516969" alt="ENGINE"><br>如果发现对应的ENGINE为MyISAM，则表示这种引擎不支持事务。</p>
+        <p>Test ABC</p>
 
       
     </div>
@@ -393,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/28/cvc-complex-type.2.4.a Invalid content was found starting with element init-param/" rel="next" title="Invalid content was found starting with element 'init-param'">
-                <i class="fa fa-chevron-left"></i> Invalid content was found starting with element 'init-param'
+              <a href="/2014/11/27/新的开始/" rel="next" title="新的开始">
+                <i class="fa fa-chevron-left"></i> 新的开始
               </a>
             
           </div>
@@ -403,8 +398,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/11/The value of the project attribute is null/" rel="prev" title="The value of the project attribute is null">
-                The value of the project attribute is null <i class="fa fa-chevron-right"></i>
+              <a href="/2014/12/14/每天问自己五件事/" rel="prev" title="每天问自己五件事">
+                每天问自己五件事 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,17 +455,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -525,22 +511,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原因验证"><span class="nav-number">3.</span> <span class="nav-text">原因验证</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
