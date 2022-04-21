@@ -288,6 +288,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2022/04/21/Jsch+Hutool实现文件上传与远程命令执行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/04/21/Jsch+Hutool实现文件上传与远程命令执行/" itemprop="url">Jsch+Hutool实现文件上传与远程命令执行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-21T14:12:08+08:00">
+                2022-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文地址：<a href="https://www.yuech.net//2022/04/21/Jsch+Hutool%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" target="_blank" rel="noopener">Jsch+Hutool实现文件上传与远程命令执行</a></p>
+<p>环境信息：<br>JDK版本：JDK_1.8<br>Jsch版本：0.1.5<br>Hutool版本：5.7.21</p>
+<hr>
+<h3 id="1、添加maven依赖"><a href="#1、添加maven依赖" class="headerlink" title="1、添加maven依赖"></a>1、添加maven依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.jcraft<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jsch<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.1.55<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>5.7.21<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、文件上传"><a href="#2、文件上传" class="headerlink" title="2、文件上传"></a>2、文件上传</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Copyright © 2022 Yuech and/or its affiliates. All rights reserved. */</span></span><br><span class="line"><span class="keyword">package</span> com.yc.apollo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.io.FileUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.io.IoUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.util.StrUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.extra.ftp.AbstractFtp;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.extra.ssh.JschUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.extra.ssh.Sftp;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Yuech</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022-01-10 11:30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//本地文件路径</span></span><br><span class="line">        String localFile = <span class="string">"d:\\user\\yuechang\\desktop\\test.txt"</span>;   </span><br><span class="line">        <span class="comment">//上传到远程的文件路径，要保证登录用户有写权限</span></span><br><span class="line">        String remoteFile = <span class="string">"/app/deploy"</span>;   </span><br><span class="line">        Session session = <span class="keyword">null</span>;</span><br><span class="line">        Sftp sftp = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            session = JschUtil.openSession(HostInfoConstants.REMOTE_HOST,</span><br><span class="line">                    HostInfoConstants.REMOTE_PORT,</span><br><span class="line">                    HostInfoConstants.USERNAME,</span><br><span class="line">                    HostInfoConstants.PASSWORD);</span><br><span class="line"></span><br><span class="line">            sftp = <span class="keyword">new</span> Sftp(session, AbstractFtp.DEFAULT_CHARSET);</span><br><span class="line">            String normalize = FileUtil.normalize(remoteFile);</span><br><span class="line">            sftp.upload(normalize, <span class="keyword">new</span> File(localFile));</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            IoUtil.close(sftp);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"上传成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、远程命令执行"><a href="#3、远程命令执行" class="headerlink" title="3、远程命令执行"></a>3、远程命令执行</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Copyright © 2022 Yuech and/or its affiliates. All rights reserved. */</span></span><br><span class="line"><span class="keyword">package</span> com.yc.apollo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.io.IoUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.util.CharsetUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.util.StrUtil;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.extra.ssh.ChannelType;</span><br><span class="line"><span class="keyword">import</span> cn.hutool.extra.ssh.JschUtil;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.ChannelExec;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.JSchException;</span><br><span class="line"><span class="keyword">import</span> com.jcraft.jsch.Session;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 远程命令执行测试类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Yuech</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022-04-13 9:36</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CmdExecTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String cmd = <span class="string">"mv /app/deploy/test.txt /app/deploy/test_20220413.txt"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, JSchException </span>&#123;</span><br><span class="line"></span><br><span class="line">            Charset charset = CharsetUtil.CHARSET_UTF_8;</span><br><span class="line">            Session session = JschUtil.createSession(HostInfoConstants.REMOTE_HOST,</span><br><span class="line">                    HostInfoConstants.REMOTE_PORT,</span><br><span class="line">                    HostInfoConstants.USERNAME,</span><br><span class="line">                    HostInfoConstants.PASSWORD);</span><br><span class="line"></span><br><span class="line">            ChannelExec channel = (ChannelExec) JschUtil.createChannel(session, ChannelType.EXEC);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 添加环境变量</span></span><br><span class="line">            channel.setCommand(cmd);</span><br><span class="line">            InputStream inputStream = channel.getInputStream();</span><br><span class="line">            InputStream errStream = channel.getErrStream();</span><br><span class="line">            channel.connect();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">final</span> String[] error = <span class="keyword">new</span> String[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">final</span> String[] result = <span class="keyword">new</span> String[<span class="number">1</span>];</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(error[<span class="number">0</span>] = IoUtil.read(errStream, charset));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                <span class="keyword">if</span> (!StrUtil.contains(e.getMessage(), <span class="string">"Pipe closed"</span>)) &#123;</span><br><span class="line">                    <span class="comment">// DefaultSystemLog.getLog().error("读取 exec err 流发生异常", e);</span></span><br><span class="line">                    error[<span class="number">0</span>] = <span class="string">"读取 exec err 流发生异常"</span> + e.getMessage();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                result[<span class="number">0</span>] = IoUtil.read(inputStream, charset);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                <span class="keyword">if</span> (!StrUtil.contains(e.getMessage(), <span class="string">"Pipe closed"</span>)) &#123;</span><br><span class="line">                    <span class="comment">//DefaultSystemLog.getLog().error("读取 exec 流发生异常", e);</span></span><br><span class="line">                    result[<span class="number">0</span>] = <span class="string">"读取 exec 流发生异常"</span> + e.getMessage();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"结束 \n"</span> + result[<span class="number">0</span>] + <span class="string">"  "</span> + error[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4、参考信息"><a href="#4、参考信息" class="headerlink" title="4、参考信息"></a>4、参考信息</h3><p><a href="https://github.com/dromara/Jpom" target="_blank" rel="noopener">jpom</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2022/01/01/PDCA Cycle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -814,210 +940,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2018/07/01/Eclipse各个版本及其对应代号列表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/01/Eclipse各个版本及其对应代号列表/" itemprop="url">Eclipse各个版本及其对应代号列表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T20:15:31+08:00">
-                2018-07-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Eclipse各个版本及其对应代号列表"><a href="#Eclipse各个版本及其对应代号列表" class="headerlink" title="Eclipse各个版本及其对应代号列表"></a>Eclipse各个版本及其对应代号列表</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">版本号</th>
-<th style="text-align:center">代码</th>
-<th style="text-align:center">日期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Eclipse 3.1</td>
-<td style="text-align:center">IO[木卫一,伊奥]</td>
-<td style="text-align:center">2005</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.2</td>
-<td style="text-align:center">Callisto[木卫四,卡里斯托]</td>
-<td style="text-align:center">2006</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.3</td>
-<td style="text-align:center">Eruopa[木卫二,欧罗巴]</td>
-<td style="text-align:center">2007</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.4</td>
-<td style="text-align:center">Ganymede[木卫三,盖尼米德]</td>
-<td style="text-align:center">2008</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.5</td>
-<td style="text-align:center">Galileo[伽利略]</td>
-<td style="text-align:center">2009</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.6</td>
-<td style="text-align:center">Helios[太阳神]</td>
-<td style="text-align:center">2010</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 3.7</td>
-<td style="text-align:center">Indigo[靛青]</td>
-<td style="text-align:center">2011</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.2</td>
-<td style="text-align:center">Juno[朱诺]</td>
-<td style="text-align:center">2012</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.3</td>
-<td style="text-align:center">Kepler[开普勒]</td>
-<td style="text-align:center">2013</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.4</td>
-<td style="text-align:center">Luna[月食]</td>
-<td style="text-align:center">2014</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.5</td>
-<td style="text-align:center">Mars[火星]</td>
-<td style="text-align:center">2015</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.6</td>
-<td style="text-align:center">Neon[霓虹灯]</td>
-<td style="text-align:center">2016</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.7</td>
-<td style="text-align:center">Oxygen[氧气]</td>
-<td style="text-align:center">2017</td>
-</tr>
-<tr>
-<td style="text-align:center">Eclipse 4.8</td>
-<td style="text-align:center">Phton[光子]</td>
-<td style="text-align:center">2018</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/01/Eclipse各个版本及其对应代号列表/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1072,7 +994,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
