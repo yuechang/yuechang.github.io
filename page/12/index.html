@@ -288,6 +288,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/12/ConcurrentModificationException异常总结-多线程方式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yue Chang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/portrait.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="漠北空城">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/12/ConcurrentModificationException异常总结-多线程方式/" itemprop="url">ConcurrentModificationException异常总结-多线程方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-12T09:37:08+08:00">
+                2015-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="1、多线程方式发生异常举例"><a href="#1、多线程方式发生异常举例" class="headerlink" title="1、多线程方式发生异常举例"></a>1、多线程方式发生异常举例</h3><h4 id="1-1、java代码如下："><a href="#1-1、java代码如下：" class="headerlink" title="1.1、java代码如下："></a>1.1、java代码如下：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> List&lt;String&gt; myList = createTestData();</span><br><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (String string : myList) &#123;</span><br><span class="line">			System.out.println(<span class="string">"遍历集合 value = "</span> + string);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">100</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Iterator&lt;String&gt; it = myList.iterator(); it.hasNext();) &#123;</span><br><span class="line">			String value = it.next();</span><br><span class="line">			System.out.println(<span class="string">"删除元素 value = "</span> + value);</span><br><span class="line">			<span class="keyword">if</span> (value.equals(<span class="string">"3"</span>)) &#123;</span><br><span class="line">				it.remove();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">100</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<h4 id="1-2、异常信息打印如下："><a href="#1-2、异常信息打印如下：" class="headerlink" title="1.2、异常信息打印如下："></a>1.2、异常信息打印如下：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">遍历集合 value = 1</span><br><span class="line">删除元素 value = 1</span><br><span class="line">删除元素 value = 2</span><br><span class="line">遍历集合 value = 2</span><br><span class="line">遍历集合 value = 3</span><br><span class="line">删除元素 value = 3</span><br><span class="line">删除元素 value = 4</span><br><span class="line">Exception in thread "Thread-0" java.util.ConcurrentModificationException</span><br><span class="line">	at java.util.AbstractList$Itr.checkForComodification(AbstractList.java:372)</span><br><span class="line">	at java.util.AbstractList$Itr.next(AbstractList.java:343)</span><br><span class="line">	at com.primeton.test.Test$1.run(Test.java:119)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:619)</span><br><span class="line">删除元素 value = 5</span><br></pre></td></tr></table></figure>
+<p>当方法检测到对象的并发修改，但不允许这种修改时，抛出此异常。说明以上办法在同一个线程执行的时候是没问题的，但是在异步情况下依然可能出现异常。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015/07/12/ConcurrentModificationException异常总结-多线程方式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/07/08/Redis-conf配置文件详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -777,132 +903,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yuechang.github.io/2015/05/18/二十岁出头的时候，你一无所有，你拥有一切/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yue Chang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/portrait.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="漠北空城">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/05/18/二十岁出头的时候，你一无所有，你拥有一切/" itemprop="url">二十岁出头的时候，你一无所有，你拥有一切</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-18T23:05:54+08:00">
-                2015-05-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>二十岁出头的时候，你一无所有，你拥有一切。<br>说明：此文虽然是转载的，但是我依旧争取上首页，传递正能量。希望管理能让它在首页多停留一会献给那些正在奋斗的人们！</p>
-<p>一篇治愈系的励志文，让我想到一句话，青春就是明明一无所有，却仍然相信有一天世界会在你脚下。 </p>
-<div style="background:#808080; color:#FFF"><br>（1）嘴上说说的人生<br>&nbsp;<br></div><br>那年我在离家的时候一个劲地往自己的硬盘里塞《灌篮高手》，我妈一副嗤之以鼻的表情看着我，似乎是在说：“这么大的人了居然还这么喜欢看动漫。”<br><br>我不知道怎么回应她，只好耸耸肩，因为我实在无法对我亲爱的娘亲说明这部动漫对我的意义。<br><br>你知道，有些歌有些东西就是有那种力量。哪怕它在你的手机里藏了好几年，哪怕它早就过了黄金期，哪怕越来越少的人会提起它。你就是知道，当你一听起这首歌的时候，当你一看起那些漫画的时候，你就会想到以前的自己，你就会获得一种莫名的力量。这种力量能够让你感受到自己的节奏，让你以跟世界不同的方式独自运转着，你能听到自己。比如那首永远的butterfly和直到世界的尽头，它们比记忆更可靠。<br><br>在记忆里最让你印象深刻的，一定是当年的你自己。因为只有在这个时候才发现，在你嚷嚷着“时间变化太快”的同时，在那些所谓的“物是人非”里，变化最多的人是你自己。我不知道怎么样的人生是最可怕的，但是我知道当你有一天你回头看，当你发现你曾经所说的一切，你曾经信誓旦旦的一切变成说说而已的时候，一定不会好受到哪里去。<br><br>好像人一长大，就会把很多东西给弄丢了。比如那些简单却能让自己充实开心一天的东西，比如让自己肆意哭和笑的能力，还有那些曾经一起结伴同行的人。最可怕的不是弄丢了这些东西，而是你变得心安理得。你开始安慰自己，这就是成长，这就是我们最终会变成的样子。你只是找了个借口继续这样的生活，对以前的自己嗤之以鼻。<br><br>只是每当你听起以前的歌的时候，或者你看到某个人在他自己的道路坚持下去的时候，你都会像被自己扇了一个大嘴巴。<br><br>看着别人的努力羡慕一下然后转身回去过自己的生活的你，又凭什么去过自己想要的人生？<br><br><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/05/18/二十岁出头的时候，你一无所有，你拥有一切/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -957,7 +957,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -970,7 +970,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1008,7 +1008,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-[object Object]"></i>
   </span>
